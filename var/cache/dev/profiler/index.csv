@@ -1,11 +1,1 @@
-02368a,::1,GET,http://localhost/apotheose/apo-O-Rando-back/public/,1616422527,,404
-6f8ff3,::1,GET,http://localhost/apotheose/apo-O-Rando-back/public/,1616423921,,404
-858002,::1,GET,http://localhost/apotheose/apo-O-Rando-back/public/,1616428615,,404
-ed7fb1,::1,GET,http://localhost/apotheose/apo-O-Rando-back/public/,1616436418,,404
-2df298,127.0.0.1,GET,http://localhost:8000/api/walk,1616436539,94d663,500
-94d663,127.0.0.1,GET,http://localhost:8000/api/walk,1616436539,,500
-3f36cf,127.0.0.1,GET,http://localhost:8000/api/walk,1616436985,dd2fb6,500
-dd2fb6,127.0.0.1,GET,http://localhost:8000/api/walk,1616436985,,500
-eb9f68,127.0.0.1,GET,http://localhost:8000/api/walk,1616437069,,200
-cff040,127.0.0.1,GET,http://localhost:8000/api/walk,1616437482,,200
-4b5495,127.0.0.1,GET,http://localhost:8000/api/walk,1616439096,,200
+daa216,127.0.0.1,GET,http://localhost:8000/api/walk,1616446759,,200

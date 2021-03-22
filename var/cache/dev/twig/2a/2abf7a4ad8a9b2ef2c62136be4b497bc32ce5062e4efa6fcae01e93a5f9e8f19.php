@@ -155,6 +155,6 @@ class __TwigTemplate_9eaf939ce2ee946da53650f53312c917228d14dc82d72818e10d0e2fa66
 {% block panel %}
     {{ render(path('_profiler_router', { token: token })) }}
 {% endblock %}
-", "@WebProfiler/Collector/router.html.twig", "/var/www/html/apotheose/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/router.html.twig");
+", "@WebProfiler/Collector/router.html.twig", "/var/www/html/apo/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/router.html.twig");
     }
 }

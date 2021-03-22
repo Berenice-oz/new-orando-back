@@ -17,19 +17,19 @@ class Area
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * 
+     * @Groups("api_walk")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * 
+     * @Groups("api_walk")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=64)
-     *
+     * @Groups("api_walk")
      */
     private $color;
 

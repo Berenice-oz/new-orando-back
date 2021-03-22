@@ -71,6 +71,6 @@ class __TwigTemplate_67b09ffbab3b4af4ef54951e18a449f18d9f54f5fcca7978546c0b6f7b2
     public function getSourceContext()
     {
         return new Source("{% extends \"@email/zurb_2/notification/body.html.twig\" %}
-", "@email/default/notification/body.html.twig", "/var/www/html/apotheose/apo-O-Rando-back/vendor/symfony/twig-bridge/Resources/views/Email/default/notification/body.html.twig");
+", "@email/default/notification/body.html.twig", "/var/www/html/apo/apo-O-Rando-back/vendor/symfony/twig-bridge/Resources/views/Email/default/notification/body.html.twig");
     }
 }

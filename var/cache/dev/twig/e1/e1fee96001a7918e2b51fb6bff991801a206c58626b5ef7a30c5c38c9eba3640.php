@@ -156,6 +156,6 @@ class __TwigTemplate_b40eb2a515667ef426fc78fb5c553359c19b7986d01300c355b5fd9fe55
     <h2>{{ messages[about].title }}</h2>
     <p>{{ messages[about].message }}</p>
 {% endblock %}
-", "@WebProfiler/Profiler/info.html.twig", "/var/www/html/apotheose/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/info.html.twig");
+", "@WebProfiler/Profiler/info.html.twig", "/var/www/html/apo/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/info.html.twig");
     }
 }

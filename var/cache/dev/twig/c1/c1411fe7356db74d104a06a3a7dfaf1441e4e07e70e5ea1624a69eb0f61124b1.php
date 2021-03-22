@@ -898,6 +898,6 @@ class __TwigTemplate_978f8078d3d5f855bd7ec13a7fd85c1ca8b10dca2c6cfe2489b185b5d53
         </tbody>
     </table>
 {% endmacro %}
-", "@WebProfiler/Collector/translation.html.twig", "/var/www/html/apotheose/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/translation.html.twig");
+", "@WebProfiler/Collector/translation.html.twig", "/var/www/html/apo/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/translation.html.twig");
     }
 }

@@ -227,6 +227,6 @@ class __TwigTemplate_d79783f0adcc41212d1c6fc695365f7eb336a4c54e69e66768fb10415d3
         </div>
     {% endif %}
 {% endblock %}
-", "@WebProfiler/Collector/exception.html.twig", "/var/www/html/apotheose/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/exception.html.twig");
+", "@WebProfiler/Collector/exception.html.twig", "/var/www/html/apo/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/exception.html.twig");
     }
 }

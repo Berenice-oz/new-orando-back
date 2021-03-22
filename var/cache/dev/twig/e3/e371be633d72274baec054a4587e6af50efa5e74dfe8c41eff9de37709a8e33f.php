@@ -171,6 +171,6 @@ class __TwigTemplate_19866cce6770c4110fb2490ba25405b406a1e1d7c87a224ca84e642dd82
         {%- endfor -%}
     </pre>
 {% endif %}
-", "@Doctrine/Collector/explain.html.twig", "/var/www/html/apotheose/apo-O-Rando-back/vendor/doctrine/doctrine-bundle/Resources/views/Collector/explain.html.twig");
+", "@Doctrine/Collector/explain.html.twig", "/var/www/html/apo/apo-O-Rando-back/vendor/doctrine/doctrine-bundle/Resources/views/Collector/explain.html.twig");
     }
 }

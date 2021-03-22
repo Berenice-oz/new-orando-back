@@ -86,6 +86,7 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks")
+     * @Groups("api_walk")
      */
     private $area;
 

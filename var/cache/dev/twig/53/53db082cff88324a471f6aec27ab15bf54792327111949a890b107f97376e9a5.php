@@ -99,6 +99,6 @@ class __TwigTemplate_d8ebe527310e4d3c2d1e42262101fe55b234c4e24255b4b7eb415afeda9
 .container.body_default {
     border-top: 8px solid #aaaaaa;
 }
-", "@email/zurb_2/notification/local.css", "/var/www/html/apotheose/apo-O-Rando-back/vendor/symfony/twig-bridge/Resources/views/Email/zurb_2/notification/local.css");
+", "@email/zurb_2/notification/local.css", "/var/www/html/apo/apo-O-Rando-back/vendor/symfony/twig-bridge/Resources/views/Email/zurb_2/notification/local.css");
     }
 }

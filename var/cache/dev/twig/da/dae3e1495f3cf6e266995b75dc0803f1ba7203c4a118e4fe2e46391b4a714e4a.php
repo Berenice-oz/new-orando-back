@@ -471,6 +471,6 @@ class __TwigTemplate_cff517be9e24b64b63a45a91a7b1fd9f2c010fb36b491455a614082f923
         </div>
     {% endif %}
 {% endblock %}
-", "@WebProfiler/Collector/twig.html.twig", "/var/www/html/apotheose/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/twig.html.twig");
+", "@WebProfiler/Collector/twig.html.twig", "/var/www/html/apo/apo-O-Rando-back/vendor/symfony/web-profiler-bundle/Resources/views/Collector/twig.html.twig");
     }
 }

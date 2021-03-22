@@ -24,7 +24,7 @@ class WalkController extends AbstractController
         return $this->json(
             $walks,
             Response::HTTP_OK,
-            ['Access-Control-Allow-Origin' => '*'],
+            [],
             ['groups' => 'api_walk'],
             
         );
