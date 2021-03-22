@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\WalkRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\WalkRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=WalkRepository::class)
@@ -14,51 +16,61 @@ class Walk
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("api_walk")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("api_walk")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("api_walk")
      */
     private $startingPoint;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("api_walk")
      */
     private $endPoint;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("api_walk")
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups("api_walk")
      */
     private $duration;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups("api_walk")
      */
     private $difficulty;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups("api_walk")
      */
     private $elevation;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups("api_walk")
      */
     private $maxNbPersons;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("api_walk")
      */
     private $description;
 
