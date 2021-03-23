@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\WalkRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -94,6 +96,16 @@ class Walk
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks")
      */
     private $creator;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk")
+     */
+    private $participants;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -252,6 +264,36 @@ class Walk
     public function setCreator(?User $creator): self
     {
         $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setWalk($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getWalk() === $this) {
+                $participant->setWalk(null);
+            }
+        }
 
         return $this;
     }
