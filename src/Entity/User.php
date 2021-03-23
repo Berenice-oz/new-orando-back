@@ -74,6 +74,11 @@ class User implements UserInterface
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Area::class)
+     */
+    private $area;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -247,6 +252,18 @@ class User implements UserInterface
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getArea(): ?Area
+    {
+        return $this->area;
+    }
+
+    public function setArea(?Area $area): self
+    {
+        $this->area = $area;
 
         return $this;
     }

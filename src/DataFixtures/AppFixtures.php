@@ -73,6 +73,8 @@ class AppFixtures extends Fixture
         // we store the users in an array
         $usersList = [];
         for ($i = 1; $i <= self::NB_USERS; $i++) {
+            $user = new User();
+            $user->setEmail($faker->unique()->email());
         }
  
 
