@@ -2,14 +2,16 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
-use Doctrine\DBAL\Connection;
-use App\DataFixtures\Provider\WalkDbProvider;
 use Faker;
-use App\Entity\Area;
-use App\Entity\Walk;
 use DateTime;
+use App\Entity\Area;
+use App\Entity\User;
+use App\Entity\Walk;
+use Doctrine\DBAL\Connection;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\Provider\WalkDbProvider;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * This class allow to make some Area objects et Walks objects in our database
@@ -21,13 +23,15 @@ class AppFixtures extends Fixture
     const NB_WALKS = 35;
     const NB_USERS = 50;
     
+    private $passwordEncoder;
     // Connection to MySQL
     private $connection;
 
     
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->connection = $connection;
+        $this->passwordEncoder = $passwordEncoder;
     }
     private function truncate()
     {
@@ -38,6 +42,7 @@ class AppFixtures extends Fixture
         //we can restart the id at 0 in each table that we mentioned
         $users = $this->connection->executeQuery('TRUNCATE TABLE area');
         $users = $this->connection->executeQuery('TRUNCATE TABLE walk');
+        $users = $this->connection->executeQuery('TRUNCATE TABLE user');
     }
     
     public function load(ObjectManager $manager)
@@ -47,6 +52,7 @@ class AppFixtures extends Fixture
         
         // use the factory to create a Faker\Generator instance in french
         $faker = Faker\Factory::create('fr_FR');
+        $faker->seed('Orando');
 
         // Initialization of the Provider
         $walkDbProvider = new WalkDbProvider();
@@ -75,6 +81,17 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= self::NB_USERS; $i++) {
             $user = new User();
             $user->setEmail($faker->unique()->email());
+            $user->setLastname($faker->unique()->lastName());
+            $user->setFirstname($faker->firstName());
+            $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8,16));
+            $user->setPassword($userHashPassword);
+            $user->setStatus(1);
+            // array_rand allow to have areas randomly
+            $randomArea = $areasList[array_rand($areasList)];
+            $user->setArea($randomArea);
+            $usersList[] = $user;
+            // here, we prepare the entity user for the creation
+            $manager->persist($user);
         }
  
 
@@ -99,7 +116,9 @@ class AppFixtures extends Fixture
             $walk->setMaxNbPersons($faker->numberBetween(1, 30));
             $walk->setDescription($faker->text());
             $walk->setCreatedAt(new DateTime());
-
+            // array_rand allow to have users randomly
+            $randomUser = $usersList[array_rand($usersList)];
+            $walk->setCreator($randomUser);
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $walk->setArea($randomArea);

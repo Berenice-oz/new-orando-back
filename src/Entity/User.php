@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -15,11 +18,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ("api_users_read_item")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups ("api_users_read_item")
      */
     private $email;
 
@@ -36,26 +41,31 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups ("api_users_read_item")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups ("api_users_read_item")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups ("api_users_read_item")
      */
     private $dateOfBirth;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups ("api_users_read_item")
      */
     private $picture;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups ("api_users_read_item")
      */
     private $description;
 
@@ -78,6 +88,18 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity=Area::class)
      */
     private $area;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Walk::class, mappedBy="creator")
+     * @Groups ("api_users_read_item")
+     */
+    private $walks;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->walks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -264,6 +286,36 @@ class User implements UserInterface
     public function setArea(?Area $area): self
     {
         $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Walk[]
+     */
+    public function getWalks(): Collection
+    {
+        return $this->walks;
+    }
+
+    public function addWalk(Walk $walk): self
+    {
+        if (!$this->walks->contains($walk)) {
+            $this->walks[] = $walk;
+            $walk->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWalk(Walk $walk): self
+    {
+        if ($this->walks->removeElement($walk)) {
+            // set the owning side to null (unless already changed)
+            if ($walk->getCreator() === $this) {
+                $walk->setCreator(null);
+            }
+        }
 
         return $this;
     }

@@ -16,13 +16,13 @@ class Walk
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
      */
     private $title;
 
@@ -40,7 +40,7 @@ class Walk
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
      */
     private $date;
 
@@ -86,9 +86,13 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks")
-     * 
      */
     private $area;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks")
+     */
+    private $creator;
 
     public function getId(): ?int
     {
@@ -235,6 +239,18 @@ class Walk
     public function setArea(?Area $area): self
     {
         $this->area = $area;
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): self
+    {
+        $this->creator = $creator;
 
         return $this;
     }
