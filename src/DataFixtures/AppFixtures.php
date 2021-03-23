@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
     const NB_AREAS = 12;
     const NB_WALKS = 35;
     const NB_USERS = 50;
-    const NB_PARTICIPANTS = 6 * self::NB_USERS;
+    const NB_PARTICIPANTS = 4 * self::NB_USERS;
     
     private $passwordEncoder;
     // Connection to MySQL
