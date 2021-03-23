@@ -11,6 +11,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\WalkDbProvider;
+use App\Entity\Participant;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -18,10 +19,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class AppFixtures extends Fixture
 {
-    //
+    //Here, we define number of recordings in each table
     const NB_AREAS = 12;
     const NB_WALKS = 35;
     const NB_USERS = 50;
+    const NB_PARTICIPANTS = 6 * self::NB_USERS;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -43,6 +45,7 @@ class AppFixtures extends Fixture
         $users = $this->connection->executeQuery('TRUNCATE TABLE area');
         $users = $this->connection->executeQuery('TRUNCATE TABLE walk');
         $users = $this->connection->executeQuery('TRUNCATE TABLE user');
+        $users = $this->connection->executeQuery('TRUNCATE TABLE participant');
     }
     
     public function load(ObjectManager $manager)
@@ -128,6 +131,23 @@ class AppFixtures extends Fixture
 
             // here, we prepare the entity walk for the creation
             $manager->persist($walk);
+        }
+
+        // table Participant : no need to store data in this table because it's a connection table
+        for ($i = 1; $i < self::NB_PARTICIPANTS; $i++) {
+            $participant = new Participant();
+            $participant->setRequestStatus('validé');
+            
+            // we collect a walk randomly in the array $walkList created previously 
+            $randomWalk = $walksList[array_rand($walksList)];
+            $participant->setWalk($randomWalk);
+            
+            // we collect a user randomly in the array $users created previously 
+            $randomUser = $usersList[array_rand($usersList)];
+            $participant->setUser($randomUser);
+
+            
+            $manager->persist($participant);
         }
 
        

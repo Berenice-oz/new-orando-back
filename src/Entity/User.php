@@ -95,10 +95,16 @@ class User implements UserInterface
      */
     private $walks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
+     */
+    private $participants;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->walks = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -314,6 +320,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($walk->getCreator() === $this) {
                 $walk->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getUser() === $this) {
+                $participant->setUser(null);
             }
         }
 
