@@ -16,11 +16,12 @@ use DateTime;
  */
 class AppFixtures extends Fixture
 {
-     // 
-     const NB_AREAS = 12;
-     const NB_WALKS = 35;
+    //
+    const NB_AREAS = 12;
+    const NB_WALKS = 35;
+    const NB_USERS = 50;
     
-     // Connection to MySQL 
+    // Connection to MySQL
     private $connection;
 
     
@@ -34,10 +35,9 @@ class AppFixtures extends Fixture
         //Here , we "discuss" with MySql and ask to disabled foreign key
         $users = $this->connection->executeQuery('SET foreign_key_checks = 0');
         // each time we make bin/console doctrine:fixtures:load, thank to $this->connection->executeQuery
-        //we can restart the id at 0 in each table that we mentioned 
+        //we can restart the id at 0 in each table that we mentioned
         $users = $this->connection->executeQuery('TRUNCATE TABLE area');
         $users = $this->connection->executeQuery('TRUNCATE TABLE walk');
-      
     }
     
     public function load(ObjectManager $manager)
@@ -60,14 +60,19 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= self::NB_AREAS; $i++) {
              
              // An area
-             $area = new Area();
-             $area->setName($faker->unique()->areaName());
-             $area->setColor($faker->areaColor());
+            $area = new Area();
+            $area->setName($faker->unique()->areaName());
+            $area->setColor($faker->areaColor());
  
             $areasList[] = $area;
              
-             // Prepare the entity $area for the creation in the database
-             $manager->persist($area);
+            // Prepare the entity $area for the creation in the database
+            $manager->persist($area);
+        }
+
+        // we store the users in an array
+        $usersList = [];
+        for ($i = 1; $i <= self::NB_USERS; $i++) {
         }
  
 
@@ -81,7 +86,7 @@ class AppFixtures extends Fixture
             
             // faker allow to generate fake data
             // unique / streetaddress/ randamDigitNotNull etc, you can find these
-            // formatters available in his documentation 
+            // formatters available in his documentation
             $walk->setTitle($faker->unique()->sentence());
             $walk->setStartingPoint($faker->streetAddress());
             $walk->setEndPoint($faker->streetAddress());
