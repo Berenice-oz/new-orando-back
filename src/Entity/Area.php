@@ -18,26 +18,27 @@ class Area
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups("api_area")
+     * @Groups("api_area_read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * 
-     * @Groups("api_area")
+     * @Groups("api_area_read")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups("api_area")
+     * @Groups("api_area_read")
      */
     private $color;
 
     /**
      * @ORM\OneToMany(targetEntity=Walk::class, mappedBy="area")
+     * @Groups("api_area_read_item")
      */
     private $walks;
 

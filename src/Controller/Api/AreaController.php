@@ -28,7 +28,7 @@ class AreaController extends AbstractController
             $areas,
             Response::HTTP_OK,
             [],
-            ['groups' => 'api_area'],
+            ['groups' => 'api_area_read'],
         );
     }
 
@@ -46,7 +46,7 @@ class AreaController extends AbstractController
             $walksByArea,
             Response::HTTP_OK,
             [],
-            ['groups' => 'api_walk'],
+            ['groups' => 'api_area_read_item'],
         );
     }
 }
