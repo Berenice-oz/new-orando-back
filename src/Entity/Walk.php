@@ -16,43 +16,43 @@ class Walk
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $startingPoint;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $endPoint;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="string", length=128)
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $difficulty;
 
@@ -64,13 +64,13 @@ class Walk
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $maxNbPersons;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $description;
 
