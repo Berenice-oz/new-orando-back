@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
 {
     //Here, we define number of recordings in each table
     const NB_AREAS = 12;
-    const NB_WALKS = 35;
+    const NB_WALKS = 50;
     const NB_USERS = 50;
     const NB_PARTICIPANTS = 4 * self::NB_USERS;
     
@@ -112,7 +112,7 @@ class AppFixtures extends Fixture
             $walk->setTitle($faker->unique()->sentence());
             $walk->setStartingPoint($faker->streetAddress());
             $walk->setEndPoint($faker->streetAddress());
-            $walk->setDate($faker->unique->dateTimeThisDecade());
+            $walk->setDate($faker->dateTimeInInterval('-1 week', '+2 weeks'));
             $walk->setDuration($faker->randomDigitNotNull());
             $walk->setDifficulty($faker->walkDifficulty());
             $walk->setElevation($faker->randomNumber(3, true));
