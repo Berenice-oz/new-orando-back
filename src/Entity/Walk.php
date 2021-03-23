@@ -16,61 +16,61 @@ class Walk
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $startingPoint;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $endPoint;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="string", length=128)
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $difficulty;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $elevation;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $maxNbPersons;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups("api_walk")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $description;
 
@@ -86,9 +86,13 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks")
-     * 
      */
     private $area;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks")
+     */
+    private $creator;
 
     public function getId(): ?int
     {
@@ -235,6 +239,18 @@ class Walk
     public function setArea(?Area $area): self
     {
         $this->area = $area;
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): self
+    {
+        $this->creator = $creator;
 
         return $this;
     }
