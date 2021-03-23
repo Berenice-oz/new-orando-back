@@ -97,6 +97,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
+     * @Groups ("api_users_read_item")
      */
     private $participants;
 

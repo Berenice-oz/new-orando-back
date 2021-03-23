@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ParticipantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ParticipantRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
@@ -29,6 +30,7 @@ class Participant
 
     /**
      * @ORM\ManyToOne(targetEntity=Walk::class, inversedBy="participants")
+     * @Groups ("api_users_read_item")
      */
     private $walk;
 

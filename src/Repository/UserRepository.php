@@ -64,4 +64,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    /**
+     * Return one user with his walk's participation
+     */
+    public function findOneWithWalkParticipation($user)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
