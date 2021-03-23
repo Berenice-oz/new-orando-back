@@ -19,6 +19,7 @@ class WalkRepository extends ServiceEntityRepository
         parent::__construct($registry, Walk::class);
     }
 
+  
     // /**
     //  * @return Walk[] Returns an array of Walk objects
     //  */
