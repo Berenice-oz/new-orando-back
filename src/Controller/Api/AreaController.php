@@ -2,23 +2,24 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Area;
 use App\Repository\AreaRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AreaController extends AbstractController
 {
     /**
      * area's list
-     * @Route("/api/areas", name="api_area")
+     * @Route("/api/areas", name="api_areas", methods={"GET"})
      */
     public function read(AreaRepository $areaRepository): Response
     {
         // We get back all areas
         $areas = $areaRepository->findAll();
         
-        // We give data in json format : 
+        // We give data in Json format : 
         // first argument : data , second argument : status , 
         // third argument : an empty array, because we have NelmioCorsBundle
         // fourth argument : we have selected data we want to send thank to Symfony\Component\Serializer\Normalizer\AbstractNormalizer
@@ -28,6 +29,24 @@ class AreaController extends AbstractController
             Response::HTTP_OK,
             [],
             ['groups' => 'api_area'],
+        );
+    }
+
+    /**
+     * Walk's list by area
+     * @Route("/api/areas/{id<\d+>}", name="api_areas_read_item", methods="GET")
+     */
+    public function readItem(AreaRepository $areaRepository, Area $area)
+    {   
+        // To get back walks'list by area ,I coded a custom method in the AreaRepository
+        $walksByArea = $areaRepository->findAllWalkJoinedToArea($area);
+
+        // we give in Json format
+        return $this->json(
+            $walksByArea,
+            Response::HTTP_OK,
+            [],
+            ['groups' => 'api_walk'],
         );
     }
 }
