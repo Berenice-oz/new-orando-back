@@ -34,8 +34,17 @@ class WalkController extends AbstractController
      * Data of a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_read_item", methods={"GET"})
      */
-    public function readItem(Walk $walk):Response
+    public function readItem(Walk $walk = null):Response
     {
+        if ($walk === null) {
+            $message = [
+                'error' => 'Walk not found.',
+                'status' => Response::HTTP_NOT_FOUND,
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
         return $this->json(
             $walk,
             Response::HTTP_OK,
