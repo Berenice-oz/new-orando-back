@@ -19,22 +19,31 @@ class AreaRepository extends ServiceEntityRepository
         parent::__construct($registry, Area::class);
     }
 
-    // /**
-    //  * @return Area[] Returns an array of Area objects
-    //  */
-    /*
-    public function findByExampleField($value)
+      /**
+     * We get back walk's list of an area
+     *
+     * Here : SQL request associate
+     * 
+     * SELECT * FROM walk
+     * INNER JOIN area
+     * ON `walk`.`area_id`= `area`.`id`
+     * WHERE `area`.`id`= 1
+     */
+    public function findAllWalkJoinedToArea(Area $area)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT w, a
+            FROM App\Entity\Walk w
+            INNER JOIN w.area a
+            WHERE w.area = :area'
+            
+        )->setParameter('area', $area);
+
+        return $query->getResult();
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Area
