@@ -36,8 +36,17 @@ class AreaController extends AbstractController
      * Walk's list by area
      * @Route("/api/areas/{id<\d+>}", name="api_areas_read_item", methods="GET")
      */
-    public function readItem(AreaRepository $areaRepository, Area $area)
+    public function readItem(AreaRepository $areaRepository, Area $area = null)
     {   
+        if ($area === null) {
+            $message = [
+                'error' => 'Area not found.',
+                'status' => Response::HTTP_NOT_FOUND,
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
         // To get back walks'list by area ,I coded a custom method in the AreaRepository
         $walksByArea = $areaRepository->findAllWalkJoinedToArea($area);
 
