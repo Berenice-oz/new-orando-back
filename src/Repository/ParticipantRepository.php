@@ -47,4 +47,36 @@ class ParticipantRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * Return All Incoming Walk for a User
+    */
+    public function findIncomingWalksByUser($user)
+    {
+        return $this->createQueryBuilder('p')
+        ->andWhere('p.user = :user')
+        ->innerjoin('p.walk', 'w')
+        ->addSelect('w')
+        ->andWhere('w.date >= :date')
+        ->setParameters(array('user' => $user, 'date' => new \DateTime('now')))
+        ->getQuery()
+        ->getResult()
+    ; 
+    }
+
+    /**
+     * Return All Archived Walk for a User
+    */
+    public function findArchivedWalksByUser($user)
+    {
+        return $this->createQueryBuilder('p')
+        ->andWhere('p.user = :user')
+        ->innerjoin('p.walk', 'w')
+        ->addSelect('w')
+        ->andWhere('w.date < :date')
+        ->setParameters(array('user' => $user, 'date' => new \DateTime('now')))
+        ->getQuery()
+        ->getResult()
+    ; 
+    }
 }
