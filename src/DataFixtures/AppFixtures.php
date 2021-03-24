@@ -89,6 +89,9 @@ class AppFixtures extends Fixture
             $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8,16));
             $user->setPassword($userHashPassword);
             $user->setStatus(1);
+            $user->setNickname($faker->unique()->name());
+            $user->setDateOfBirth($faker->optional()->dateTime());
+            $user->setDescription($faker->optional()->paragraphs(2, true));
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $user->setArea($randomArea);
