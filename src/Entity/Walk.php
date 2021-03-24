@@ -179,6 +179,7 @@ class Walk
 
     public function setDifficulty(string $difficulty): self
     {
+       
         $this->difficulty = $difficulty;
 
         return $this;

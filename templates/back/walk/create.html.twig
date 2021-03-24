@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Je crée ma randonnée{% endblock %}
+
+{% block body %}
+<h1> C'est parti ! Je crée ma randonnée </h1>
+
+{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+{# génère tous les champs du form#}
+{{ form_widget(form) }}
+
+
+    <button type="submit" class="btn btn-success">Valider</button>
+{{ form_end(form) }}
+{% endblock %}
