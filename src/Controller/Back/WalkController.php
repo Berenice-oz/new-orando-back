@@ -49,4 +49,32 @@ class WalkController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+ 
+    /**
+     * @Route("/back/walk/edit/{id<\d+>}", name="back_walk_edit", methods={"GET","POST"})
+     *
+     */
+    public function edit(Walk $walk, Request $request, EntityManagerInterface $em)
+    {
+       
+        $form = $this->createForm(WalkType::class, $walk);
+
+         $form->handleRequest($request);
+ 
+         if ($form->isSubmitted() && $form->isValid()) {
+ 
+            
+             $walk->setUpdatedAt(new \DateTime());
+           
+ 
+             $em->flush();
+ 
+             
+        }
+
+        return $this->render('back/walk/edit.html.twig', [
+            'walk' => $walk,
+            'form' => $form->createView(),
+        ]);
+    }
 }

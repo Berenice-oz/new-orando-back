@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use DateTime;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\WalkRepository;
+use DateTime;
 
 
 /**
@@ -15,10 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Walk
 {
-    const DIFFICULTY_SIMPLE = 'facile';
-    const DIFFICULTY_INTERMEDIATE = 'moyen';
-    const DIFFICULTY_ADVANCE = 'difficile';
-    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -201,11 +199,7 @@ class Walk
 
     public function setDifficulty(string $difficulty): self
     {
-        if (!in_array($difficulty, array(self::DIFFICULTY_SIMPLE, self::DIFFICULTY_INTERMEDIATE, self::DIFFICULTY_ADVANCE))) {
-            throw new \InvalidArgumentException("Invalid difficulty");
-        }
-       
-        $this->difficulty = $difficulty;
+       $this->difficulty = $difficulty;
 
         return $this;
     }
