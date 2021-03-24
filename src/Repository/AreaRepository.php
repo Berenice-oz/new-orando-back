@@ -38,19 +38,17 @@ class AreaRepository extends ServiceEntityRepository
             FROM App\Entity\Walk w
             INNER JOIN w.area a
             WHERE w.area = :area'
-            
         )->setParameter('area', $area);
 
         return $query->getResult();
     }
     
 
-    /*
-    public function findOneBySomeField($value): ?Area
+    
+    /*public function findAllByAsc($area)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
