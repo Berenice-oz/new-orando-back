@@ -5,8 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\WalkRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -14,6 +14,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Walk
 {
+    const DIFFICULTY_SIMPLE = 'facile';
+    const DIFFICULTY_INTERMEDIATE = 'moyen';
+    const DIFFICULTY_ADVANCE = 'difficile';
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -25,36 +29,47 @@ class Walk
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $startingPoint;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * @Assert\NotBlank
      */
     private $endPoint;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $duration;
 
     /**
      * @ORM\Column(type="string", length=128)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $difficulty;
 
@@ -73,11 +88,14 @@ class Walk
     /**
      * @ORM\Column(type="text")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     *  
      */
     private $createdAt;
 
@@ -89,6 +107,8 @@ class Walk
     /**
      * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks")
      * @Groups({"api_walks_read", "api_walks_read_item"})
+     * 
+     * 
      */
     private $area;
 
@@ -179,6 +199,9 @@ class Walk
 
     public function setDifficulty(string $difficulty): self
     {
+        if (!in_array($difficulty, array(self::DIFFICULTY_SIMPLE, self::DIFFICULTY_INTERMEDIATE, self::DIFFICULTY_ADVANCE))) {
+            throw new \InvalidArgumentException("Invalid difficulty");
+        }
        
         $this->difficulty = $difficulty;
 
