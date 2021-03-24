@@ -14,12 +14,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
- use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
+
 class WalkType extends AbstractType
 {
+    // This class WalkType allow to create some field in your form with Form Field Type Reference
+    // thank to this method => buildform
+    // Form Fiel Types Reference is for instance in our case TextType::class, EntityType::class etc
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            // this line means(and the others means the same) : the field => title (arbitrary name of the field ) is known as Text
             ->add('title', TextType::class, [
                 'label' => 'Titre',
             ])
@@ -32,6 +37,9 @@ class WalkType extends AbstractType
                 },
                 'label' => 'Région',
                 'placeholder' => 'Sélectionner votre région...',
+                // this is a validation contrainst : new NotBlank() => the field must be not empty
+                // Another validation constrainst have been  coded  directly 
+                //on the propertie's Entity with this annotation @Assert
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -45,7 +53,6 @@ class WalkType extends AbstractType
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de la randonnée',
-                'empty_data' => '',
                 
             ])
             ->add('duration', ChoiceType::class, [
