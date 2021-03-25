@@ -18,21 +18,21 @@ class Area
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"api_area_read", "api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_area_read", "api_walks_read", "api_walks_read_item", "api_users_read_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * 
-     * @Groups({"api_area_read", "api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_area_read", "api_walks_read", "api_walks_read_item", "api_users_read_item"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups({"api_area_read", "api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_area_read", "api_walks_read", "api_walks_read_item", "api_users_read_item"})
      */
     private $color;
 
