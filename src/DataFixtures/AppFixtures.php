@@ -153,6 +153,19 @@ class AppFixtures extends Fixture
             $manager->persist($participant);
         }
 
+        // admin
+        $admin = new User();
+        $admin->setEmail('admin@admin.com');
+        $admin->setLastname('admin');
+        $admin->setFirstname('admin');
+        $adminHashPassword = $this->passwordEncoder->encodePassword($admin, 'admin');
+        $admin->setPassword($adminHashPassword);
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setStatus(1);
+        $admin->setNickname('admin');
+        $manager->persist($admin);
+
+
        
         
         // we send the data in our database
