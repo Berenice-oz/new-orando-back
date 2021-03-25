@@ -78,9 +78,11 @@ class WalkController extends AbstractController
         
         // ask to the form to examine the request object
          $form->handleRequest($request);
+
+         //dd($walk);
  
          if ($form->isSubmitted() && $form->isValid()) {
- 
+
             //update => date
             $walk->setUpdatedAt(new \DateTime());
            
@@ -90,9 +92,11 @@ class WalkController extends AbstractController
               // add a flash message to inform the user if his action is alright
              $this->addFlash('success', 'modification effectuée avec succès');
 
-         
+            
  
         }
+
+       
         // display of the form => GET
         return $this->render('back/walk/edit.html.twig', [
             'walk' => $walk,

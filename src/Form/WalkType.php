@@ -52,21 +52,11 @@ class WalkType extends AbstractType
                 'label' => 'Point d\'arrivée',
             ])
             ->add('date', DateType::class, [
-                'label' => 'Date de la randonnée',
-                
+                'label' => 'Date de la randonnée ',
             ])
-            ->add('duration', ChoiceType::class, [
+            ->add('duration', TextType::class, [
                 'label' => 'Durée approximative',
-                'placeholder' => 'Sélectionner',
-                'choices' => [
-                    '1' => 1,
-                    '2' => 2,
-                    '3' => 3,
-                    '4' => 4,
-                    '5' => 5,
-                    '6' => 6,
-
-                ],
+                'empty_data' => '',
                 
             ])
             ->add('difficulty', ChoiceType::class, [
