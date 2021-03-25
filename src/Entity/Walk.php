@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\WalkRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\WalkRepository;
+use DateTime;
 
 
 /**
@@ -25,35 +28,44 @@ class Walk
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $startingPoint;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * @Assert\NotBlank
      */
     private $endPoint;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Assert\NotBlank
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $difficulty;
@@ -73,11 +85,14 @@ class Walk
     /**
      * @ORM\Column(type="text")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Assert\NotBlank
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     *  
      */
     private $createdAt;
 
@@ -93,17 +108,18 @@ class Walk
     private $area;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
      */
     private $creator;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk")
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove"})
      */
     private $participants;
 
     public function __construct()
     {
+        $this->createdAt= new DateTime();
         $this->participants = new ArrayCollection();
     }
 
@@ -179,7 +195,7 @@ class Walk
 
     public function setDifficulty(string $difficulty): self
     {
-        $this->difficulty = $difficulty;
+       $this->difficulty = $difficulty;
 
         return $this;
     }

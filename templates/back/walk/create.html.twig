@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Je crée ma randonnée{% endblock %}
+
+{% block body %}
+<h1> C'est parti ! Je crée ma randonnée </h1>
+
+{# Inclusion of the "partial" _flash_message #}
+{{ include('back/walk/_flash_message.html.twig') }}
+
+{# Inclusion of the "partial" form #}
+{{ include('back/walk/_form.html.twig') }}
+
+{% endblock %}
