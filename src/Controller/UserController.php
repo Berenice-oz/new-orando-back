@@ -51,6 +51,9 @@ class UserController extends AbstractController
      */
     public function userContact(Request $request, MailerInterface $mailer, User $user = null): Response
     {
+        //make sure the user is authenticated first
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         if ($user === null) {
             throw $this->createNotFoundException(
                 'Utilisateur non trouvé'
@@ -64,14 +67,16 @@ class UserController extends AbstractController
             //Email content from form message
             $message = $form->getData()['message'];
             //User's email
-            $userEmail =  $user->getEmail();
+            $recipientUserEmail =  $user->getEmail();
+            //Sender email
+            $senderUserEmail = $this->getUser()->getEmail();
             //Send mail
             $email = (new Email())
-            ->from('contact@orando.me')
-            ->to($userEmail)
-            ->subject('O\'Rando - You have a new message!')
+            ->from($senderUserEmail)
+            ->to($recipientUserEmail)
+            ->subject('O\'Rando - You have a new message from '. $this->getUser()->getNickname() .'!')
             ->html('<p>'. $message .'</p>
-            ');
+            <p>Pour répondre rendez vous sur la page :'.$this->generateUrl('contact_user', ['id' => $this->getUser()->getId()]).'</p>');
             //todo penser à inclure dans le message du mail l'URL pour répondre $this->generateUrl('contact_user') + param id du user qui envoie le mail
 
         $mailer->send($email);
