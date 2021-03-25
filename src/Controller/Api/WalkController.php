@@ -52,4 +52,6 @@ class WalkController extends AbstractController
             ['groups' => 'api_walks_read_item'],
         );
     }
+
+    
 }

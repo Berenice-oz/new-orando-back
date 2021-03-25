@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class WalkController extends AbstractController
 {
@@ -17,7 +18,7 @@ class WalkController extends AbstractController
      * 
      * @Route("/back/walk/create", name="back_walk_create", methods={"GET", "POST"})
      */
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
         // we create a new Walk
         $walk = new Walk;
@@ -30,11 +31,15 @@ class WalkController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
+
             //we ask the Manager to prepare itself to add our object in our database
             $em->persist($walk);
             
             // we ask to the Manager to save our object in our database
             $em->flush();
+
+            // add a flash message to inform the user if his action is alright
+            $this->addFlash('success', 'Votre randonnée a bien été crée.');
             
             // redirection
             return $this->redirectToRoute('back_walk_create');
@@ -51,27 +56,40 @@ class WalkController extends AbstractController
     }
  
     /**
+     * Edit a walk
+     * 
      * @Route("/back/walk/edit/{id<\d+>}", name="back_walk_edit", methods={"GET","POST"})
      *
      */
-    public function edit(Walk $walk, Request $request, EntityManagerInterface $em)
+    public function edit(Walk $walk, Request $request, EntityManagerInterface $em, SessionInterface $session)
     {
-       
+        // managing error => 404 
+        if (null === $walk) {
+            
+            throw $this->createNotFoundException('Randonnée non trouvée.');
+        }
+        
+        // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
-
+        
+        // ask to the form to examine the request object
          $form->handleRequest($request);
  
          if ($form->isSubmitted() && $form->isValid()) {
  
-            
-             $walk->setUpdatedAt(new \DateTime());
+            //update => date
+            $walk->setUpdatedAt(new \DateTime());
            
- 
+            // we ask to the Manager to save our object in our database
              $em->flush();
- 
-             
-        }
 
+              // add a flash message to inform the user if his action is alright
+             $this->addFlash('success', 'modification effectuée avec succès');
+
+         
+ 
+        }
+        // display of the form => GET
         return $this->render('back/walk/edit.html.twig', [
             'walk' => $walk,
             'form' => $form->createView(),
