@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\RegisterType;
 use App\Form\UserContactType;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,12 +11,43 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
+    
+    /**
+     * @Route("/register", name="user_register", methods={"GET","POST"})
+     */
+    public function register(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $user = new User();
+
+        $form = $this->createForm(RegisterType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Encodage du mot de passe
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            //todo flashmessage
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('user/register.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    
     /**
      * Form to contact a user and send message by mail
-     * @Route("/profil/{id<\d+>}/contact-user", name="contact_user", methods={"GET","POST"})
+     * @Route("/profile/{id<\d+>}/contact-user", name="contact_user", methods={"GET","POST"})
      */
     public function userContact(Request $request, MailerInterface $mailer, User $user = null): Response
     {
