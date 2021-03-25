@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Walk;
 use App\Repository\WalkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -53,5 +54,34 @@ class WalkController extends AbstractController
         );
     }
 
+    /**
+     * Delete a walk
+     * @Route("/api/walks/delete/{id<\d+>}", name="api_walks_delete_item", methods={"DELETE"})
+     */
+    public function deleteItem(Walk $walk, EntityManagerInterface $em)
+    {
+        // managing error
+        if ($walk === null) {
+
+            // optional: we define a custom message to transmit to the frontend
+            $message = [
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => 'Randonnée non trouvée.',
+            ];
     
+           
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+    
+    
+            // Delete
+            $em->remove($walk);
+            $em->flush();
+    
+            
+            return $this->json(
+            ['message' => 'La randonnée a bien été supprimé.'],
+            Response::HTTP_OK
+            );
+    }
 }

@@ -104,20 +104,19 @@ class Walk
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks")
+     * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks", cascade={"persist"})
      * @Groups({"api_walks_read", "api_walks_read_item"})
-     * 
      * 
      */
     private $area;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
      */
     private $creator;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk")
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove"})
      */
     private $participants;
 

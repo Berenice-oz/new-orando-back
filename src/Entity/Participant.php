@@ -25,11 +25,13 @@ class Participant
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants")
+     * 
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Walk::class, inversedBy="participants")
+     * 
      * @Groups ("api_users_read_item")
      */
     private $walk;
