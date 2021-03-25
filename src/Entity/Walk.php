@@ -48,13 +48,13 @@ class Walk
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="string", length=128)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $difficulty;
 
@@ -88,7 +88,7 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks")
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
      */
     private $area;
 
