@@ -25,13 +25,15 @@ class WalkController extends AbstractController
 
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
+      
 
         // ask to the form to examine the request object
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
 
-
+            
+           
             //we ask the Manager to prepare itself to add our object in our database
             $em->persist($walk);
             
@@ -47,6 +49,8 @@ class WalkController extends AbstractController
 
 
         }
+
+        //dd($walk);
         
         return $this->render('back/walk/create.html.twig', [
             'walk' => $walk,
@@ -61,7 +65,7 @@ class WalkController extends AbstractController
      * @Route("/back/walk/edit/{id<\d+>}", name="back_walk_edit", methods={"GET","POST"})
      *
      */
-    public function edit(Walk $walk, Request $request, EntityManagerInterface $em, SessionInterface $session)
+    public function edit(Walk $walk = null, Request $request, EntityManagerInterface $em, SessionInterface $session)
     {
         // managing error => 404 
         if (null === $walk) {
