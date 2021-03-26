@@ -28,9 +28,12 @@ class AreaController extends AbstractController
             $areas,
             Response::HTTP_OK,
             [],
-            ['groups' => 'api_area_read'],
+            ['groups' => [
+                'api_area_read', 
+                'api_area_read_item'
+            ]]
         );
-    }
+    } 
 
     /**
      * Walk's list by area

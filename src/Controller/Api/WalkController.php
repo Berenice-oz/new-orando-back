@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 
 
@@ -59,8 +60,9 @@ class WalkController extends AbstractController
      * Delete a walk
      * @Route("/api/walks/delete/{id<\d+>}", name="api_walks_delete_item", methods={"DELETE"})
      */
-    public function deleteItem(Walk $walk, EntityManagerInterface $em)
+    public function deleteItem(Walk $walk = null, EntityManagerInterface $em, TokenInterface $token)
     {
+      
         
         // managing error
         if ($walk === null) {
@@ -75,7 +77,6 @@ class WalkController extends AbstractController
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
 
-       
     
     
         // Delete

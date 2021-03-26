@@ -27,8 +27,8 @@ class WalkController extends AbstractController
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
 
-        // Current user
-        $user = $this->getUser();
+         // Current user
+         $user = $this->getUser();
 
         //dd($walk);
       
@@ -38,7 +38,8 @@ class WalkController extends AbstractController
         
 
         if($form->isSubmitted() && $form->isValid()){
-            
+
+
             $walk->setCreator($user);
             
             //we ask the Manager to prepare itself to add our object in our database
@@ -81,16 +82,18 @@ class WalkController extends AbstractController
         }
 
         $this->denyAccessUnlessGranted('edit', $walk);
+                
         
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
-        
+
         // ask to the form to examine the request object
          $form->handleRequest($request);
 
          //dd($walk);
  
          if ($form->isSubmitted() && $form->isValid()) {
+
 
             //update => date
             $walk->setUpdatedAt(new \DateTime());
