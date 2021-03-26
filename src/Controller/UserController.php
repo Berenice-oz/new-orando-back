@@ -30,11 +30,12 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Encodage du mot de passe
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $user->setStatus(1);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            //todo flashmessage
+            //todo flashmessage vous pouvez vous connecter
 
             return $this->redirectToRoute('app_login');
         }

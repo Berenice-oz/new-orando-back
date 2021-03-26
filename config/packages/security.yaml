@@ -57,11 +57,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-<<<<<<< HEAD
         #WEB/HTML
         - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/walk, roles: ROLE_USER }
         #WEB/API
         - { path: ^/api/users, roles: ROLE_USER }
-=======
-        - { path: ^/profile, roles: ROLE_USER }
->>>>>>> 3ff1e7043b6b1885c6008be6a0d34d772470d544

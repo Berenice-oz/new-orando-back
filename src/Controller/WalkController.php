@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Back;
+namespace App\Controller;
 
 use App\Entity\Walk;
 use App\Form\WalkType;
@@ -16,7 +16,7 @@ class WalkController extends AbstractController
     /**
      * This method display walk form(methods = GET) and treat data of the form (methods="POST")
      * 
-     * @Route("/back/walk/create", name="back_walk_create", methods={"GET", "POST"})
+     * @Route("/walk/create", name="walk_create", methods={"GET", "POST"})
      */
     public function create(Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
@@ -44,7 +44,7 @@ class WalkController extends AbstractController
             $this->addFlash('success', 'Votre randonnée a bien été crée.');
             
             // redirection
-            return $this->redirectToRoute('back_walk_create');
+            return $this->redirectToRoute('walk_create');
 
 
 
@@ -52,7 +52,7 @@ class WalkController extends AbstractController
 
         //dd($walk);
         
-        return $this->render('back/walk/create.html.twig', [
+        return $this->render('walk/create.html.twig', [
             'walk' => $walk,
             //we send to the template "a view of the form" thank to createView()
             'form' => $form->createView(),
@@ -62,7 +62,7 @@ class WalkController extends AbstractController
     /**
      * Edit a walk
      * 
-     * @Route("/back/walk/edit/{id<\d+>}", name="back_walk_edit", methods={"GET","POST"})
+     * @Route("/walk/edit/{id<\d+>}", name="walk_edit", methods={"GET","POST"})
      *
      */
     public function edit(Walk $walk = null, Request $request, EntityManagerInterface $em, SessionInterface $session)
@@ -98,7 +98,7 @@ class WalkController extends AbstractController
 
        
         // display of the form => GET
-        return $this->render('back/walk/edit.html.twig', [
+        return $this->render('walk/edit.html.twig', [
             'walk' => $walk,
             'form' => $form->createView(),
         ]);
