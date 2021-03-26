@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Walk;
 use App\Form\WalkType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WalkController extends AbstractController
 {
@@ -26,6 +27,9 @@ class WalkController extends AbstractController
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
 
+        // Current user
+        $user = $this->getUser();
+
         //dd($walk);
       
         // ask to the form to examine the request object
@@ -34,7 +38,8 @@ class WalkController extends AbstractController
         
 
         if($form->isSubmitted() && $form->isValid()){
-
+            
+            $walk->setCreator($user);
             
             //we ask the Manager to prepare itself to add our object in our database
             $em->persist($walk);
@@ -74,6 +79,8 @@ class WalkController extends AbstractController
             
             throw $this->createNotFoundException('Randonnée non trouvée.');
         }
+
+        $this->denyAccessUnlessGranted('edit', $walk);
         
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\User;
 use App\Entity\Walk;
 use App\Repository\WalkRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -60,6 +61,7 @@ class WalkController extends AbstractController
      */
     public function deleteItem(Walk $walk, EntityManagerInterface $em)
     {
+        
         // managing error
         if ($walk === null) {
 
@@ -72,16 +74,18 @@ class WalkController extends AbstractController
            
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
+
+       
     
     
-            // Delete
-            $em->remove($walk);
-            $em->flush();
-    
-            
-            return $this->json(
-            ['message' => 'La randonnée a bien été supprimé.'],
-            Response::HTTP_OK
-            );
+        // Delete
+        $em->remove($walk);
+        $em->flush();
+
+        
+        return $this->json(
+        ['message' => 'La randonnée a bien été supprimé.'],
+        Response::HTTP_OK
+        );
     }
 }
