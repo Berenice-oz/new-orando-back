@@ -51,7 +51,6 @@ class Walk
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
-     * 
      * @Assert\NotBlank
      */
     private $date;
