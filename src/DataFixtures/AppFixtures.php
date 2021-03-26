@@ -89,6 +89,9 @@ class AppFixtures extends Fixture
             $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8,16));
             $user->setPassword($userHashPassword);
             $user->setStatus(1);
+            $user->setNickname($faker->unique()->name());
+            $user->setDateOfBirth($faker->optional()->dateTime());
+            $user->setDescription($faker->optional()->paragraphs(2, true));
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $user->setArea($randomArea);
@@ -149,6 +152,31 @@ class AppFixtures extends Fixture
             
             $manager->persist($participant);
         }
+
+        // admin
+        $admin = new User();
+        $admin->setEmail('admin@admin.com');
+        $admin->setLastname('admin');
+        $admin->setFirstname('admin');
+        $adminHashPassword = $this->passwordEncoder->encodePassword($admin, 'admin');
+        $admin->setPassword($adminHashPassword);
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setStatus(1);
+        $admin->setNickname('admin');
+        $manager->persist($admin);
+
+        // user
+        $user = new User();
+        $user->setEmail('user@user.com');
+        $user->setLastname('user');
+        $user->setFirstname('user');
+        $userHashPassword = $this->passwordEncoder->encodePassword($user, 'user');
+        $user->setPassword($userHashPassword);
+        $user->setRoles(['ROLE_USER']);
+        $user->setStatus(1);
+        $user->setNickname('user');
+        $manager->persist($user);
+
 
        
         

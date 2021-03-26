@@ -16,6 +16,8 @@ class UserController extends AbstractController
      */
     public function readItem(User $user = null, ParticipantRepository $participantRepository):Response
     {
+
+        dd($this->getUser());
         if ($user === null) {
             $message = [
                 'error' => 'User not found.',

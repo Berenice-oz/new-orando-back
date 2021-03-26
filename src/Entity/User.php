@@ -52,11 +52,17 @@ class User implements UserInterface
     private $lastname;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups ("api_users_read_item")
+     */
+    private $nickname;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups ("api_users_read_item")
      */
     private $dateOfBirth;
-
+    
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups ("api_users_read_item")
@@ -99,6 +105,7 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
      */
     private $participants;
+
 
     public function __construct()
     {
@@ -352,6 +359,18 @@ class User implements UserInterface
                 $participant->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    public function setNickname(string $nickname): self
+    {
+        $this->nickname = $nickname;
 
         return $this;
     }
