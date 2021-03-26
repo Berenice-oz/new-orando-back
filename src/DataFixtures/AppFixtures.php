@@ -165,6 +165,7 @@ class AppFixtures extends Fixture
         $admin->setNickname('admin');
         $manager->persist($admin);
 
+<<<<<<< HEAD
         // user
         $user = new User();
         $user->setEmail('user@user.com');
@@ -177,6 +178,8 @@ class AppFixtures extends Fixture
         $user->setNickname('user');
         $manager->persist($user);
 
+=======
+>>>>>>> 3ff1e7043b6b1885c6008be6a0d34d772470d544
 
        
         
