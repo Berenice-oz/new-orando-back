@@ -62,7 +62,6 @@ class WalkController extends AbstractController
      */
     public function deleteItem(Walk $walk = null, EntityManagerInterface $em, TokenInterface $token)
     {
-      
         
         // managing error
         if ($walk === null) {
