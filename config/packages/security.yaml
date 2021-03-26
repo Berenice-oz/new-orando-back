@@ -27,7 +27,7 @@ security:
 
         # JWT Authentification for API routes
         api_anonymous:
-            pattern: ^/api/(areas|walks)
+            pattern: ^/api/(areas|walks|users)
             anonymous: true
         api:
             pattern: ^/api
@@ -61,4 +61,4 @@ security:
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/walk, roles: ROLE_USER }
         #WEB/API
-        - { path: ^/api/users, roles: ROLE_USER }
+        #- { path: ^/api/users, roles: ROLE_USER }
