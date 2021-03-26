@@ -25,32 +25,34 @@ class WalkController extends AbstractController
 
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
-      
 
+        //dd($walk);
+      
         // ask to the form to examine the request object
         $form->handleRequest($request);
+
+        
 
         if($form->isSubmitted() && $form->isValid()){
 
             
-           
             //we ask the Manager to prepare itself to add our object in our database
             $em->persist($walk);
+            
             
             // we ask to the Manager to save our object in our database
             $em->flush();
 
+           
             // add a flash message to inform the user if his action is alright
             $this->addFlash('success', 'Votre randonnée a bien été crée.');
             
             // redirection
             return $this->redirectToRoute('walk_create');
 
-
+            
 
         }
-
-        //dd($walk);
         
         return $this->render('walk/create.html.twig', [
             'walk' => $walk,
