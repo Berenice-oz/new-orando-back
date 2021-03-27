@@ -28,9 +28,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Encodage du mot de passe
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
             $user->setStatus(1);
+            $user->setRoles(['ROLE_USER']);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

@@ -59,7 +59,6 @@ class WalkController extends AbstractController
      */
     public function deleteItem(Walk $walk = null, EntityManagerInterface $em)
     {
-        $this->denyAccessUnlessGranted('delete', $walk);
         // managing error
         if ($walk === null) {
 
@@ -73,7 +72,7 @@ class WalkController extends AbstractController
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
 
-    
+        $this->denyAccessUnlessGranted('delete', $walk);
     
         // Delete
         $em->remove($walk);
