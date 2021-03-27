@@ -75,13 +75,12 @@ class WalkController extends AbstractController
      */
     public function edit(Walk $walk = null, Request $request, EntityManagerInterface $em, SessionInterface $session)
     {
+        $this->denyAccessUnlessGranted('edit', $walk);
         // managing error => 404 
         if (null === $walk) {
             
             throw $this->createNotFoundException('Randonnée non trouvée.');
         }
-
-        $this->denyAccessUnlessGranted('edit', $walk);
                 
         
         // creation's form while giving the entity

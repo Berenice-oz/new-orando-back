@@ -26,9 +26,11 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         # JWT Authentification for API routes
-        api_anonymous:
-            pattern: ^/api/(areas|walks|users)
-            anonymous: true
+        # api_anonymous:
+        #     # pattern: ^/api/(areas|walks|users)
+        #     #     ##config front à supprimer
+        #     #     ##pattern: ^/api/(areas|users|walks)
+        #     anonymous: true
         api:
             pattern: ^/api
             stateless: true
@@ -50,7 +52,6 @@ security:
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
-
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
@@ -61,4 +62,14 @@ security:
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/walk, roles: ROLE_USER }
         #WEB/API
-        #- { path: ^/api/users, roles: ROLE_USER }
+        - { path: ^/api/users, roles: [ROLE_USER], methods: GET }
+        - {
+              path: ^/api/walks,
+              roles: ROLE_USER,
+              methods: [DELETE],
+          }
+        - {
+              path: ^/api/walks,
+              roles: IS_AUTHENTICATED_ANONYMOUSLY,
+              methods: [GET],
+          }
