@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -23,8 +26,12 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180)
      * @Groups ("api_users_read_item")
+     * @Assert\NotBlank
+     * @Assert\Email(
+     *     message = "Cet adresse e-mail n'est pas valide."
+     * )
      */
     private $email;
 
@@ -36,30 +43,35 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups ("api_users_read_item")
+     * @Assert\NotBlank
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups ("api_users_read_item")
+     * @Assert\NotBlank
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups ("api_users_read_item")
+     * @Assert\NotBlank
      */
     private $nickname;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups ("api_users_read_item")
+     * @Assert\Date
      */
     private $dateOfBirth;
     
@@ -200,7 +212,7 @@ class User implements UserInterface
 
     public function setFirstname(string $firstname): self
     {
-        $this->firstname = $firstname;
+        $this->firstname = ucfirst($firstname);
 
         return $this;
     }
@@ -212,7 +224,7 @@ class User implements UserInterface
 
     public function setLastname(string $lastname): self
     {
-        $this->lastname = $lastname;
+        $this->lastname = ucfirst($lastname);
 
         return $this;
     }

@@ -34,11 +34,12 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-            //todo flashmessage vous pouvez vous connecter
+            // add a flash message to inform the user if his action is alright
+            $this->addFlash('success', 'Votre compte a bien été crée, vous pouvez vous connecter.');
 
             return $this->redirectToRoute('app_login');
         }
+        //Todo ELSE une erreur est survenue lors de l'enregistrement
 
         return $this->render('user/register.html.twig', [
             'form' => $form->createView(),
