@@ -62,7 +62,7 @@ class WalkType extends AbstractType
                 'label' => 'Durée approximative',
                 'placeholder' => 'Quelle est la durée de votre randonnée?',
                 'choices' => [
-                    '30' => '30',
+                    '30 minutes' => '30',
                     '1 heure' => '1h',
                     '1 heure 30' => '1h30',
                     '2 heures' => '2h',
@@ -92,6 +92,7 @@ class WalkType extends AbstractType
                 'label' => 'Dénivelé',
                 'attr' => [
                     'min' => 1,
+                    'max' => 2000
                 ]
             ])
             ->add('maxNbPersons', IntegerType::class, [
