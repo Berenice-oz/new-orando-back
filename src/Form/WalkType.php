@@ -56,9 +56,25 @@ class WalkType extends AbstractType
                     'placeholder' => [
                         'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
                     ],
+                'years' => range(date('Y'), date('Y')+5),
             ])
-            ->add('duration', TextType::class, [
+            ->add('duration', ChoiceType::class, [
                 'label' => 'Durée approximative',
+                'placeholder' => 'Quelle est la durée de votre randonnée?',
+                'choices' => [
+                    '30' => '30',
+                    '1 heure' => '1h',
+                    '1 heure 30' => '1h30',
+                    '2 heures' => '2h',
+                    '2 heures 30' => '2h30',
+                    '3 heures' => '3h',
+                    '3 heures 30' => '3h30',
+                    '4 heures' => '4h',
+                    '4 heures 30' => '4h30',
+                    '5 heures' => '5h',
+                ],
+                'multiple' => false,
+                'expanded' => false,
                 
             ])
             ->add('difficulty', ChoiceType::class, [
@@ -74,9 +90,15 @@ class WalkType extends AbstractType
             ])
             ->add('elevation', IntegerType::class, [
                 'label' => 'Dénivelé',
+                'attr' => [
+                    'min' => 1,
+                ]
             ])
             ->add('maxNbPersons', IntegerType::class, [
                 'label' => 'Nombre de personnes maximum',
+                'attr' => [
+                    'min' => 1,
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',

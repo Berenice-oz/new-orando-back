@@ -35,7 +35,6 @@ class Walk
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
-     * 
      * @Assert\NotBlank
      */
     private $startingPoint;
@@ -71,12 +70,14 @@ class Walk
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Assert\Positive
      */
     private $elevation;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * @Assert\Positive
      */
     private $maxNbPersons;
 
