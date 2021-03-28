@@ -28,7 +28,6 @@ class Walk
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
-     * 
      * @Assert\NotBlank
      */
     private $title;
@@ -84,7 +83,6 @@ class Walk
     /**
      * @ORM\Column(type="text")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
-     * 
      * @Assert\NotBlank
      */
     private $description;
