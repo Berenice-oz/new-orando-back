@@ -13,8 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-
 
 class WalkType extends AbstractType
 {
@@ -38,7 +38,7 @@ class WalkType extends AbstractType
                 'label' => 'Région',
                 'placeholder' => 'Sélectionner votre région...',
                 // this is a validation contrainst : new NotBlank() => the field must be not empty
-                // Another validation constrainst have been  coded  directly 
+                // Another validation constrainst have been  coded  directly
                 //on the propertie's Entity with this annotation @Assert
                 'constraints' => [
                     new NotBlank(),
@@ -53,10 +53,12 @@ class WalkType extends AbstractType
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de la randonnée ',
+                    'placeholder' => [
+                        'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
+                    ],
             ])
             ->add('duration', TextType::class, [
                 'label' => 'Durée approximative',
-                'empty_data' => '',
                 
             ])
             ->add('difficulty', ChoiceType::class, [

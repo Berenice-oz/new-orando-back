@@ -48,7 +48,7 @@ class Walk
     private $endPoint;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
@@ -166,7 +166,7 @@ class Walk
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 
