@@ -53,9 +53,9 @@ class WalkType extends AbstractType
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de la randonnée ',
-                    'placeholder' => [
-                        'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
-                    ],
+                'placeholder' => [
+                    'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
+                ],
                 'years' => range(date('Y'), date('Y')+5),
             ])
             ->add('duration', ChoiceType::class, [
