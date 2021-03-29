@@ -49,7 +49,7 @@ class AppFixtures extends Fixture
         $users = $this->connection->executeQuery('TRUNCATE TABLE user');
         $users = $this->connection->executeQuery('TRUNCATE TABLE tag');
         $users = $this->connection->executeQuery('TRUNCATE TABLE participant');
-        $users = $this->connection->executeQuery('TRUNCATE TABLE tag_walk');
+        $users = $this->connection->executeQuery('TRUNCATE TABLE walk_tag');
     }
     
     public function load(ObjectManager $manager)

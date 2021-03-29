@@ -34,7 +34,7 @@ class WalkController extends AbstractController
      * Data of a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_read_item", methods={"GET"})
      */
-    public function readItem(Walk $walk = null):Response
+    public function readItem(Walk $walk = null, WalkRepository $walkRepository):Response
     {
         if ($walk === null) {
             $message = [
@@ -44,6 +44,7 @@ class WalkController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
+
 
         return $this->json(
             $walk,
