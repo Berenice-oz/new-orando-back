@@ -13,13 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Participant
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
      * @Assert\Range(
@@ -31,12 +24,14 @@ class Participant
     private $requestStatus;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants")
      * @Assert\NotBlank
      */
     private $user;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Walk::class, inversedBy="participants")
      * @Assert\NotBlank
      * @Groups ("api_users_read_item")
@@ -46,11 +41,6 @@ class Participant
     public function __construct()
     {
         $this->requestStatus = 1;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getRequestStatus(): ?string

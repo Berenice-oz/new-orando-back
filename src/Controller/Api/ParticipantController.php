@@ -30,7 +30,6 @@ class ParticipantController extends AbstractController
             return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         // Save the participation in database
-        
         $entityManager->persist($participation);
         $entityManager->flush();
 
