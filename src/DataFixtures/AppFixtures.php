@@ -83,8 +83,10 @@ class AppFixtures extends Fixture
             $manager->persist($area);
         }
 
+        //we store tags in an array
         $tagsList = [];
 
+        
         foreach (TagData::$tagsData as $tag) {
             
             // A Tag
@@ -92,11 +94,9 @@ class AppFixtures extends Fixture
             $myTag->setName($tag['name']);
             $myTag->setColor($tag['color']);
 
-        
-            // we store tags in an array
             $tagsList[] = $myTag;
             
-            // Prepare the entity $tag for the creation in the database
+            // Prepare the entity $myTag for the creation in the database
             $manager->persist($myTag);
 
         

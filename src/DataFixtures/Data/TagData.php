@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures\Data;
 
-
+/**
+ * Data of tags
+ */
 class TagData
 {
     static $tagsData = [
