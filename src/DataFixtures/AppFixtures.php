@@ -121,6 +121,7 @@ class AppFixtures extends Fixture
             $walk->setElevation($faker->randomNumber(3, true));
             $walk->setMaxNbPersons($faker->numberBetween(1, 30));
             $walk->setDescription($faker->text());
+            $walk->setStatus($faker->walkStatus());
             $walk->setCreatedAt(new DateTime());
             // array_rand allow to have users randomly
             $randomUser = $usersList[array_rand($usersList)];
