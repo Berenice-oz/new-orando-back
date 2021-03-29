@@ -12,12 +12,12 @@ use App\Repository\WalkRepository;
 use DateTime;
 
 
-
 /**
  * @ORM\Entity(repositoryClass=WalkRepository::class)
  */
 class Walk
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -139,6 +139,7 @@ class Walk
         $this->status = 'A venir';
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
+
     }
 
     public function getId(): ?int
