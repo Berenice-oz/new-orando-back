@@ -40,14 +40,14 @@ class Walk
     private $startingPoint;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
-     * @Assert\NotBlank
+     * 
      */
     private $endPoint;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
@@ -119,10 +119,22 @@ class Walk
      */
     private $participants;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="walks")
+     */
+    private $tags;
+
     public function __construct()
     {
         $this->createdAt= new DateTime();
+        $this->status = 'A venir';
         $this->participants = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -311,6 +323,45 @@ class Walk
             if ($participant->getWalk() === $this) {
                 $participant->setWalk(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addWalk($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeWalk($this);
         }
 
         return $this;

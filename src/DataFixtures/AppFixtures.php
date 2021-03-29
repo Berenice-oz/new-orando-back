@@ -4,15 +4,17 @@ namespace App\DataFixtures;
 
 use Faker;
 use DateTime;
+use App\Entity\Tag;
 use App\Entity\Area;
 use App\Entity\User;
 use App\Entity\Walk;
+use App\Entity\Participant;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\WalkDbProvider;
-use App\Entity\Participant;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\DataFixtures\Data\TagData;
 
 /**
  * This class allow to make some Area objects et Walks objects in our database
@@ -45,7 +47,9 @@ class AppFixtures extends Fixture
         $users = $this->connection->executeQuery('TRUNCATE TABLE area');
         $users = $this->connection->executeQuery('TRUNCATE TABLE walk');
         $users = $this->connection->executeQuery('TRUNCATE TABLE user');
+        $users = $this->connection->executeQuery('TRUNCATE TABLE tag');
         $users = $this->connection->executeQuery('TRUNCATE TABLE participant');
+        $users = $this->connection->executeQuery('TRUNCATE TABLE tag_walk');
     }
     
     public function load(ObjectManager $manager)
@@ -78,6 +82,26 @@ class AppFixtures extends Fixture
             // Prepare the entity $area for the creation in the database
             $manager->persist($area);
         }
+
+        //we store tags in an array
+        $tagsList = [];
+
+        
+        foreach (TagData::$tagsData as $tag) {
+            
+            // A Tag
+            $myTag = new Tag();
+            $myTag->setName($tag['name']);
+            $myTag->setColor($tag['color']);
+
+            $tagsList[] = $myTag;
+            
+            // Prepare the entity $myTag for the creation in the database
+            $manager->persist($myTag);
+
+        
+        }
+
 
         // we store the users in an array
         $usersList = [];
@@ -121,6 +145,7 @@ class AppFixtures extends Fixture
             $walk->setElevation($faker->randomNumber(3, true));
             $walk->setMaxNbPersons($faker->numberBetween(1, 30));
             $walk->setDescription($faker->text());
+            $walk->setStatus($faker->walkStatus());
             $walk->setCreatedAt(new DateTime());
             // array_rand allow to have users randomly
             $randomUser = $usersList[array_rand($usersList)];
@@ -128,6 +153,14 @@ class AppFixtures extends Fixture
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $walk->setArea($randomArea);
+
+            shuffle($tagsList);
+            
+            for ($r = 0; $r <= mt_rand(1, 2); $r++) {
+               
+                $randomTag = $tagsList[$r];
+                $walk->addTag($randomTag);
+            }
 
 
             $walksList[] = $walk;
@@ -152,6 +185,8 @@ class AppFixtures extends Fixture
             
             $manager->persist($participant);
         }
+
+    
 
         // admin
         $admin = new User();

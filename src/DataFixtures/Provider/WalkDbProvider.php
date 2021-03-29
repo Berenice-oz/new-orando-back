@@ -12,7 +12,7 @@ class WalkDbProvider
         'Pays de la Loire',
         'Île-de-France',
         'Centre-Val de Loire',
-        'Nouvelles-Aquitaine',
+        'Nouvelle-Aquitaine',
         'Occitanie',
         'Auvergne-Rhône-Alpes',
         'Provence-Alpes-Côte d\'Azur',
@@ -44,6 +44,12 @@ class WalkDbProvider
         'difficile',
     ];
 
+    private $status = [
+        'A venir',
+        'Annuler',
+        'Terminée',
+    ];
+
     /**
      * Return a name of area randomly
      */
@@ -67,6 +73,15 @@ class WalkDbProvider
     {
         return $this->difficulty[array_rand($this->difficulty)];
     }
+
+    /**
+     * Return a walk's status randomly
+     */
+    public function walkStatus()
+    {
+        return $this->status[array_rand($this->status)];
+    }
+
 
 
 }
