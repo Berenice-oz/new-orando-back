@@ -121,7 +121,7 @@ class Walk
     private $participants;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $status;
 
@@ -136,7 +136,7 @@ class Walk
     public function __construct()
     {
         $this->createdAt= new DateTime();
-        $this->status = 'A venir';
+        $this->status = 1;
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
 
@@ -333,12 +333,12 @@ class Walk
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    public function setStatus(?string $status): self
+    public function setStatus(?int $status): self
     {
         $this->status = $status;
 

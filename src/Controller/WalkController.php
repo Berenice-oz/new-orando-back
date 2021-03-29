@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Walk;
 use App\Form\WalkType;
+use App\Entity\Participant;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,34 +30,32 @@ class WalkController extends AbstractController
 
          // Current user
          $user = $this->getUser();
-
-        //dd($walk);
       
         // ask to the form to examine the request object
         $form->handleRequest($request);
 
-        
-
         if($form->isSubmitted() && $form->isValid()){
 
-
+            //Add current user as walk's creator
             $walk->setCreator($user);
-            
+
             //we ask the Manager to prepare itself to add our object in our database
             $em->persist($walk);
-            
+
+            //Add current user as walk's participant
+            $participant = new Participant();
+            $participant->setUser($user);
+            $participant->setWalk($walk);
+            $em->persist($participant);
             
             // we ask to the Manager to save our object in our database
             $em->flush();
-
-           
+   
             // add a flash message to inform the user if his action is alright
             $this->addFlash('success', 'Votre randonnée a bien été crée.');
             
             // redirection
             return $this->redirectToRoute('walk_create');
-
-            
 
         }
         

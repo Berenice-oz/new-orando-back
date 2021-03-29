@@ -56,9 +56,9 @@ class WalkController extends AbstractController
 
     /**
      * Delete a walk
-     * @Route("/api/walks/{id<\d+>}", name="api_walks_delete_item", methods={"DELETE"})
+     * @Route("/api/walks/{id<\d+>}", name="api_walks_delete", methods={"DELETE"})
      */
-    public function deleteItem(Walk $walk = null, EntityManagerInterface $em)
+    public function delete(Walk $walk = null, EntityManagerInterface $em)
     {
         // managing error
         if ($walk === null) {
