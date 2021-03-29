@@ -14,6 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\WalkDbProvider;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\DataFixtures\Data\TagData;
 
 /**
  * This class allow to make some Area objects et Walks objects in our database
@@ -25,7 +26,6 @@ class AppFixtures extends Fixture
     const NB_WALKS = 50;
     const NB_USERS = 50;
     const NB_PARTICIPANTS = 4 * self::NB_USERS;
-    const NB_TAGS = 6;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -83,21 +83,25 @@ class AppFixtures extends Fixture
             $manager->persist($area);
         }
 
-         // we store tags in an array
-         $tagsList = [];
+        $tagsList = [];
 
-         for ($i = 1; $i <= self::NB_TAGS; $i++) {
-              
-              // A Tag
-             $tag = new Tag();
-             $tag->setName($faker->tagName());
-             $tag->setColor($faker->tagColor());
-  
-             $tagsList[] = $tag;
-              
-             // Prepare the entity $tag for the creation in the database
-             $manager->persist($tag);
-         }
+        foreach (TagData::$tagsData as $tag) {
+            
+            // A Tag
+            $myTag = new Tag();
+            $myTag->setName($tag['name']);
+            $myTag->setColor($tag['color']);
+
+        
+            // we store tags in an array
+            $tagsList[] = $myTag;
+            
+            // Prepare the entity $tag for the creation in the database
+            $manager->persist($myTag);
+
+        
+        }
+
 
         // we store the users in an array
         $usersList = [];
