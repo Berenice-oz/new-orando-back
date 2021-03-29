@@ -211,9 +211,6 @@ class AppFixtures extends Fixture
         $user->setNickname('user');
         $manager->persist($user);
 
-
-       
-        
         // we send the data in our database
         $manager->flush();
     }
