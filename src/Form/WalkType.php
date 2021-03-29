@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class WalkType extends AbstractType
 {
@@ -45,15 +47,8 @@ class WalkType extends AbstractType
                 ],
                
             ])
-            ->add('status', ChoiceType::class, [
-                'label' => 'Statut de votre randonnée',
-                'choices' => [
-                    'A venir' => 'A venir',
-                    'Annuler' => 'Annuler',
-                    'Terminée' => 'Terminée',
-                ]
+            
                 
-            ])
             ->add('startingPoint', TextType::class, [
                 'label' => 'Point de départ',
             ])
@@ -114,10 +109,37 @@ class WalkType extends AbstractType
                 'label' => 'Description',
             ])
 
-           
-            
+         
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $walk = $event->getData();
+               
+                $form = $event->getForm();
+                
+                if ($walk->getId() !== null) {
+                    $form->add('status', ChoiceType::class, [
+                        
+                        'label' => 'Statut de votre randonnée',
+                        'choices' => [
+                            'A venir' => 'A venir',
+                            'Annuler' => 'Annuler',
+                            'Terminée' => 'Terminée',
+                        ]
+                    ]);
+                } else {
+                    $form->add('status', ChoiceType::class, [
+                        
+                        'label' => 'Statut de votre randonnée',
+                        'choices' => [
+                            'A venir' => 'A venir',
+                        ],
+                        'expanded' => true,
+                        'multiple' => false,
+                    ]);
+                }
+            })
         ;
-    }
+    
+    }   
 
     public function configureOptions(OptionsResolver $resolver)
     {
