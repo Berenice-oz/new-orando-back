@@ -50,6 +50,24 @@ class WalkDbProvider
         'Terminée',
     ];
 
+    private $tagName = [
+        'En famille',
+        'Animaux bienvenus',
+        'Urbaine',
+        'Bord de mer',
+        'Montagne',
+        'Nocturne',
+    ];
+
+    private $tagColor = [
+        '#84258E',
+        '#5A5F62',
+        '#FF6600',
+        '#02D5E6',
+        '#64391F',
+        '#0E3151',
+    ];
+
     /**
      * Return a name of area randomly
      */
@@ -74,12 +92,28 @@ class WalkDbProvider
         return $this->difficulty[array_rand($this->difficulty)];
     }
 
-     /**
+    /**
      * Return a walk's status randomly
      */
     public function walkStatus()
     {
         return $this->status[array_rand($this->status)];
+    }
+
+    /**
+     * Return a tag's name randomly
+     */
+    public function tagName()
+    {
+        return $this->tagName[array_rand($this->tagName)];
+    }
+
+    /**
+     * Return a tag's solor randomly
+     */
+    public function tagColor()
+    {
+        return $this->tagColor[array_rand($this->tagColor)];
     }
 
 

@@ -4,14 +4,15 @@ namespace App\DataFixtures;
 
 use Faker;
 use DateTime;
+use App\Entity\Tag;
 use App\Entity\Area;
 use App\Entity\User;
 use App\Entity\Walk;
+use App\Entity\Participant;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\WalkDbProvider;
-use App\Entity\Participant;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -24,6 +25,7 @@ class AppFixtures extends Fixture
     const NB_WALKS = 50;
     const NB_USERS = 50;
     const NB_PARTICIPANTS = 4 * self::NB_USERS;
+    const NB_TAGS = 6;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -45,7 +47,9 @@ class AppFixtures extends Fixture
         $users = $this->connection->executeQuery('TRUNCATE TABLE area');
         $users = $this->connection->executeQuery('TRUNCATE TABLE walk');
         $users = $this->connection->executeQuery('TRUNCATE TABLE user');
+        $users = $this->connection->executeQuery('TRUNCATE TABLE tag');
         $users = $this->connection->executeQuery('TRUNCATE TABLE participant');
+        $users = $this->connection->executeQuery('TRUNCATE TABLE tag_walk');
     }
     
     public function load(ObjectManager $manager)
@@ -78,6 +82,22 @@ class AppFixtures extends Fixture
             // Prepare the entity $area for the creation in the database
             $manager->persist($area);
         }
+
+         // we store tags in an array
+         $tagsList = [];
+
+         for ($i = 1; $i <= self::NB_TAGS; $i++) {
+              
+              // A Tag
+             $tag = new Tag();
+             $tag->setName($faker->tagName());
+             $tag->setColor($faker->tagColor());
+  
+             $tagsList[] = $tag;
+              
+             // Prepare the entity $tag for the creation in the database
+             $manager->persist($tag);
+         }
 
         // we store the users in an array
         $usersList = [];
@@ -130,6 +150,14 @@ class AppFixtures extends Fixture
             $randomArea = $areasList[array_rand($areasList)];
             $walk->setArea($randomArea);
 
+            shuffle($tagsList);
+            
+            for ($r = 0; $r <= mt_rand(1, 2); $r++) {
+               
+                $randomTag = $tagsList[$r];
+                $walk->addTag($randomTag);
+            }
+
 
             $walksList[] = $walk;
 
@@ -153,6 +181,8 @@ class AppFixtures extends Fixture
             
             $manager->persist($participant);
         }
+
+    
 
         // admin
         $admin = new User();

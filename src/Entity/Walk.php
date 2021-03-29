@@ -124,11 +124,17 @@ class Walk
      */
     private $status;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="walks")
+     */
+    private $tags;
+
     public function __construct()
     {
         $this->createdAt= new DateTime();
         $this->status = 'A venir';
         $this->participants = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -330,6 +336,33 @@ class Walk
     public function setStatus(?string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addWalk($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeWalk($this);
+        }
 
         return $this;
     }
