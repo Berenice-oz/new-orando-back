@@ -48,9 +48,9 @@ class WalkType extends AbstractType
             ->add('status', ChoiceType::class, [
                 'label' => 'Statut de votre randonnée',
                 'choices' => [
-                    'A venir' => 'A venir',
-                    'Annuler' => 'Annuler',
-                    'Terminée' => 'Terminée',
+                    'Annulée' => 0,
+                    'À venir' => 1,
+                    'Terminée' => 2,
                 ]
                 
             ])

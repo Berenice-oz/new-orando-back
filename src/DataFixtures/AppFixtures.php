@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
     const NB_AREAS = 12;
     const NB_WALKS = 50;
     const NB_USERS = 100;
-    const NB_PARTICIPANTS = 2 * self::NB_USERS;
+    const NB_PARTICIPANTS = 10 * self::NB_USERS;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -159,8 +159,8 @@ class AppFixtures extends Fixture
             //add walks creations
             shuffle($walksList);
             for ($r = 0; $r < mt_rand(1, 5); $r++) {
-                $randomCreation = $walksList[$r];
-                $user->addWalk($randomCreation);
+                $randomWalk = $walksList[$r];
+                $user->addWalk($randomWalk);
             }
 
             $usersList[] = $user;
@@ -168,6 +168,7 @@ class AppFixtures extends Fixture
 
             // here, we prepare the entity user for the creation
             $manager->persist($user);
+            
         }
 
         // table Participant : no need to store data in this table because it's a connection table
