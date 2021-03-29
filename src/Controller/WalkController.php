@@ -80,9 +80,7 @@ class WalkController extends AbstractController
             
             throw $this->createNotFoundException('Randonnée non trouvée.');
         }
-
         $this->denyAccessUnlessGranted('edit', $walk);
-                
         
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);

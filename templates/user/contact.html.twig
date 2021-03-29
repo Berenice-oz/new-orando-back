@@ -3,9 +3,10 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    Envoyer un message à {{ user.getUsername }}
+	Envoyer un message à
+	{{ user.getNickname }}
 	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 	{{ form_widget(form) }}
-	<button type="submit">Enregistrer</button>
+	<button type="submit" class="btn btn-success">Envoyer</button>
 	{{ form_end(form) }}
 {% endblock %}

@@ -28,17 +28,18 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Encodage du mot de passe
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
             $user->setStatus(1);
+            $user->setRoles(['ROLE_USER']);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-            //todo flashmessage vous pouvez vous connecter
+            // add a flash message to inform the user if his action is alright
+            $this->addFlash('success', 'Votre compte a bien été crée, vous pouvez vous connecter.');
 
             return $this->redirectToRoute('app_login');
         }
+        //Todo ELSE une erreur est survenue lors de l'enregistrement
 
         return $this->render('user/register.html.twig', [
             'form' => $form->createView(),

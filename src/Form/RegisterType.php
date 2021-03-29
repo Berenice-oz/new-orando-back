@@ -18,24 +18,20 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Email,
-                    new NotBlank,
-                ],
+                'label' => 'Votre email:'
             ])
             ->add('nickname', TextType::class, [
-                'constraints' => new NotBlank,
+                'label' => 'Votre pseudo:',
             ])
             ->add('firstname', TextType::class, [
-                'constraints' => new NotBlank,
+                'label' => 'Votre prénom:',
             ])
             ->add('lastname', TextType::class, [
-                'constraints' => new NotBlank,
+                'label' => 'Votre nom:',
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'empty_data' => '',
-                'constraints' => new NotBlank(),
             ])
         ;
     }

@@ -28,7 +28,6 @@ class Walk
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
-     * 
      * @Assert\NotBlank
      */
     private $title;
@@ -36,7 +35,6 @@ class Walk
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
-     * 
      * @Assert\NotBlank
      */
     private $startingPoint;
@@ -49,7 +47,7 @@ class Walk
     private $endPoint;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
@@ -72,19 +70,24 @@ class Walk
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 2000,
+     *      notInRangeMessage = "Vous devez choisir une valeur comprise entre {{ min }}m et {{ max }}m",
+     * )
      */
     private $elevation;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * @Assert\Positive
      */
     private $maxNbPersons;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
-     * 
      * @Assert\NotBlank
      */
     private $description;
@@ -168,7 +171,7 @@ class Walk
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 
