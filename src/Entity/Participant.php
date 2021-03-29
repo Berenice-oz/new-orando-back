@@ -43,12 +43,12 @@ class Participant
         $this->requestStatus = 1;
     }
 
-    public function getRequestStatus(): ?string
+    public function getRequestStatus(): ?int
     {
         return $this->requestStatus;
     }
 
-    public function setRequestStatus(string $requestStatus): self
+    public function setRequestStatus(int $requestStatus): self
     {
         $this->requestStatus = $requestStatus;
 

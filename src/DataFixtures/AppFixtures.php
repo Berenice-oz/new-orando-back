@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
     const NB_AREAS = 12;
     const NB_WALKS = 50;
     const NB_USERS = 100;
-    const NB_PARTICIPANTS = 4 * self::NB_USERS;
+    const NB_PARTICIPANTS = 2 * self::NB_USERS;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -98,8 +98,6 @@ class AppFixtures extends Fixture
             
             // Prepare the entity $myTag for the creation in the database
             $manager->persist($myTag);
-
-        
         }
 
         // We store the walks in an array
@@ -122,7 +120,7 @@ class AppFixtures extends Fixture
             $walk->setElevation($faker->randomNumber(3, true));
             $walk->setMaxNbPersons($faker->numberBetween(1, 30));
             $walk->setDescription($faker->text());
-            $walk->setStatus($faker->walkStatus());
+            $walk->setStatus($faker->numberBetween(0,2));
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $walk->setArea($randomArea);
@@ -130,7 +128,6 @@ class AppFixtures extends Fixture
             shuffle($tagsList);
             
             for ($r = 0; $r <= mt_rand(1, 2); $r++) {
-               
                 $randomTag = $tagsList[$r];
                 $walk->addTag($randomTag);
             }
@@ -150,7 +147,7 @@ class AppFixtures extends Fixture
             $user->setEmail($faker->unique()->email());
             $user->setLastname($faker->unique()->lastName());
             $user->setFirstname($faker->firstName());
-            $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8,16));
+            $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8, 16));
             $user->setPassword($userHashPassword);
             $user->setStatus(1);
             $user->setNickname($faker->unique()->name());
@@ -159,12 +156,6 @@ class AppFixtures extends Fixture
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $user->setArea($randomArea);
-            // //add participations to walks
-            // shuffle($walksList);
-            // for ($r = 0; $r < mt_rand(0, 5); $r++) {
-            //     $randomParticipation = $walksList[$r];
-            //     $user->addParticipant($randomParticipation);
-            // }
             //add walks creations
             shuffle($walksList);
             for ($r = 0; $r < mt_rand(1, 5); $r++) {
@@ -179,21 +170,19 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
-        // // table Participant : no need to store data in this table because it's a connection table
-        // for ($i = 1; $i < self::NB_PARTICIPANTS; $i++) {
-        //     $participant = new Participant();
-            
-        //     // we collect a walk randomly in the array $walkList created previously 
-        //     $randomWalk = $walksList[array_rand($walksList)];
-        //     $participant->setWalk($randomWalk);
-            
-        //     // we collect a user randomly in the array $users created previously 
-        //     $randomUser = $usersList[array_rand($usersList)];
-        //     $participant->setUser($randomUser);
+        // table Participant : no need to store data in this table because it's a connection table
+        for ($i = 1; $i < self::NB_USERS; $i++) {
+            $participant = new Participant();
+            $user = $usersList[$i];
+            $participant->setUser($user);
+            shuffle($walksList);
+            for ($r = 1; $r <= mt_rand(1, 5); $r++) {
+                $randomWalk = $walksList[$r];
+                $participant->setWalk($randomWalk);
+            }
 
-            
-        //     $manager->persist($participant);
-        // }
+            $manager->persist($participant);
+        }
 
     
 
