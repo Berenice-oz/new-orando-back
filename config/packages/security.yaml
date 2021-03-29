@@ -25,21 +25,21 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        # JWT Authentification for API routes
-        api_users:
-            pattern: ^/api/users
-            stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+        # # JWT Authentification for API routes
+        # api_users:
+        #     pattern: ^/api/users
+        #     stateless: true
+        #     guard:
+        #         authenticators:
+        #             - lexik_jwt_authentication.jwt_token_authenticator
 
-        api_walks:
-            pattern: ^/api/walks
-            stateless: true
-            methods: [DELETE]
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+        # api_walks:
+        #     pattern: ^/api/walks
+        #     stateless: true
+        #     methods: [DELETE]
+        #     guard:
+        #         authenticators:
+        #             - lexik_jwt_authentication.jwt_token_authenticator
         
         #Main authentification
         main:
@@ -65,6 +65,6 @@ security:
         #WEB/HTML
         - { path: "^/profile", roles: ROLE_USER }
         - { path: "^/walk", roles: ROLE_USER }
-        #WEB/API
-        - { path: "^/api/users", roles: ROLE_USER, methods: GET }
-        - { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
+        # #WEB/API
+        # - { path: "^/api/users", roles: ROLE_USER, methods: GET }
+        # - { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
