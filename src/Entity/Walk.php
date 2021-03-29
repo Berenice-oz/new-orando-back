@@ -127,6 +127,7 @@ class Walk
     public function __construct()
     {
         $this->createdAt= new DateTime();
+        $this->status = 'A venir';
         $this->participants = new ArrayCollection();
     }
 
