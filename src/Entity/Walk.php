@@ -112,6 +112,7 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
+     * @Assert\NotBlank
      */
     private $creator;
 
