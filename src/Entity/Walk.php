@@ -17,6 +17,7 @@ use DateTime;
  */
 class Walk
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -125,9 +126,12 @@ class Walk
     private $status;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="walks")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="walks")
+     * @ORM\JoinTable(name="walk_tag")
+     * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $tags;
+
 
     public function __construct()
     {
@@ -135,6 +139,7 @@ class Walk
         $this->status = 'A venir';
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -352,7 +357,6 @@ class Walk
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
-            $tag->addWalk($this);
         }
 
         return $this;
@@ -360,10 +364,9 @@ class Walk
 
     public function removeTag(Tag $tag): self
     {
-        if ($this->tags->removeElement($tag)) {
-            $tag->removeWalk($this);
-        }
+        $this->tags->removeElement($tag);
 
         return $this;
     }
+
 }
