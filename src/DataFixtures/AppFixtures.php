@@ -172,7 +172,7 @@ class AppFixtures extends Fixture
         // table Participant : no need to store data in this table because it's a connection table
         for ($i = 1; $i < self::NB_PARTICIPANTS; $i++) {
             $participant = new Participant();
-            $participant->setRequestStatus('validé');
+            $participant->setRequestStatus(1);
             
             // we collect a walk randomly in the array $walkList created previously 
             $randomWalk = $walksList[array_rand($walksList)];
