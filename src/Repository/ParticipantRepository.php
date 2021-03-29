@@ -57,8 +57,8 @@ class ParticipantRepository extends ServiceEntityRepository
         ->andWhere('p.user = :user')
         ->innerjoin('p.walk', 'w')
         ->addSelect('w')
-        ->andWhere('w.date >= :date')
-        ->setParameters(array('user' => $user, 'date' => new \DateTime('now')))
+        ->andWhere('w.status = :status')
+        ->setParameters(array('user' => $user, 'status' => 1))
         ->getQuery()
         ->getResult()
     ; 
@@ -73,8 +73,8 @@ class ParticipantRepository extends ServiceEntityRepository
         ->andWhere('p.user = :user')
         ->innerjoin('p.walk', 'w')
         ->addSelect('w')
-        ->andWhere('w.date < :date')
-        ->setParameters(array('user' => $user, 'date' => new \DateTime('now')))
+        ->andWhere('w.status = :status')
+        ->setParameters(array('user' => $user, 'status' => 2))
         ->getQuery()
         ->getResult()
     ; 
