@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -114,7 +115,7 @@ class User implements UserInterface
     private $walks;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user", cascade={"persist"})
      */
     private $participants;
 
@@ -351,15 +352,27 @@ class User implements UserInterface
         return $this->participants;
     }
 
-    public function addParticipant(Participant $participant): self
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-            $participant->setUser($this);
-        }
+    // public function addParticipant(Participant $participant): self
+    // {
+    //     if (!$this->participants->contains($participant)) {
+    //         $this->participants[] = $participant;
+    //         $participant->setUser($this);
+    //     }
 
-        return $this;
+    //     return $this;
+    // }
+
+
+    public function addParticipant(Walk $walk): Participant
+    {
+        $participant = new Participant();
+        $this->participants[] = $participant;
+        $participant->setUser($this);
+        $participant->setWalk($walk);
+
+        return $participant;
     }
+
 
     public function removeParticipant(Participant $participant): self
     {

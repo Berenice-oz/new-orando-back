@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
     const NB_AREAS = 12;
     const NB_WALKS = 50;
     const NB_USERS = 100;
-    const NB_PARTICIPANTS = 10 * self::NB_USERS;
+    const NB_PARTICIPANTS = 50 * self::NB_USERS;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -120,7 +120,7 @@ class AppFixtures extends Fixture
             $walk->setElevation($faker->randomNumber(3, true));
             $walk->setMaxNbPersons($faker->numberBetween(1, 30));
             $walk->setDescription($faker->text());
-            $walk->setStatus($faker->numberBetween(0,2));
+            $walk->setStatus($faker->numberBetween(0, 2));
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $walk->setArea($randomArea);
@@ -163,29 +163,19 @@ class AppFixtures extends Fixture
                 $user->addWalk($randomWalk);
             }
 
+            shuffle($walksList);
+            for ($s = 0; $s < mt_rand(1, 4); $s++) {
+                $randomWalk = $walksList[$s];
+                $user->addParticipant($randomWalk);
+            }
+
             $usersList[] = $user;
             
 
             // here, we prepare the entity user for the creation
             $manager->persist($user);
-            
         }
 
-        // table Participant : no need to store data in this table because it's a connection table
-        for ($i = 1; $i < self::NB_USERS; $i++) {
-            $participant = new Participant();
-            $user = $usersList[$i];
-            $participant->setUser($user);
-            shuffle($walksList);
-            for ($r = 1; $r <= mt_rand(1, 5); $r++) {
-                $randomWalk = $walksList[$r];
-                $participant->setWalk($randomWalk);
-            }
-
-            $manager->persist($participant);
-        }
-
-    
 
         // admin
         $admin = new User();
