@@ -62,6 +62,7 @@ class WalkType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
+                // multiple => true is important because tags is a collection(cf Entity Walk => tags)
                 'multiple' => true,
                 'expanded' => true,
             ])
@@ -126,7 +127,9 @@ class WalkType extends AbstractType
                 'label' => 'Description',
             ])
 
-         
+            // we add an event because when we create a walk , we don't need status field
+            // except when it is to edit the walk 
+            // PRE_SET_DATA allow to interact with the form and the Entity
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $walk = $event->getData();
                
