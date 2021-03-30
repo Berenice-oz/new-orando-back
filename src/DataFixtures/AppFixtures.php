@@ -201,6 +201,79 @@ class AppFixtures extends Fixture
         $user->setNickname('user');
         $manager->persist($user);
 
+        //todo avoir une liste de randonnée pour le "user"
+        $userWalks = [
+            [
+                'title' => 'Circuit découverte de la Presqu\'île de Crozon',
+                'startingPoint' => 'Presqu\'île de Crozon',
+                'endPoint' => '',
+                'date' => new \Datetime('2021-04-01 14:00:00'),
+                'duration' => '1 heure',
+                'difficulty' => 'Moyen',
+                'elevation' => null,
+                'maxNbPersons' => null,
+                'description' => 'Cadre idyllique pour profiter d\'une vue sur le large à 180 degrés.',
+            ],
+            [
+                'title' => 'Randonnée à la Pointe de Saint Mathieu',
+                'startingPoint' => 'Pointe de Saint Mathieu',
+                'endPoint' => '',
+                'date' => new \Datetime('2021-04-05 14:00:00'),
+                'duration' => '2 heures 30',
+                'difficulty' => 'Facile',
+                'elevation' => 255,
+                'maxNbPersons' => null,
+                'description' => 'Circuit de l\'île d\'Ouessant à l\'île de Sein.',
+            ],
+            [
+                'title' => 'Côte de Granit Rose',
+                'startingPoint' => 'Côte de Granit Rose',
+                'endPoint' => '',
+                'date' => new \Datetime('2021-04-24 14:00:00'),
+                'duration' => '4 heures 30',
+                'difficulty' => 'Facile',
+                'elevation' => 500,
+                'maxNbPersons' => 12,
+                'description' => 'Découverte de ce musée à ciel ouvert sur les sentiers de Ploumanac\'h.',
+            ],
+            [
+                'title' => 'La Forêt de la Madeleine et l\'Abbaye de Port-Royal-des-Champs',
+                'startingPoint' => 'La Forêt de la Madeleine',
+                'endPoint' => 'l\'Abbaye de Port-Royal-des-Champs',
+                'date' => new \Datetime('2021-04-30 14:00:00'),
+                'duration' => '3 heures 30',
+                'difficulty' => 'Facile',
+                'elevation' => null,
+                'maxNbPersons' => 10,
+                'description' => 'Balade historique sur les pas de Jean Racine',
+            ]
+        ];
+
+        $userWalksList = [];
+        //todo persist ces randos 
+        foreach($userWalks as $userWalk){
+            $walk = new Walk();
+            $walk->setTitle($userWalk['title']);
+            $walk->setStartingPoint($userWalk['startingPoint']);
+            $walk->setEndPoint($userWalk['endPoint']);
+            $walk->setDate($userWalk['date']);
+            $walk->setDuration($userWalk['duration']);
+            $walk->setDifficulty($userWalk['difficulty']);
+            $walk->setElevation($userWalk['elevation']);
+            $walk->setMaxNbPersons($userWalk['maxNbPersons']);
+            $walk->setDescription($userWalk['description']);
+            // array_rand allow to have areas randomly
+            $randomArea = $areasList[array_rand($areasList)];
+            $walk->setArea($randomArea);
+            $userWalksList[] = $walk;
+            $manager->persist($walk);
+        }
+
+        //todo pour chaque randonnée ajouté le créateur avec Addwalk
+        foreach($userWalksList as $walk){
+            $user->addWalk($walk);
+        }
+
         // we send the data in our database
         $manager->flush();
     }
