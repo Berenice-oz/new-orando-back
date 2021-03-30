@@ -120,22 +120,12 @@ class WalkType extends AbstractType
                         
                         'label' => 'Statut de votre randonnée',
                         'choices' => [
-                            'A venir' => 'A venir',
-                            'Annuler' => 'Annuler',
-                            'Terminée' => 'Terminée',
+                            'A venir' => 0,
+                            'Annuler' => 1,
+                            'Terminée' => 2,
                         ]
                     ]);
-                } else {
-                    $form->add('status', ChoiceType::class, [
-                        
-                        'label' => 'Statut de votre randonnée',
-                        'choices' => [
-                            'A venir' => 'A venir',
-                        ],
-                        'expanded' => true,
-                        'multiple' => false,
-                    ]);
-                }
+                } 
             })
         ;
     
