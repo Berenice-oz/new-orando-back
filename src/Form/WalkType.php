@@ -2,8 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Tag;
 use App\Entity\Area;
+use App\Repository\TagRepository;
 use App\Repository\AreaRepository;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,8 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 
 class WalkType extends AbstractType
 {
@@ -46,6 +48,22 @@ class WalkType extends AbstractType
                     new NotBlank(),
                 ],
                
+            ])
+
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'query_builder' => function (TagRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.name', 'ASC');
+                },
+                'label' => 'Tag',
+                'placeholder' => 'Sélectionner votre Tag...',
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'multiple' => true,
+                'expanded' => true,
             ])
             
             ->add('startingPoint', TextType::class, [
