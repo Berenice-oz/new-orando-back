@@ -22,9 +22,10 @@ use App\DataFixtures\Data\WalkData;
 class AppFixtures extends Fixture
 {
     //Here, we define number of recordings in each table
-    const NB_WALKS = 11;
-    const NB_USERS = 10;
-    const NB_PARTICIPANTS = 3 * self::NB_USERS;
+    const NB_AREAS = 12;
+    const NB_WALKS = 50;
+    const NB_USERS = 100;
+    const NB_PARTICIPANTS = 50 * self::NB_USERS;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -67,42 +68,21 @@ class AppFixtures extends Fixture
         $faker->addProvider($walkDbProvider);
 
         // we store the areas in an array
-        $areas = [
-            
-            1 => 'Bretagne',
-            2 => 'Normandie',
-            3 => 'Hauts-de-France',
-            4 => 'Pays de la Loire',
-            5 =>  'Île-de-France',
-            6 => 'Centre-Val de Loire',
-            7 => 'Nouvelle-Aquitaine',
-            8 => 'Occitanie',
-            9 => 'Auvergne-Rhône-Alpes',
-            10 => 'Provence-Alpes-Côte d\'Azur',
-            11 => 'Corse',
-            12 => 'Grand-Est',
-            13 => 'Bourgogne-Franche-Comté',
-            14 => 'Mayotte',
-            15 => 'Martinique',
-            16 => 'Guadeloupe',
-            17 => 'Réunion',
-            18 => 'Guyane',
-        ];
-
         $areasList = [];
-
-        foreach($areas as $value) {
+        for ($i = 1; $i <= self::NB_AREAS; $i++) {
              
-             // An area
-            $area = new Area();
-            $area->setName($value);
-            $area->setColor($faker->areaColor());
+            // An area
+           $area = new Area();
+           $area->setName($faker->unique()->areaName());
+           $area->setColor($faker->areaColor());
 
-            $areasList[] = $area;
-             
-            // Prepare the entity $area for the creation in the database
-            $manager->persist($area);
-        }
+           $areasList[] = $area;
+            
+           // Prepare the entity $area for the creation in the database
+           $manager->persist($area);
+       }
+
+       //we store tags in an array
 
         //we store tags in an array
         $tagsList = [];
@@ -122,19 +102,29 @@ class AppFixtures extends Fixture
         }
 
         // We store the walks in an array
-        $walksList = [];
-
+        $walksList = [];   
+        
         for ($i = 1; $i <= self::NB_WALKS; $i++) {
-
-            $walkData = new WalkData();
             
             // A walk
             $walk = new Walk();
             
-            $walk->setTitle(WalkData::$walksData[$i]['title']);
-            $walk->setDescription(WalkData::$walksData[$i]['description']);
+            // faker allow to generate fake data
+            // unique / streetaddress/ randamDigitNotNull etc, you can find these
+            // formatters available in his documentation
+            $walk->setTitle($faker->unique()->sentence());
+            $walk->setStartingPoint($faker->streetAddress());
+            $walk->setEndPoint($faker->streetAddress());
+            $walk->setDate($faker->dateTimeInInterval('-1 week', '+2 weeks'));
+            $walk->setDuration($faker->randomDigitNotNull());
             $walk->setDifficulty($faker->walkDifficulty());
-            //$walk->setArea(WalkData::$walksData['areaId']);
+            $walk->setElevation($faker->randomNumber(3, true));
+            $walk->setMaxNbPersons($faker->numberBetween(1, 30));
+            $walk->setDescription($faker->text());
+            $walk->setStatus($faker->numberBetween(0, 2));
+            // array_rand allow to have areas randomly
+            $randomArea = $areasList[array_rand($areasList)];
+            $walk->setArea($randomArea);
 
             shuffle($tagsList);
             
