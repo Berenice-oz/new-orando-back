@@ -119,8 +119,8 @@ class WalkType extends AbstractType
                         
                         'label' => 'Statut de votre randonnée',
                         'choices' => [
-                            'A venir' => 0,
-                            'Annuler' => 1,
+                            'Annulé' => 0,
+                            'A venir' => 1,
                             'Terminée' => 2,
                         ]
                     ]);
