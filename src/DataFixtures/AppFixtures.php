@@ -24,8 +24,8 @@ class AppFixtures extends Fixture
     //Here, we define number of recordings in each table
     const NB_AREAS = 12;
     const NB_WALKS = 50;
-    const NB_USERS = 50;
-    const NB_PARTICIPANTS = 4 * self::NB_USERS;
+    const NB_USERS = 100;
+    const NB_PARTICIPANTS = 50 * self::NB_USERS;
     
     private $passwordEncoder;
     // Connection to MySQL
@@ -98,32 +98,7 @@ class AppFixtures extends Fixture
             
             // Prepare the entity $myTag for the creation in the database
             $manager->persist($myTag);
-
-        
         }
-
-
-        // we store the users in an array
-        $usersList = [];
-        for ($i = 1; $i <= self::NB_USERS; $i++) {
-            $user = new User();
-            $user->setEmail($faker->unique()->email());
-            $user->setLastname($faker->unique()->lastName());
-            $user->setFirstname($faker->firstName());
-            $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8,16));
-            $user->setPassword($userHashPassword);
-            $user->setStatus(1);
-            $user->setNickname($faker->unique()->name());
-            $user->setDateOfBirth($faker->optional()->dateTime());
-            $user->setDescription($faker->optional()->paragraphs(2, true));
-            // array_rand allow to have areas randomly
-            $randomArea = $areasList[array_rand($areasList)];
-            $user->setArea($randomArea);
-            $usersList[] = $user;
-            // here, we prepare the entity user for the creation
-            $manager->persist($user);
-        }
- 
 
         // We store the walks in an array
         $walksList = [];
@@ -145,11 +120,7 @@ class AppFixtures extends Fixture
             $walk->setElevation($faker->randomNumber(3, true));
             $walk->setMaxNbPersons($faker->numberBetween(1, 30));
             $walk->setDescription($faker->text());
-            $walk->setStatus($faker->walkStatus());
-            $walk->setCreatedAt(new DateTime());
-            // array_rand allow to have users randomly
-            $randomUser = $usersList[array_rand($usersList)];
-            $walk->setCreator($randomUser);
+            $walk->setStatus($faker->numberBetween(0, 2));
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $walk->setArea($randomArea);
@@ -157,7 +128,6 @@ class AppFixtures extends Fixture
             shuffle($tagsList);
             
             for ($r = 0; $r <= mt_rand(1, 2); $r++) {
-               
                 $randomTag = $tagsList[$r];
                 $walk->addTag($randomTag);
             }
@@ -169,24 +139,43 @@ class AppFixtures extends Fixture
             $manager->persist($walk);
         }
 
-        // table Participant : no need to store data in this table because it's a connection table
-        for ($i = 1; $i < self::NB_PARTICIPANTS; $i++) {
-            $participant = new Participant();
-            $participant->setRequestStatus('validé');
-            
-            // we collect a walk randomly in the array $walkList created previously 
-            $randomWalk = $walksList[array_rand($walksList)];
-            $participant->setWalk($randomWalk);
-            
-            // we collect a user randomly in the array $users created previously 
-            $randomUser = $usersList[array_rand($usersList)];
-            $participant->setUser($randomUser);
 
+        // we store the users in an array
+        $usersList = [];
+        for ($i = 1; $i <= self::NB_USERS; $i++) {
+            $user = new User();
+            $user->setEmail($faker->unique()->email());
+            $user->setLastname($faker->unique()->lastName());
+            $user->setFirstname($faker->firstName());
+            $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8, 16));
+            $user->setPassword($userHashPassword);
+            $user->setStatus(1);
+            $user->setNickname($faker->unique()->name());
+            $user->setDateOfBirth($faker->optional()->dateTime());
+            $user->setDescription($faker->optional()->paragraphs(2, true));
+            // array_rand allow to have areas randomly
+            $randomArea = $areasList[array_rand($areasList)];
+            $user->setArea($randomArea);
+            //add walks creations
+            shuffle($walksList);
+            for ($r = 0; $r < mt_rand(1, 5); $r++) {
+                $randomWalk = $walksList[$r];
+                $user->addWalk($randomWalk);
+            }
+
+            shuffle($walksList);
+            for ($s = 0; $s < mt_rand(1, 4); $s++) {
+                $randomWalk = $walksList[$s];
+                $user->addParticipant($randomWalk);
+            }
+
+            $usersList[] = $user;
             
-            $manager->persist($participant);
+
+            // here, we prepare the entity user for the creation
+            $manager->persist($user);
         }
 
-    
 
         // admin
         $admin = new User();
@@ -212,9 +201,6 @@ class AppFixtures extends Fixture
         $user->setNickname('user');
         $manager->persist($user);
 
-
-       
-        
         // we send the data in our database
         $manager->flush();
     }

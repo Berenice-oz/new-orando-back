@@ -27,7 +27,7 @@ security:
 
         # # JWT Authentification for API routes
         # api_users:
-        #     pattern: ^/api/users
+        #     pattern: ^/api/(users|participant)
         #     stateless: true
         #     guard:
         #         authenticators:
@@ -68,3 +68,4 @@ security:
         # #WEB/API
         # - { path: "^/api/users", roles: ROLE_USER, methods: GET }
         # - { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
+        # - { path: "^/api/participant", roles: ROLE_USER, methods: POST }

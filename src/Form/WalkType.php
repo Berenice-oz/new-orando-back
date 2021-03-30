@@ -48,7 +48,6 @@ class WalkType extends AbstractType
                
             ])
             
-                
             ->add('startingPoint', TextType::class, [
                 'label' => 'Point de départ',
             ])
