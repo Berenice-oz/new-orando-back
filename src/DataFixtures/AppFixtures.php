@@ -199,9 +199,13 @@ class AppFixtures extends Fixture
         $user->setRoles(['ROLE_USER']);
         $user->setStatus(1);
         $user->setNickname('user');
+        shuffle($walksList);
+        for ($s = 0; $s < 5; $s++) {
+            $randomWalk = $walksList[$s];
+            $user->addParticipant($randomWalk);
+        }
         $manager->persist($user);
 
-        //todo avoir une liste de randonnée pour le "user"
         $userWalks = [
             [
                 'title' => 'Circuit découverte de la Presqu\'île de Crozon',
@@ -250,8 +254,7 @@ class AppFixtures extends Fixture
         ];
 
         $userWalksList = [];
-        //todo persist ces randos 
-        foreach($userWalks as $userWalk){
+        foreach ($userWalks as $userWalk) {
             $walk = new Walk();
             $walk->setTitle($userWalk['title']);
             $walk->setStartingPoint($userWalk['startingPoint']);
@@ -269,8 +272,7 @@ class AppFixtures extends Fixture
             $manager->persist($walk);
         }
 
-        //todo pour chaque randonnée ajouté le créateur avec Addwalk
-        foreach($userWalksList as $walk){
+        foreach ($userWalksList as $walk) {
             $user->addWalk($walk);
         }
 
