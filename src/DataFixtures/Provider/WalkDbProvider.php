@@ -4,7 +4,7 @@ namespace App\DataFixtures\Provider;
 
 class WalkDbProvider
 {
-
+    
     private $name = [
         'Bretagne',
         'Normandie',
@@ -81,7 +81,6 @@ class WalkDbProvider
     {
         return $this->status[array_rand($this->status)];
     }
-
 
 
 }

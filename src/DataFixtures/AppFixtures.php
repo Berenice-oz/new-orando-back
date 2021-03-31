@@ -15,7 +15,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\WalkDbProvider;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\DataFixtures\Data\TagData;
-
+use App\DataFixtures\Data\WalkData;
 /**
  * This class allow to make some Area objects et Walks objects in our database
  */
@@ -69,19 +69,20 @@ class AppFixtures extends Fixture
 
         // we store the areas in an array
         $areasList = [];
-
         for ($i = 1; $i <= self::NB_AREAS; $i++) {
              
-             // An area
-            $area = new Area();
-            $area->setName($faker->unique()->areaName());
-            $area->setColor($faker->areaColor());
- 
-            $areasList[] = $area;
-             
-            // Prepare the entity $area for the creation in the database
-            $manager->persist($area);
-        }
+            // An area
+           $area = new Area();
+           $area->setName($faker->unique()->areaName());
+           $area->setColor($faker->areaColor());
+
+           $areasList[] = $area;
+            
+           // Prepare the entity $area for the creation in the database
+           $manager->persist($area);
+       }
+
+       //we store tags in an array
 
         //we store tags in an array
         $tagsList = [];
@@ -101,8 +102,8 @@ class AppFixtures extends Fixture
         }
 
         // We store the walks in an array
-        $walksList = [];
-
+        $walksList = [];   
+        
         for ($i = 1; $i <= self::NB_WALKS; $i++) {
             
             // A walk
@@ -177,7 +178,7 @@ class AppFixtures extends Fixture
         }
 
 
-        // admin
+        // admin => it's use during our test in dev environement
         $admin = new User();
         $admin->setEmail('admin@admin.com');
         $admin->setLastname('admin');
@@ -189,7 +190,7 @@ class AppFixtures extends Fixture
         $admin->setNickname('admin');
         $manager->persist($admin);
 
-        // user
+        // user => it's use during our test in dev environement
         $user = new User();
         $user->setEmail('user@user.com');
         $user->setLastname('user');
@@ -206,7 +207,10 @@ class AppFixtures extends Fixture
         }
         $manager->persist($user);
 
+        //walk's data creation store in an multidimensional array
         $userWalks = [
+            
+            //first walk
             [
                 'title' => 'Circuit découverte de la Presqu\'île de Crozon',
                 'startingPoint' => 'Presqu\'île de Crozon',
@@ -218,6 +222,7 @@ class AppFixtures extends Fixture
                 'maxNbPersons' => null,
                 'description' => 'Cadre idyllique pour profiter d\'une vue sur le large à 180 degrés.',
             ],
+            //second walk
             [
                 'title' => 'Randonnée à la Pointe de Saint Mathieu',
                 'startingPoint' => 'Pointe de Saint Mathieu',
@@ -229,6 +234,7 @@ class AppFixtures extends Fixture
                 'maxNbPersons' => null,
                 'description' => 'Circuit de l\'île d\'Ouessant à l\'île de Sein.',
             ],
+            //third walk
             [
                 'title' => 'Côte de Granit Rose',
                 'startingPoint' => 'Côte de Granit Rose',
@@ -240,6 +246,7 @@ class AppFixtures extends Fixture
                 'maxNbPersons' => 12,
                 'description' => 'Découverte de ce musée à ciel ouvert sur les sentiers de Ploumanac\'h.',
             ],
+            //fourth walk
             [
                 'title' => 'La Forêt de la Madeleine et l\'Abbaye de Port-Royal-des-Champs',
                 'startingPoint' => 'La Forêt de la Madeleine',
@@ -253,6 +260,7 @@ class AppFixtures extends Fixture
             ]
         ];
 
+        //each new object walk created with the data above will be strore in array => $userWalksList
         $userWalksList = [];
         foreach ($userWalks as $userWalk) {
             $walk = new Walk();
@@ -265,13 +273,17 @@ class AppFixtures extends Fixture
             $walk->setElevation($userWalk['elevation']);
             $walk->setMaxNbPersons($userWalk['maxNbPersons']);
             $walk->setDescription($userWalk['description']);
+            
             // array_rand allow to have areas randomly
             $randomArea = $areasList[array_rand($areasList)];
             $walk->setArea($randomArea);
             $userWalksList[] = $walk;
+            
+            //prepare each entity walk for the creation in database
             $manager->persist($walk);
         }
 
+        //these walks which are persisted above can be now add to our user's test => user@user.com
         foreach ($userWalksList as $walk) {
             $user->addWalk($walk);
         }
