@@ -40,6 +40,6 @@ class SecurityController extends AbstractController
      */
     public function redirectafterlogout()
     {
-        return $this->redirect('http://localhost:8080');
+        return $this->redirect('http://localhost:8080/');
     }
 }
