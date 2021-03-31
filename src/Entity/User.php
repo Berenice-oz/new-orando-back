@@ -22,7 +22,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups ("api_users_read_item")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $id;
 
@@ -50,21 +50,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups ("api_users_read_item")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups ("api_users_read_item")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups ("api_users_read_item")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
     private $nickname;
