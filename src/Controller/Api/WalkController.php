@@ -68,6 +68,7 @@ class WalkController extends AbstractController
                 'status' => Response::HTTP_NOT_FOUND,
                 'error' => 'Randonnée non trouvée.',
             ];
+
     
            
             return $this->json($message, Response::HTTP_NOT_FOUND);
@@ -76,12 +77,17 @@ class WalkController extends AbstractController
         // $this->denyAccessUnlessGranted('delete', $walk);
     
         // Delete
+        $walkId = $walk->getId();
         $em->remove($walk);
         $em->flush();
 
+        $message = [
+            'id' => $walkId,
+            'message' => 'La randonnée a bien été supprimé.'
+        ];
         
         return $this->json(
-        ['message' => 'La randonnée a bien été supprimé.'],
+        $message,
         Response::HTTP_OK
         );
     }
