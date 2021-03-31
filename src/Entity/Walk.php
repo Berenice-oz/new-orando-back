@@ -112,6 +112,7 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $creator;
 
