@@ -34,4 +34,12 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    /**
+     * @Route("/redirectafterlogout", name="redirectafterlogout")
+     */
+    public function redirectafterlogout()
+    {
+        return $this->redirect('http://localhost:8080');
+    }
 }
