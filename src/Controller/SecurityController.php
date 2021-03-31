@@ -2,13 +2,21 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use App\Security\LoginFormAuthenticator;
+use App\Entity\User;
 
 class SecurityController extends AbstractController
 {
+   
+    
     /**
      * @Route("/login", name="app_login")
      */
@@ -41,5 +49,38 @@ class SecurityController extends AbstractController
     public function redirectafterlogout()
     {
         return $this->redirect('http://localhost:8080/');
+    }
+
+
+    /**
+     * @Route("/api/login/check", name="login_check", methods={"POST"})
+     *
+     */
+    public function loginCheck(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $request, SerializerInterface $serializer, UserPasswordEncoderInterface $userEncoder)
+    {
+        
+        // récupèrer le contenu du json
+        $jsonContent = $request->getContent();
+        dd($jsonContent , $request);
+        // le  transformer en entité User
+        $user = $serializer->deserialize($jsonContent, User::class, 'json');
+
+        $userId = $user->getId();
+
+        $password = $user->getPassword();
+        $hashPassword = $userEncoder->encodePassword($user, $password);
+        
+        
+        
+        return $guardHandler->authenticateUserAndHandleSuccess(
+            $user,          // the User object you just created
+            $request,
+            $authenticator, // authenticator whose onAuthenticationSuccess you want to use
+            'main'          // the name of your firewall in security.yaml
+        );
+       
+        
+
+        
     }
 }
