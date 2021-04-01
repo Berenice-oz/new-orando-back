@@ -61,7 +61,6 @@ class SecurityController extends AbstractController
         
         // récupèrer le contenu du json
         $jsonContent = $request->getContent();
-        dd($jsonContent , $request);
         // le  transformer en entité User
         $user = $serializer->deserialize($jsonContent, User::class, 'json');
 
