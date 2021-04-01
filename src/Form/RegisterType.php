@@ -10,7 +10,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\File;
 
 class RegisterType extends AbstractType
 {
@@ -32,6 +34,19 @@ class RegisterType extends AbstractType
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'empty_data' => '',
+            ])
+            ->add('imageFile', FileType::class, [
+                'label' => 'Votre photo',
+                'constraints' => [
+                        new File([
+                            'maxSize' => '4096k',
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpeg',
+                            ],
+                            'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (formats acceptés: .png, .jpg, .jpeg)',
+                        ]),
+                    ]
             ])
         ;
     }
