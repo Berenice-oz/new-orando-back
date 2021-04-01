@@ -83,8 +83,11 @@ class UserController extends AbstractController
 
         $mailer->send($email);
             //todo Flash message
+            $this->addFlash('success', 'Votre message a bien été envoyé. <a href=\'http://localhost:8080\'>Retour vers la liste des randonnées</a>.');
 
             //Redirection
+            //! impossible d'envoyer vers la page profil de l'utilisateur connecté
+            //! car pas de paramètre d'url(id) coté front 
             return $this->redirectToRoute('contact_user', ['id' => $user->getId()]);
         }else {
             return $this->render('user/contact.html.twig', [
