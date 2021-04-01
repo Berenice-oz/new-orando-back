@@ -6,8 +6,10 @@ use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,6 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("email")
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -75,6 +78,15 @@ class User implements UserInterface
      * @Assert\Date
      */
     private $dateOfBirth;
+
+     /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="picture_user", fileNameProperty="picture")
+     * 
+     * @var File|null
+     */
+    private $imageFile;
     
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -395,6 +407,30 @@ class User implements UserInterface
     public function setNickname(string $nickname): self
     {
         $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * Get nOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @return  File|null
+     */ 
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set nOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @param  File|null  $imageFile  NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @return  self
+     */ 
+    public function setImageFile($imageFile)
+    {
+        $this->imageFile = $imageFile;
 
         return $this;
     }

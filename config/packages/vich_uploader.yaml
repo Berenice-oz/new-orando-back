@@ -1,0 +1,12 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        picture_user:
+            uri_prefix: /images/users # Folder where our upload's pictures are
+            upload_destination: '%kernel.project_dir%/public/images/users' # I want to send these upload pictures in folder public => images => users
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'
