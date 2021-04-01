@@ -70,11 +70,9 @@ class UserController extends AbstractController
             $message = $form->getData()['message'];
             //User's email
             $recipientUserEmail =  $user->getEmail();
-            //Sender email
-            $senderUserEmail = $this->getUser()->getEmail();
             //Send mail
             $email = (new Email())
-            ->from($senderUserEmail)
+            ->from('contact@orando.me')
             ->to($recipientUserEmail)
             ->subject('O\'Rando - You have a new message from '. $this->getUser()->getNickname() .'!')
             ->html('<p>'. $message .'</p>
