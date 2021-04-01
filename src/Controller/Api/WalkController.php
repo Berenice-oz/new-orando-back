@@ -74,7 +74,7 @@ class WalkController extends AbstractController
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
 
-        // $this->denyAccessUnlessGranted('delete', $walk);
+        $this->denyAccessUnlessGranted('delete', $walk);
     
         // Delete
         $walkId = $walk->getId();
