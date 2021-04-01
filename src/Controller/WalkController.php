@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class WalkController extends AbstractController
 {
     /**
@@ -50,9 +51,11 @@ class WalkController extends AbstractController
             
             // we ask to the Manager to save our object in our database
             $em->flush();
-   
+            
+
+            $session->set('walk', $walk);
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Votre randonnée a bien été crée.');
+            $this->addFlash('success', 'Votre randonnée a bien été crée');
             
             // redirection
             return $this->redirectToRoute('walk_create');
