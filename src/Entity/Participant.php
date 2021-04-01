@@ -29,7 +29,7 @@ class Participant
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants")
      * @Assert\NotBlank
-     * @Groups ("api_walks_read_item")
+     * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $user;
 
