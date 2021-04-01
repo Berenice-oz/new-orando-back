@@ -118,6 +118,7 @@ class Walk
 
     /**
      * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove"})
+     * @Groups ("api_walks_read_item")
      */
     private $participants;
 
