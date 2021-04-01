@@ -27,7 +27,7 @@ class ParticipantController extends AbstractController
         $errors = $validator->validate($participation);
         if (count($errors) > 0) {
 
-            return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->json(['message' => 'La modification n\'a pas été prise en compte.'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         // Save the participation in database
         $entityManager->persist($participation);
