@@ -52,8 +52,6 @@ class WalkController extends AbstractController
             // we ask to the Manager to save our object in our database
             $em->flush();
             
-
-            $session->set('walk', $walk);
             // add a flash message to inform the user if his action is alright
             $this->addFlash('success', 'Votre randonnée a bien été crée');
             
