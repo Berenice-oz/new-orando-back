@@ -27,7 +27,7 @@ class ParticipantController extends AbstractController
         $errors = $validator->validate($participation);
         if (count($errors) > 0) {
 
-            return $this->json(['message' => 'La modification n\'a pas été prise en compte.'], Response::HTTP_STATUS_TEAPOT);
+            return $this->json(['message' => 'La modification n\'a pas été prise en compte.'], 418);
         }
         // Save the participation in database
         $entityManager->persist($participation);
