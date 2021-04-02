@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
+use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\WalkRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\WalkRepository;
-use DateTime;
 
 
 /**
@@ -118,7 +119,7 @@ class Walk
     private $creator;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove","persist"})
      * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $participants;
@@ -139,7 +140,7 @@ class Walk
     public function __construct()
     {
         //$this->createdAt= new DateTime();
-        $this->status = 1;
+        //$this->status = 1;
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
 
@@ -323,6 +324,15 @@ class Walk
         return $this;
     }
 
+    //  /**
+    //  * @ORM\PrePersist
+    //  */
+    //todo Faire un listener
+    // public function setCreatorValue()
+    // {
+    //     $this->creator = new \DateTime();
+    // }
+
     /**
      * @return Collection|Participant[]
      */
@@ -341,15 +351,17 @@ class Walk
         return $this;
     }
 
-   /* => PostPersist
-    public function addCreatorParticipant(Participant $participant): self
+    /**
+     * @ORM\PrePersist
+     */
+    public function addCreatorParticipant()
     {
-        
+        $participant = new Participant;
         $this->participants[] = $participant;
         $participant->setUser($this->creator);
         $participant->setWalk($this);
         
-    }*/
+    }
 
     public function removeParticipant(Participant $participant): self
     {
@@ -374,6 +386,15 @@ class Walk
 
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setStatusValue()
+    {
+        $this->status = 1;
+    }
+
 
     /**
      * @return Collection|Tag[]

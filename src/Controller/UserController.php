@@ -38,7 +38,6 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_login');
         }
-        //Todo ELSE une erreur est survenue lors de l'enregistrement
 
         return $this->render('user/register.html.twig', [
             'form' => $form->createView(),

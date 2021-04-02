@@ -43,11 +43,11 @@ class WalkController extends AbstractController
             //we ask the Manager to prepare itself to add our object in our database
             $em->persist($walk);
 
-            //Add current user as walk's participant
-            $participant = new Participant();
-            $participant->setUser($user);
-            $participant->setWalk($walk);
-            $em->persist($participant);
+            // //Add current user as walk's participant
+            // $participant = new Participant();
+            // $participant->setUser($user);
+            // $participant->setWalk($walk);
+            // $em->persist($participant);
             
             
             // we ask to the Manager to save our object in our database
