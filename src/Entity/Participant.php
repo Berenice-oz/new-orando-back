@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  * @UniqueEntity(fields={"user", "walk"})
+ * @ORM\HasLifecycleCallbacks()
  */
 class Participant
 {

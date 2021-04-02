@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("email")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -135,7 +136,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        //$this->createdAt = new \DateTime();
         $this->walks = new ArrayCollection();
         $this->participants = new ArrayCollection();
     }
@@ -182,6 +183,14 @@ class User implements UserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setRolesValue()
+    {
+        $this->roles = ['ROLE_USER'];
     }
 
     /**
@@ -284,11 +293,20 @@ class User implements UserInterface
         return $this->status;
     }
 
+
     public function setStatus(int $status): self
     {
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setStatusValue()
+    {
+        $this->status = 1;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -303,6 +321,14 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -313,6 +339,14 @@ class User implements UserInterface
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     public function getArea(): ?Area
