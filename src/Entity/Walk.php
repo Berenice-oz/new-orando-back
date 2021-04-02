@@ -14,6 +14,7 @@ use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=WalkRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Walk
 {
@@ -62,7 +63,7 @@ class Walk
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, columnDefinition="ENUM('Facile', 'Moyen' , 'Difficile')")
      * @Assert\NotBlank
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
@@ -137,7 +138,7 @@ class Walk
 
     public function __construct()
     {
-        $this->createdAt= new DateTime();
+        //$this->createdAt= new DateTime();
         $this->status = 1;
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -216,10 +217,11 @@ class Walk
 
     public function setDifficulty(string $difficulty): self
     {
-       $this->difficulty = $difficulty;
+        $this->difficulty = $difficulty;
 
         return $this;
     }
+    
 
     public function getElevation(): ?int
     {
@@ -269,6 +271,14 @@ class Walk
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -279,6 +289,14 @@ class Walk
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     public function getArea(): ?Area
@@ -322,6 +340,16 @@ class Walk
 
         return $this;
     }
+
+   /* => PostPersist
+    public function addCreatorParticipant(Participant $participant): self
+    {
+        
+        $this->participants[] = $participant;
+        $participant->setUser($this->creator);
+        $participant->setWalk($this);
+        
+    }*/
 
     public function removeParticipant(Participant $participant): self
     {

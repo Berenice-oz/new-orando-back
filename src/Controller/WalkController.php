@@ -97,7 +97,7 @@ class WalkController extends AbstractController
 
 
             //update => date
-            $walk->setUpdatedAt(new \DateTime());
+            //$walk->setUpdatedAt(new \DateTime());
            
             // we ask to the Manager to save our object in our database
             $em->flush();
@@ -107,9 +107,11 @@ class WalkController extends AbstractController
             // add a flash message to inform the user if his action is alright
             $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walk/'. $id .'\'>Retour vers la liste des randonnées</a>.');
 
-            // redirection
-            return $this->redirectToRoute('walk_create'); 
- 
+            
+            return $this->render('walk/edit.html.twig', [
+                'walk' => $walk,
+                'form' => $form->createView(),
+            ]);
         }
 
        
