@@ -48,7 +48,7 @@ class ParticipantRepository extends ServiceEntityRepository
     }
     */
 
-    /**
+ /**
      * Return All Incoming Walk for a User
     */
     public function findIncomingWalksByUser($user)
@@ -58,7 +58,8 @@ class ParticipantRepository extends ServiceEntityRepository
         ->innerjoin('p.walk', 'w')
         ->addSelect('w')
         ->andWhere('w.status = :status')
-        ->setParameters(array('user' => $user, 'status' => 1))
+        ->andWhere('p.requestStatus = :requestStatus')
+        ->setParameters(array('user' => $user, 'status' => 1, 'requestStatus' => 1))
         ->getQuery()
         ->getResult()
     ; 
@@ -74,7 +75,8 @@ class ParticipantRepository extends ServiceEntityRepository
         ->innerjoin('p.walk', 'w')
         ->addSelect('w')
         ->andWhere('w.status = :status')
-        ->setParameters(array('user' => $user, 'status' => 2))
+        ->andWhere('p.requestStatus = :requestStatus')
+        ->setParameters(array('user' => $user, 'status' => 2, 'requestStatus' => 1))
         ->getQuery()
         ->getResult()
     ; 
