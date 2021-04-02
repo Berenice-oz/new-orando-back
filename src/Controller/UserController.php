@@ -15,7 +15,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
-    
     /**
      * @Route("/register", name="user_register", methods={"GET","POST"})
      */

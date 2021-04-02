@@ -25,7 +25,7 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        # # JWT Authentification for API routes
+        # JWT Authentification for API routes
         api_users:
             pattern: ^/api/(users|participant)
             stateless: true
@@ -69,3 +69,4 @@ security:
         - { path: "^/api/users", roles: ROLE_USER, methods: GET }
         - { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
         - { path: "^/api/participant", roles: ROLE_USER, methods: POST }
+        - { path: "^/api/participant", roles: ROLE_USER, methods: PATCH }
