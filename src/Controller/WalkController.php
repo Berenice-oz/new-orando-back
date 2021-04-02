@@ -107,9 +107,11 @@ class WalkController extends AbstractController
             // add a flash message to inform the user if his action is alright
             $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walk/'. $id .'\'>Retour vers la liste des randonnées</a>.');
 
-            //todo REDIRECTION
-            return $this->redirectToRoute('walk_create'); 
- 
+            
+            return $this->render('walk/edit.html.twig', [
+                'walk' => $walk,
+                'form' => $form->createView(),
+            ]);
         }
 
        

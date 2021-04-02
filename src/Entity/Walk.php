@@ -63,7 +63,7 @@ class Walk
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=128, columnDefinition="ENUM('1', '2', '3')")
+     * @ORM\Column(type="string", length=128, columnDefinition="ENUM('Facile', 'Moyen' , 'Difficile')")
      * @Assert\NotBlank
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
@@ -340,6 +340,16 @@ class Walk
 
         return $this;
     }
+
+   /* => PostPersist
+    public function addCreatorParticipant(Participant $participant): self
+    {
+        
+        $this->participants[] = $participant;
+        $participant->setUser($this->creator);
+        $participant->setWalk($this);
+        
+    }*/
 
     public function removeParticipant(Participant $participant): self
     {
