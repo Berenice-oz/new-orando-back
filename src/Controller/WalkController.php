@@ -49,11 +49,14 @@ class WalkController extends AbstractController
             $participant->setWalk($walk);
             $em->persist($participant);
             
+            
             // we ask to the Manager to save our object in our database
             $em->flush();
+
+            $id = $walk->getId();
             
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Votre randonnée a bien été crée . <a href=\'http://localhost:8080\'>Retour vers la liste des randonnées</a>.');
+            $this->addFlash('success', 'Votre randonnée a bien été crée <a href=\'http://localhost:8080/walk/'. $id .'\'> -> Consulter votre randonnée</a>.');
             
             // redirection
             return $this->redirectToRoute('walk_create');
@@ -97,10 +100,12 @@ class WalkController extends AbstractController
             $walk->setUpdatedAt(new \DateTime());
            
             // we ask to the Manager to save our object in our database
-             $em->flush();
+            $em->flush();
+
+            $id = $walk->getId();
 
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080\'>Retour vers la liste des randonnées</a>.');
+            $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walk/'. $id .'\'>Retour vers la liste des randonnées</a>.');
 
             // redirection
             return $this->redirectToRoute('walk_create'); 
