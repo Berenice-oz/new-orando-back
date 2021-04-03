@@ -101,81 +101,81 @@ class AppFixtures extends Fixture
             $manager->persist($myTag);
         }
 
-        // We store the walks in an array
-        $walksList = [];   
+        // // We store the walks in an array
+        // $walksList = [];   
         
-        for ($i = 1; $i <= self::NB_WALKS; $i++) {
+        // for ($i = 1; $i <= self::NB_WALKS; $i++) {
             
-            // A walk
-            $walk = new Walk();
+        //     // A walk
+        //     $walk = new Walk();
             
-            // faker allow to generate fake data
-            // unique / streetaddress/ randamDigitNotNull etc, you can find these
-            // formatters available in his documentation
-            $walk->setTitle($faker->unique()->sentence());
-            $walk->setStartingPoint($faker->streetAddress());
-            $walk->setEndPoint($faker->streetAddress());
-            $walk->setDate($faker->dateTimeInInterval('-1 week', '+2 weeks'));
-            $walk->setDuration($faker->randomDigitNotNull());
-            $walk->setDifficulty($faker->walkDifficulty());
-            $walk->setElevation($faker->randomNumber(3, true));
-            $walk->setMaxNbPersons($faker->numberBetween(1, 30));
-            $walk->setDescription($faker->text());
-            $walk->setStatus($faker->numberBetween(0, 2));
-            // array_rand allow to have areas randomly
-            $randomArea = $areasList[array_rand($areasList)];
-            $walk->setArea($randomArea);
+        //     // faker allow to generate fake data
+        //     // unique / streetaddress/ randamDigitNotNull etc, you can find these
+        //     // formatters available in his documentation
+        //     $walk->setTitle($faker->unique()->sentence());
+        //     $walk->setStartingPoint($faker->streetAddress());
+        //     $walk->setEndPoint($faker->streetAddress());
+        //     $walk->setDate($faker->dateTimeInInterval('-1 week', '+2 weeks'));
+        //     $walk->setDuration($faker->randomDigitNotNull());
+        //     $walk->setDifficulty($faker->walkDifficulty());
+        //     $walk->setElevation($faker->randomNumber(3, true));
+        //     $walk->setMaxNbPersons($faker->numberBetween(1, 30));
+        //     $walk->setDescription($faker->text());
+        //     $walk->setStatus($faker->numberBetween(0, 2));
+        //     // array_rand allow to have areas randomly
+        //     $randomArea = $areasList[array_rand($areasList)];
+        //     $walk->setArea($randomArea);
 
-            shuffle($tagsList);
+        //     shuffle($tagsList);
             
-            for ($r = 0; $r <= mt_rand(1, 2); $r++) {
-                $randomTag = $tagsList[$r];
-                $walk->addTag($randomTag);
-            }
+        //     for ($r = 0; $r <= mt_rand(1, 2); $r++) {
+        //         $randomTag = $tagsList[$r];
+        //         $walk->addTag($randomTag);
+        //     }
 
 
-            $walksList[] = $walk;
+        //     $walksList[] = $walk;
 
-            // here, we prepare the entity walk for the creation
-            $manager->persist($walk);
-        }
+        //     // here, we prepare the entity walk for the creation
+        //     $manager->persist($walk);
+        // }
 
 
-        // we store the users in an array
-        $usersList = [];
-        for ($i = 1; $i <= self::NB_USERS; $i++) {
-            $user = new User();
-            $user->setEmail($faker->unique()->email());
-            $user->setLastname($faker->unique()->lastName());
-            $user->setFirstname($faker->firstName());
-            $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8, 16));
-            $user->setPassword($userHashPassword);
-            $user->setStatus(1);
-            $user->setNickname($faker->unique()->name());
-            $user->setDateOfBirth($faker->optional()->dateTime());
-            $user->setDescription($faker->optional()->paragraphs(2, true));
-            // array_rand allow to have areas randomly
-            $randomArea = $areasList[array_rand($areasList)];
-            $user->setArea($randomArea);
-            //add walks creations
-            shuffle($walksList);
-            for ($r = 0; $r < mt_rand(1, 5); $r++) {
-                $randomWalk = $walksList[$r];
-                $user->addWalk($randomWalk);
-            }
+        // // we store the users in an array
+        // $usersList = [];
+        // for ($i = 1; $i <= self::NB_USERS; $i++) {
+        //     $user = new User();
+        //     $user->setEmail($faker->unique()->email());
+        //     $user->setLastname($faker->unique()->lastName());
+        //     $user->setFirstname($faker->firstName());
+        //     $userHashPassword = $this->passwordEncoder->encodePassword($user, $faker->password(8, 16));
+        //     $user->setPassword($userHashPassword);
+        //     $user->setStatus(1);
+        //     $user->setNickname($faker->unique()->name());
+        //     $user->setDateOfBirth($faker->optional()->dateTime());
+        //     $user->setDescription($faker->optional()->paragraphs(2, true));
+        //     // array_rand allow to have areas randomly
+        //     $randomArea = $areasList[array_rand($areasList)];
+        //     $user->setArea($randomArea);
+        //     //add walks creations
+        //     shuffle($walksList);
+        //     for ($r = 0; $r < mt_rand(1, 5); $r++) {
+        //         $randomWalk = $walksList[$r];
+        //         $user->addWalk($randomWalk);
+        //     }
 
-            shuffle($walksList);
-            for ($s = 0; $s < mt_rand(1, 4); $s++) {
-                $randomWalk = $walksList[$s];
-                $user->addParticipant($randomWalk);
-            }
+        //     shuffle($walksList);
+        //     for ($s = 0; $s < mt_rand(1, 4); $s++) {
+        //         $randomWalk = $walksList[$s];
+        //         $user->addParticipant($randomWalk);
+        //     }
 
-            $usersList[] = $user;
+        //     $usersList[] = $user;
             
 
-            // here, we prepare the entity user for the creation
-            $manager->persist($user);
-        }
+        //     // here, we prepare the entity user for the creation
+        //     $manager->persist($user);
+        // }
 
 
         // admin => it's use during our test in dev environement
@@ -200,93 +200,93 @@ class AppFixtures extends Fixture
         $user->setRoles(['ROLE_USER']);
         $user->setStatus(1);
         $user->setNickname('user');
-        shuffle($walksList);
-        for ($s = 0; $s < 5; $s++) {
-            $randomWalk = $walksList[$s];
-            $user->addParticipant($randomWalk);
-        }
+        // shuffle($walksList);
+        // for ($s = 0; $s < 5; $s++) {
+        //     $randomWalk = $walksList[$s];
+        //     $user->addParticipant($randomWalk);
+        // }
         $manager->persist($user);
 
-        //walk's data creation store in an multidimensional array
-        $userWalks = [
+        // //walk's data creation store in an multidimensional array
+        // $userWalks = [
             
-            //first walk
-            [
-                'title' => 'Circuit découverte de la Presqu\'île de Crozon',
-                'startingPoint' => 'Presqu\'île de Crozon',
-                'endPoint' => '',
-                'date' => new \Datetime('2021-04-01 14:00:00'),
-                'duration' => '1 heure',
-                'difficulty' => 'Moyen',
-                'elevation' => null,
-                'maxNbPersons' => null,
-                'description' => 'Cadre idyllique pour profiter d\'une vue sur le large à 180 degrés.',
-            ],
-            //second walk
-            [
-                'title' => 'Randonnée à la Pointe de Saint Mathieu',
-                'startingPoint' => 'Pointe de Saint Mathieu',
-                'endPoint' => '',
-                'date' => new \Datetime('2021-04-05 14:00:00'),
-                'duration' => '2 heures 30',
-                'difficulty' => 'Facile',
-                'elevation' => 255,
-                'maxNbPersons' => null,
-                'description' => 'Circuit de l\'île d\'Ouessant à l\'île de Sein.',
-            ],
-            //third walk
-            [
-                'title' => 'Côte de Granit Rose',
-                'startingPoint' => 'Côte de Granit Rose',
-                'endPoint' => '',
-                'date' => new \Datetime('2021-04-24 14:00:00'),
-                'duration' => '4 heures 30',
-                'difficulty' => 'Facile',
-                'elevation' => 500,
-                'maxNbPersons' => 12,
-                'description' => 'Découverte de ce musée à ciel ouvert sur les sentiers de Ploumanac\'h.',
-            ],
-            //fourth walk
-            [
-                'title' => 'La Forêt de la Madeleine et l\'Abbaye de Port-Royal-des-Champs',
-                'startingPoint' => 'La Forêt de la Madeleine',
-                'endPoint' => 'l\'Abbaye de Port-Royal-des-Champs',
-                'date' => new \Datetime('2021-04-30 14:00:00'),
-                'duration' => '3 heures 30',
-                'difficulty' => 'Facile',
-                'elevation' => null,
-                'maxNbPersons' => 10,
-                'description' => 'Balade historique sur les pas de Jean Racine',
-            ]
-        ];
+        //     //first walk
+        //     [
+        //         'title' => 'Circuit découverte de la Presqu\'île de Crozon',
+        //         'startingPoint' => 'Presqu\'île de Crozon',
+        //         'endPoint' => '',
+        //         'date' => new \Datetime('2021-04-01 14:00:00'),
+        //         'duration' => '1 heure',
+        //         'difficulty' => 'Moyen',
+        //         'elevation' => null,
+        //         'maxNbPersons' => null,
+        //         'description' => 'Cadre idyllique pour profiter d\'une vue sur le large à 180 degrés.',
+        //     ],
+        //     //second walk
+        //     [
+        //         'title' => 'Randonnée à la Pointe de Saint Mathieu',
+        //         'startingPoint' => 'Pointe de Saint Mathieu',
+        //         'endPoint' => '',
+        //         'date' => new \Datetime('2021-04-05 14:00:00'),
+        //         'duration' => '2 heures 30',
+        //         'difficulty' => 'Facile',
+        //         'elevation' => 255,
+        //         'maxNbPersons' => null,
+        //         'description' => 'Circuit de l\'île d\'Ouessant à l\'île de Sein.',
+        //     ],
+        //     //third walk
+        //     [
+        //         'title' => 'Côte de Granit Rose',
+        //         'startingPoint' => 'Côte de Granit Rose',
+        //         'endPoint' => '',
+        //         'date' => new \Datetime('2021-04-24 14:00:00'),
+        //         'duration' => '4 heures 30',
+        //         'difficulty' => 'Facile',
+        //         'elevation' => 500,
+        //         'maxNbPersons' => 12,
+        //         'description' => 'Découverte de ce musée à ciel ouvert sur les sentiers de Ploumanac\'h.',
+        //     ],
+        //     //fourth walk
+        //     [
+        //         'title' => 'La Forêt de la Madeleine et l\'Abbaye de Port-Royal-des-Champs',
+        //         'startingPoint' => 'La Forêt de la Madeleine',
+        //         'endPoint' => 'l\'Abbaye de Port-Royal-des-Champs',
+        //         'date' => new \Datetime('2021-04-30 14:00:00'),
+        //         'duration' => '3 heures 30',
+        //         'difficulty' => 'Facile',
+        //         'elevation' => null,
+        //         'maxNbPersons' => 10,
+        //         'description' => 'Balade historique sur les pas de Jean Racine',
+        //     ]
+        // ];
 
-        //each new object walk created with the data above will be strore in array => $userWalksList
-        $userWalksList = [];
-        foreach ($userWalks as $userWalk) {
-            $walk = new Walk();
-            $walk->setTitle($userWalk['title']);
-            $walk->setStartingPoint($userWalk['startingPoint']);
-            $walk->setEndPoint($userWalk['endPoint']);
-            $walk->setDate($userWalk['date']);
-            $walk->setDuration($userWalk['duration']);
-            $walk->setDifficulty($userWalk['difficulty']);
-            $walk->setElevation($userWalk['elevation']);
-            $walk->setMaxNbPersons($userWalk['maxNbPersons']);
-            $walk->setDescription($userWalk['description']);
+        // //each new object walk created with the data above will be strore in array => $userWalksList
+        // $userWalksList = [];
+        // foreach ($userWalks as $userWalk) {
+        //     $walk = new Walk();
+        //     $walk->setTitle($userWalk['title']);
+        //     $walk->setStartingPoint($userWalk['startingPoint']);
+        //     $walk->setEndPoint($userWalk['endPoint']);
+        //     $walk->setDate($userWalk['date']);
+        //     $walk->setDuration($userWalk['duration']);
+        //     $walk->setDifficulty($userWalk['difficulty']);
+        //     $walk->setElevation($userWalk['elevation']);
+        //     $walk->setMaxNbPersons($userWalk['maxNbPersons']);
+        //     $walk->setDescription($userWalk['description']);
             
-            // array_rand allow to have areas randomly
-            $randomArea = $areasList[array_rand($areasList)];
-            $walk->setArea($randomArea);
-            $userWalksList[] = $walk;
+        //     // array_rand allow to have areas randomly
+        //     $randomArea = $areasList[array_rand($areasList)];
+        //     $walk->setArea($randomArea);
+        //     $userWalksList[] = $walk;
             
-            //prepare each entity walk for the creation in database
-            $manager->persist($walk);
-        }
+        //     //prepare each entity walk for the creation in database
+        //     $manager->persist($walk);
+        // }
 
-        //these walks which are persisted above can be now add to our user's test => user@user.com
-        foreach ($userWalksList as $walk) {
-            $user->addWalk($walk);
-        }
+        // //these walks which are persisted above can be now add to our user's test => user@user.com
+        // foreach ($userWalksList as $walk) {
+        //     $user->addWalk($walk);
+        // }
 
         // we send the data in our database
         $manager->flush();

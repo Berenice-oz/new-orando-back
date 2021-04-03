@@ -28,7 +28,7 @@ class Participant
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants", cascade={"persist"})
      * @Assert\NotBlank
      * @Groups({"api_walks_read", "api_walks_read_item"})
      */

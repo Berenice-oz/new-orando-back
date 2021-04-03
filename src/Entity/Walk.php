@@ -7,10 +7,13 @@ use DateTime;
 use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\WalkRepository;
+use App\DBAL\Types\WalkDifficultyType;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+
 
 
 /**
@@ -19,7 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Walk
 {
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -64,7 +66,8 @@ class Walk
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=128, columnDefinition="ENUM('Facile', 'Moyen' , 'Difficile')")
+     * @ORM\Column(name="difficulty", type="WalkDifficultyType")
+     * @DoctrineAssert\Enum(entity="App\DBAL\Types\WalkDifficultyType")  
      * @Assert\NotBlank
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */

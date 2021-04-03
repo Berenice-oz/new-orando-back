@@ -99,16 +99,16 @@ class WalkType extends AbstractType
                 'expanded' => false,
                 
             ])
-            ->add('difficulty', ChoiceType::class, [
+            ->add('difficulty', null, [
                 'label' => 'Niveau de difficulté',
-                'choices' => [
-                    'Facile' => 'facile',
-                    'Moyen' => 'moyen',
-                    'Difficile' => 'difficile'
+                // 'choices' => [
+                //     'Facile' => 'facile',
+                //     'Moyen' => 'moyen',
+                //     'Difficile' => 'difficile'
 
-                ],
-                'multiple' => false,
-                'expanded' => true,
+                // ],
+                // 'multiple' => false,
+                // 'expanded' => true,
             ])
             ->add('elevation', IntegerType::class, [
                 'label' => 'Dénivelé',

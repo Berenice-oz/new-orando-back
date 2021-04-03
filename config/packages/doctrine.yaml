@@ -1,8 +1,8 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-        mapping_types:
-            enum: string
+        types:
+            WalkDifficultyType: App\DBAL\Types\WalkDifficultyType
 
         
         # IMPORTANT: You MUST configure your server version,

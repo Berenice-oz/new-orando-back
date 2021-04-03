@@ -29,13 +29,13 @@ class WalkController extends AbstractController
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
 
-         // Current user
-         $user = $this->getUser();
-      
+        // Current user
+        $user = $this->getUser();
+
         // ask to the form to examine the request object
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             //Add current user as walk's creator
             $walk->setCreator($user);
@@ -48,28 +48,27 @@ class WalkController extends AbstractController
             // $participant->setUser($user);
             // $participant->setWalk($walk);
             // $em->persist($participant);
-            
-            
+
+
             // we ask to the Manager to save our object in our database
             $em->flush();
 
             $id = $walk->getId();
-            
+
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Votre randonnée a bien été crée <a href=\'http://localhost:8080/walk/'. $id .'\'> -> Consulter votre randonnée</a>.');
-            
+            $this->addFlash('success', 'Votre randonnée a bien été crée <a href=\'http://localhost:8080/walk/' . $id . '\'> -> Consulter votre randonnée</a>.');
+
             // redirection
             return $this->redirectToRoute('walk_create');
-
         }
-        
+
         return $this->render('walk/create.html.twig', [
             'walk' => $walk,
             //we send to the template "a view of the form" thank to createView()
             'form' => $form->createView(),
         ]);
     }
- 
+
     /**
      * Edit a walk
      * 
@@ -80,41 +79,41 @@ class WalkController extends AbstractController
     {
         // managing error => 404 
         if (null === $walk) {
-            
+
             throw $this->createNotFoundException('Randonnée non trouvée.');
         }
         $this->denyAccessUnlessGranted('edit', $walk);
-        
+
         // creation's form while giving the entity
         $form = $this->createForm(WalkType::class, $walk);
 
         // ask to the form to examine the request object
-         $form->handleRequest($request);
+        $form->handleRequest($request);
 
-         //dd($walk);
- 
-         if ($form->isSubmitted() && $form->isValid()) {
+        //dd($walk);
+
+        if ($form->isSubmitted() && $form->isValid()) {
 
 
             //update => date
             //$walk->setUpdatedAt(new \DateTime());
-           
+
             // we ask to the Manager to save our object in our database
             $em->flush();
 
             $id = $walk->getId();
 
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walk/'. $id .'\'>Retour vers la liste des randonnées</a>.');
+            $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walk/' . $id . '\'>Retour vers la liste des randonnées</a>.');
 
-            
+
             return $this->render('walk/edit.html.twig', [
                 'walk' => $walk,
                 'form' => $form->createView(),
             ]);
         }
 
-       
+
         // display of the form => GET
         return $this->render('walk/edit.html.twig', [
             'walk' => $walk,
