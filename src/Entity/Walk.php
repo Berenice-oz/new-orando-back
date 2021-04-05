@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
+use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\WalkRepository;
+use App\DBAL\Types\WalkDifficultyType;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\WalkRepository;
-use DateTime;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+
 
 
 /**
@@ -18,7 +22,6 @@ use DateTime;
  */
 class Walk
 {
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -63,7 +66,8 @@ class Walk
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=128, columnDefinition="ENUM('Facile', 'Moyen' , 'Difficile')")
+     * @ORM\Column(name="difficulty", type="WalkDifficultyType")
+     * @DoctrineAssert\Enum(entity="App\DBAL\Types\WalkDifficultyType")  
      * @Assert\NotBlank
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
@@ -118,7 +122,7 @@ class Walk
     private $creator;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove","persist"})
      * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $participants;
@@ -139,7 +143,7 @@ class Walk
     public function __construct()
     {
         //$this->createdAt= new DateTime();
-        $this->status = 1;
+        //$this->status = 1;
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
 
@@ -271,14 +275,6 @@ class Walk
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        $this->createdAt = new \DateTime();
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -289,14 +285,6 @@ class Walk
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue()
-    {
-        $this->updatedAt = new \DateTime();
     }
 
     public function getArea(): ?Area
@@ -341,15 +329,6 @@ class Walk
         return $this;
     }
 
-   /* => PostPersist
-    public function addCreatorParticipant(Participant $participant): self
-    {
-        
-        $this->participants[] = $participant;
-        $participant->setUser($this->creator);
-        $participant->setWalk($this);
-        
-    }*/
 
     public function removeParticipant(Participant $participant): self
     {

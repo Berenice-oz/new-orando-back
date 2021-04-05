@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa8cd43bcb4629de9a1e06bf83f6e000",
+    "content-hash": "1f3d0d9f13d96020f81be4581e0897e8",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1613,6 +1613,102 @@
                 "source": "https://github.com/FakerPHP/Faker/tree/v.1.14.1"
             },
             "time": "2021-03-30T06:27:33+00:00"
+        },
+        {
+            "name": "fresh/doctrine-enum-bundle",
+            "version": "v7.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fre5h/DoctrineEnumBundle.git",
+                "reference": "604e3c2de57b87f35c8a1eb7666c92804415c0c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fre5h/DoctrineEnumBundle/zipball/604e3c2de57b87f35c8a1eb7666c92804415c0c0",
+                "reference": "604e3c2de57b87f35c8a1eb7666c92804415c0c0",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "^2.11 || ^3.0",
+                "doctrine/doctrine-bundle": "^2.1",
+                "doctrine/orm": "^2.7",
+                "php": ">=7.2.5",
+                "symfony/config": "^5.0",
+                "symfony/dependency-injection": "^5.0",
+                "symfony/doctrine-bridge": "^5.0",
+                "symfony/framework-bundle": "^5.0",
+                "symfony/http-kernel": "^5.0",
+                "symfony/validator": "^5.0",
+                "twig/twig": "^3.0"
+            },
+            "require-dev": {
+                "escapestudios/symfony2-coding-standard": "^3.11",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-doctrine": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan-symfony": "^0.12",
+                "phpunit/phpunit": "^8.5",
+                "slam/phpstan-extensions": "^5.0",
+                "symfony/form": "^5.0",
+                "symfony/yaml": "^5.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fresh\\DoctrineEnumBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artem Henvald",
+                    "email": "genvaldartem@gmail.com",
+                    "role": "Creator"
+                },
+                {
+                    "name": "Community",
+                    "homepage": "https://github.com/fre5h/DoctrineEnumBundle/graphs/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Provides support of ENUM type for Doctrine2 in Symfony applications.",
+            "homepage": "https://github.com/fre5h/DoctrineEnumBundle",
+            "keywords": [
+                "bundle",
+                "dbal",
+                "doctrine",
+                "entity",
+                "enum",
+                "mssql",
+                "mysql",
+                "postgresql",
+                "sqlite",
+                "symfony",
+                "type"
+            ],
+            "support": {
+                "email": "genvaldartem@gmail.com",
+                "issues": "https://github.com/fre5h/DoctrineEnumBundle/issues",
+                "source": "https://github.com/fre5h/DoctrineEnumBundle/tree/v7.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fre5h",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-11-30T07:15:40+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
