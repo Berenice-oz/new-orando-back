@@ -40,7 +40,7 @@ class WalkType extends AbstractType
                         ->orderBy('a.name', 'ASC');
                 },
                 'label' => 'Région',
-                'placeholder' => 'Sélectionner votre région...',
+                'placeholder' => 'Sélectionnez votre région...',
                 // this is a validation contrainst : new NotBlank() => the field must be not empty
                 // Another validation constrainst have been  coded  directly
                 //on the propertie's Entity with this annotation @Assert
@@ -57,8 +57,8 @@ class WalkType extends AbstractType
                     return $er->createQueryBuilder('t')
                         ->orderBy('t.name', 'ASC');
                 },
-                'label' => 'Tag',
-                'placeholder' => 'Sélectionner votre Tag...',
+                'label' => 'Thème (choix multiple possible)',
+                'placeholder' => 'Sélectionnez vos thèmes...',
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -71,14 +71,15 @@ class WalkType extends AbstractType
                 'label' => 'Point de départ',
             ])
             ->add('endPoint', TextType::class, [
-                'label' => 'Point d\'arrivée',
+                'label' => 'Point d\'arrivée (si différent du point de départ)',
             ])
             ->add('date', DateTimeType::class, [
-                'label' => 'Date de la randonnée avec heure de départ ',
+                'label' => 'Date et heure de départ ',
                 'placeholder' => [
                     'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
                 ],
                 'years' => range(date('Y'), date('Y')+5),
+                'input_format' => 'd-m-Y H:m'
             ])
             ->add('duration', ChoiceType::class, [
                 'label' => 'Durée approximative',
@@ -94,6 +95,7 @@ class WalkType extends AbstractType
                     '4 heures' => '4h',
                     '4 heures 30' => '4h30',
                     '5 heures' => '5h',
+                    'plus de 5 heures' => 'plus_5h',
                 ],
                 'multiple' => false,
                 'expanded' => false,
@@ -101,17 +103,11 @@ class WalkType extends AbstractType
             ])
             ->add('difficulty', null, [
                 'label' => 'Niveau de difficulté',
-                // 'choices' => [
-                //     'Facile' => 'facile',
-                //     'Moyen' => 'moyen',
-                //     'Difficile' => 'difficile'
-
-                // ],
-                // 'multiple' => false,
-                // 'expanded' => true,
+                'multiple' => false,
+                'expanded' => true,
             ])
             ->add('elevation', IntegerType::class, [
-                'label' => 'Dénivelé',
+                'label' => 'Dénivelé (en mètres)',
                 'attr' => [
                     'min' => 1,
                     'max' => 2000
@@ -124,7 +120,8 @@ class WalkType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
+                'label' => 'Description / infos pratiques',
+                'help' => 'toute information utile pour les participants : adresse exacte du point de départ, matériel recommandé, présence de points d’eau ...'
             ])
 
             // we add an event because when we create a walk , we don't need status field
