@@ -69,21 +69,17 @@ class UserController extends AbstractController
             //User's email
             $recipientUserEmail =  $user->getEmail();
             //Send mail
-            $email = (new Email())
-            ->from('contact@orando.me')
+            $email = (new Email());
+            $email->getHeaders()->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
+            $email->from('contact@orando.me')
             ->to($recipientUserEmail)
-            ->subject('O\'Rando - You have a new message from '. $this->getUser()->getNickname() .'!')
+            ->subject('O\'Rando - Vous avez reçu un nouveau message de '. $this->getUser()->getNickname() .'!')
             ->html('<p>'. $message .'</p>
             <p>Pour répondre rendez vous sur la page :'.$this->generateUrl('contact_user', ['id' => $this->getUser()->getId()]).'</p>');
-            //todo penser à inclure dans le message du mail l'URL pour répondre $this->generateUrl('contact_user') + param id du user qui envoie le mail
-
             $mailer->send($email);
-            //todo Flash message
             $this->addFlash('success', 'Votre message a bien été envoyé. <a href=\'http://localhost:8080\'>Retour vers la liste des randonnées</a>.');
 
             //Redirection
-            //! impossible d'envoyer vers la page profil de l'utilisateur connecté
-            //! car pas de paramètre d'url(id) coté front 
             return $this->redirectToRoute('contact_user', ['id' => $user->getId()]);
         }else {
             return $this->render('user/contact.html.twig', [
