@@ -1,7 +1,53 @@
 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 {# génère tous les champs du form#}
-{{ form_widget(form) }}
-
-
-    <button type="submit" class="btn btn-success">Valider</button>
+<div class="field">
+	{{ form_label(form.title) }}
+	{{ form_widget(form.title) }}
+</div>
+<div class="field">
+	{{ form_label(form.area) }}
+	{{ form_widget(form.area) }}
+</div>
+<div class="field">
+	{{ form_label(form.tags) }}
+	{{ form_widget(form.tags) }}
+</div>
+<div class="field">
+	{{ form_label(form.startingPoint) }}
+	{{ form_widget(form.startingPoint) }}
+</div>
+<div class="field">
+	{{ form_label(form.endPoint) }}
+	{{ form_widget(form.endPoint) }}
+</div>
+<div class="field">
+	{{ form_label(form.date) }}
+	{{ form_widget(form.date) }}
+</div>
+<div class="field">
+	{{ form_label(form.duration) }}
+	{{ form_widget(form.duration) }}
+</div>
+<div class="field">
+	{{ form_label(form.kilometre) }}
+	{{ form_widget(form.kilometre) }}
+</div>
+<div class="field">
+	{{ form_label(form.difficulty) }}
+	{{ form_widget(form.difficulty) }}
+</div>
+<div class="field">
+	{{ form_label(form.elevation) }}
+	{{ form_widget(form.elevation) }}
+</div>
+<div class="field">
+	{{ form_label(form.maxNbPersons) }}
+	{{ form_widget(form.maxNbPersons) }}
+    {{ form_help(form.maxNbPersons) }}
+</div>
+<div class="field">
+	{{ form_label(form.description) }}
+	{{ form_widget(form.description) }}
+</div>
+<button type="submit" class="btn btn-success">Valider</button>
 {{ form_end(form) }}
