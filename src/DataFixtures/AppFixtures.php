@@ -179,33 +179,33 @@ class AppFixtures extends Fixture
 
 
         // admin => it's use during our test in dev environement
-        $admin = new User();
-        $admin->setEmail('admin@admin.com');
-        $admin->setLastname('admin');
-        $admin->setFirstname('admin');
-        $adminHashPassword = $this->passwordEncoder->encodePassword($admin, 'admin');
-        $admin->setPassword($adminHashPassword);
-        $admin->setRoles(['ROLE_ADMIN']);
-        $admin->setStatus(1);
-        $admin->setNickname('admin');
-        $manager->persist($admin);
+        //$admin = new User();
+        //$admin->setEmail('admin@admin.com');
+        //$admin->setLastname('admin');
+        //$admin->setFirstname('admin');
+        //$adminHashPassword = $this->passwordEncoder->encodePassword($admin, 'admin');
+        //$admin->setPassword($adminHashPassword);
+        //$admin->setRoles(['ROLE_ADMIN']);
+        //$admin->setStatus(1);//
+        //$admin->setNickname('admin');
+        //$manager->persist($admin);
 
         // user => it's use during our test in dev environement
-        $user = new User();
-        $user->setEmail('user@user.com');
-        $user->setLastname('user');
-        $user->setFirstname('user');
-        $userHashPassword = $this->passwordEncoder->encodePassword($user, 'user');
-        $user->setPassword($userHashPassword);
-        $user->setRoles(['ROLE_USER']);
-        $user->setStatus(1);
-        $user->setNickname('user');
+        //$user = new User();
+        //$user->setEmail('user@user.com');
+        //$user->setLastname('user');
+        //$user->setFirstname('user');
+        //$userHashPassword = $this->passwordEncoder->encodePassword($user, 'user');
+        //$user->setPassword($userHashPassword);
+        //$user->setRoles(['ROLE_USER']);
+        //$user->setStatus(1);
+        //$user->setNickname('user');
         // shuffle($walksList);
         // for ($s = 0; $s < 5; $s++) {
         //     $randomWalk = $walksList[$s];
         //     $user->addParticipant($randomWalk);
         // }
-        $manager->persist($user);
+        //$manager->persist($user);
 
         // //walk's data creation store in an multidimensional array
         // $userWalks = [
