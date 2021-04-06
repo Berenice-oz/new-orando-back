@@ -30,7 +30,7 @@ class RegisterType extends AbstractType
                         ->orderBy('a.name', 'ASC');
                 },
                 'label' => 'Région',
-                'placeholder' => 'Sélectionner votre région...',
+                'placeholder' => 'Sélectionnez votre région...',
                 'constraints' => [
                     new NotBlank(),
                 ],
