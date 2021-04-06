@@ -140,6 +140,12 @@ class Walk
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * 
+     */
+    private $kilometre;
+
 
     public function __construct()
     {
@@ -375,6 +381,18 @@ class Walk
     public function removeTag(Tag $tag): self
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getKilometre(): ?string
+    {
+        return $this->kilometre;
+    }
+
+    public function setKilometre(string $kilometre): self
+    {
+        $this->kilometre = $kilometre;
 
         return $this;
     }

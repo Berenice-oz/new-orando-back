@@ -30,7 +30,7 @@ class WalkType extends AbstractType
         $builder
             // this line means(and the others means the same) : the field => title (arbitrary name of the field ) is known as Text
             ->add('title', TextType::class, [
-                'label' => 'Titre',
+                'label' => 'Titre*',
             ])
             ->add('area', EntityType::class, [
                 'class' => Area::class,
@@ -39,7 +39,7 @@ class WalkType extends AbstractType
                     return $er->createQueryBuilder('a')
                         ->orderBy('a.name', 'ASC');
                 },
-                'label' => 'Région',
+                'label' => 'Région*',
                 'placeholder' => 'Sélectionnez votre région...',
                 // this is a validation contrainst : new NotBlank() => the field must be not empty
                 // Another validation constrainst have been  coded  directly
@@ -68,13 +68,13 @@ class WalkType extends AbstractType
             ])
             
             ->add('startingPoint', TextType::class, [
-                'label' => 'Point de départ',
+                'label' => 'Point de départ*',
             ])
             ->add('endPoint', TextType::class, [
                 'label' => 'Point d\'arrivée (si différent du point de départ)',
             ])
             ->add('date', DateTimeType::class, [
-                'label' => 'Date et heure de départ ',
+                'label' => 'Date et heure de départ*',
                 'placeholder' => [
                     'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
                 ],
@@ -82,10 +82,9 @@ class WalkType extends AbstractType
                 'input_format' => 'd-m-Y H:m'
             ])
             ->add('duration', ChoiceType::class, [
-                'label' => 'Durée approximative',
+                'label' => 'Durée approximative*',
                 'placeholder' => 'Quelle est la durée de votre randonnée?',
                 'choices' => [
-                    '30 minutes' => '30',
                     '1 heure' => '1h',
                     '1 heure 30' => '1h30',
                     '2 heures' => '2h',
@@ -101,8 +100,22 @@ class WalkType extends AbstractType
                 'expanded' => false,
                 
             ])
+            ->add('kilometre', ChoiceType::class, [
+                'label' => 'Nombre de kilomètres(environ)',
+                'placeholder' => 'Sélectionner...',
+                'choices' => [
+                    '4 km' => '4 km',
+                    '6 km' => '6 km',
+                    '8 km' =>  '8 km',
+                    '10 km' => '10 km',
+                    '12 km' => '12 km',
+                    'plus de 15 km' => 'plus_15km',
+                ],
+                'multiple' => false,
+                'expanded' => false,
+            ])
             ->add('difficulty', null, [
-                'label' => 'Niveau de difficulté',
+                'label' => 'Niveau de difficulté*',
                 'multiple' => false,
                 'expanded' => true,
             ])
@@ -120,7 +133,7 @@ class WalkType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description / infos pratiques',
+                'label' => 'Description / infos pratiques*',
                 'help' => 'toute information utile pour les participants : adresse exacte du point de départ, matériel recommandé, présence de points d’eau ...'
             ])
 

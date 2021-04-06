@@ -36,6 +36,7 @@ class WalkController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //dd($walk);
 
             // //Add current user as walk's creator
             // $walk->setCreator($user);
