@@ -14,6 +14,7 @@ class TagData
         ["name" => "Bord de mer", "color" => "#02D5E6"],
         ["name" => "Montagne", "color" => "#64391F"],
         ["name" => "Nocturne", "color" => "#0E3151"],
+        ["name" => "A vélo", "color" => "Corail"],
 
     ];
 }
