@@ -32,9 +32,9 @@ class ContactController extends AbstractController
             ->from('contact@orando.me')
             ->to('contact@orando.me')
             ->replyTo($mail)
-            ->subject($subject)
-            ->text($message);
-
+            ->subject('Contact Orando.me -' . $subject)
+            ->text('Message de '.$mail .':
+            '. $message);
             $mailer->send($email);
 
             $this->addFlash('success', 'Merci pour votre message. Il sera traité dans les meilleurs délais.');
