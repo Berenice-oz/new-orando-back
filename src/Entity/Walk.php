@@ -55,6 +55,7 @@ class Walk
      * @ORM\Column(type="datetime")
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
+     * @Assert\GreaterThanOrEqual("+1 hours")
      */
     private $date;
 
@@ -275,14 +276,6 @@ class Walk
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        $this->createdAt = new \DateTime();
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -293,14 +286,6 @@ class Walk
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue()
-    {
-        $this->updatedAt = new \DateTime();
     }
 
     public function getArea(): ?Area
@@ -327,15 +312,6 @@ class Walk
         return $this;
     }
 
-    //  /**
-    //  * @ORM\PrePersist
-    //  */
-    //todo Faire un listener
-    // public function setCreatorValue()
-    // {
-    //     $this->creator = new \DateTime();
-    // }
-
     /**
      * @return Collection|Participant[]
      */
@@ -354,17 +330,6 @@ class Walk
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function addCreatorParticipant()
-    {
-        $participant = new Participant;
-        $this->participants[] = $participant;
-        $participant->setUser($this->creator);
-        $participant->setWalk($this);
-        
-    }
 
     public function removeParticipant(Participant $participant): self
     {
@@ -389,15 +354,6 @@ class Walk
 
         return $this;
     }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setStatusValue()
-    {
-        $this->status = 1;
-    }
-
 
     /**
      * @return Collection|Tag[]

@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Form\RegisterType;
 use App\Form\UserContactType;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,8 +45,8 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    
-    
+
+
     /**
      * Form to contact a user and send message by mail
      * @Route("/profile/{id<\d+>}/contact-user", name="contact_user", methods={"GET","POST"})
@@ -53,13 +55,13 @@ class UserController extends AbstractController
     {
         //make sure the user is authenticated first
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        
+
         if ($user === null) {
             throw $this->createNotFoundException(
                 'Utilisateur non trouvé'
             );
         }
-        
+
         $form = $this->createForm(UserContactType::class);
         $form->handleRequest($request);
 
@@ -68,24 +70,32 @@ class UserController extends AbstractController
             $message = $form->getData()['message'];
             //User's email
             $recipientUserEmail =  $user->getEmail();
+            //Expeditor
+            $expeditor = $this->getUser();
             //Send mail
-            $email = (new Email())
-            ->from('contact@orando.me')
-            ->to($recipientUserEmail)
-            ->subject('O\'Rando - You have a new message from '. $this->getUser()->getNickname() .'!')
-            ->html('<p>'. $message .'</p>
-            <p>Pour répondre rendez vous sur la page :'.$this->generateUrl('contact_user', ['id' => $this->getUser()->getId()]).'</p>');
-            //todo penser à inclure dans le message du mail l'URL pour répondre $this->generateUrl('contact_user') + param id du user qui envoie le mail
+            $email = (new TemplatedEmail());
+            $email->getHeaders()->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
+            $email->from(new Address('contact@orando.me'))
+                ->to($recipientUserEmail)
+                ->subject('O\'Rando - Vous avez reçu un nouveau message de ' . $expeditor->getNickname() . '!')
+                ->htmlTemplate('email/email-contact_user.html.twig')
+                ->text('Bonjour '.$user->getNickname().'
 
+                Vous avez reçu un nouveau message de '.$expeditor->getNickname().' sur Orando.me :
+                
+                '.$message.'
+                ')
+                ->context([
+                    'message' => $message,
+                    'user' => $user,
+                    'expeditor' => $expeditor
+                ]);
             $mailer->send($email);
-            //todo Flash message
             $this->addFlash('success', 'Votre message a bien été envoyé. <a href=\'http://localhost:8080\'>Retour vers la liste des randonnées</a>.');
 
             //Redirection
-            //! impossible d'envoyer vers la page profil de l'utilisateur connecté
-            //! car pas de paramètre d'url(id) coté front 
             return $this->redirectToRoute('contact_user', ['id' => $user->getId()]);
-        }else {
+        } else {
             return $this->render('user/contact.html.twig', [
                 'form' => $form->createView(),
                 'user' => $user,

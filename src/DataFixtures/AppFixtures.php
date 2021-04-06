@@ -22,7 +22,7 @@ use App\DataFixtures\Data\WalkData;
 class AppFixtures extends Fixture
 {
     //Here, we define number of recordings in each table
-    const NB_AREAS = 12;
+    const NB_AREAS = 18;
     const NB_WALKS = 50;
     const NB_USERS = 100;
     const NB_PARTICIPANTS = 50 * self::NB_USERS;
