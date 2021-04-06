@@ -100,19 +100,9 @@ class WalkType extends AbstractType
                 'expanded' => false,
                 
             ])
-            ->add('kilometre', ChoiceType::class, [
+            ->add('kilometre', IntegerType::class, [
                 'label' => 'Nombre de kilomètres(environ)',
-                'placeholder' => 'Sélectionner...',
-                'choices' => [
-                    '4 km' => '4 km',
-                    '6 km' => '6 km',
-                    '8 km' =>  '8 km',
-                    '10 km' => '10 km',
-                    '12 km' => '12 km',
-                    'plus de 15 km' => 'plus_15km',
-                ],
-                'multiple' => false,
-                'expanded' => false,
+                
             ])
             ->add('difficulty', null, [
                 'label' => 'Niveau de difficulté*',

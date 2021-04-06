@@ -100,7 +100,7 @@ class Walk
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      */
     private $kilometre;
@@ -387,12 +387,12 @@ class Walk
         return $this;
     }
 
-    public function getKilometre(): ?string
+    public function getKilometre(): ?int
     {
         return $this->kilometre;
     }
 
-    public function setKilometre(string $kilometre): self
+    public function setKilometre(?int $kilometre): self
     {
         $this->kilometre = $kilometre;
 
