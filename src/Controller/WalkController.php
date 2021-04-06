@@ -57,7 +57,7 @@ class WalkController extends AbstractController
             $id = $walk->getId();
 
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Votre randonnée a bien été crée <a href=\'http://localhost:8080/walk/' . $id . '\'> -> Consulter votre randonnée</a>.');
+            $this->addFlash('success', 'Votre randonnée a bien été crée <a href=\'http://localhost:8080/walks/' . $id . '\'> -> Consulter votre randonnée</a>.');
 
             // redirection
             return $this->redirectToRoute('walk_create');
@@ -105,7 +105,7 @@ class WalkController extends AbstractController
             $id = $walk->getId();
 
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walk/' . $id . '\'>Retour vers la liste des randonnées</a>.');
+            $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walks/' . $id . '\'>Retour vers la liste des randonnées</a>.');
 
 
             return $this->render('walk/edit.html.twig', [

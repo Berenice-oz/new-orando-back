@@ -4,11 +4,36 @@
 {% endblock %}
 
 {% block body %}
-
-	<h1>Inscription</h1>
-
+	<h2>Inscription</h2>
 	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-	{{ form_widget(form) }}
+	<div class="field">
+	{{ form_label(form.area) }}
+	{{ form_widget(form.area) }}
+	</div>
+	<div class="field">
+	{{ form_label(form.email) }}
+	{{ form_widget(form.email) }}
+	</div>
+	<div class="field">
+	{{ form_label(form.nickname) }}
+	{{ form_widget(form.nickname) }}
+	</div>
+	<div class="field">
+	{{ form_label(form.firstname) }}
+	{{ form_widget(form.firstname) }}
+	</div>
+	<div class="field">
+	{{ form_label(form.lastname) }}
+	{{ form_widget(form.lastname) }}
+	</div>
+	<div class="field">
+	{{ form_label(form.password) }}
+	{{ form_widget(form.password) }}
+	</div>
+	<div class="field">
+	{{ form_label(form.imageFile) }}
+	{{ form_widget(form.imageFile) }}
+	</div>
 	<button type="submit" class="btn btn-success">M'inscrire</button>
 	{{ form_end(form) }}
 
