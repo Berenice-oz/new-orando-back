@@ -7,6 +7,7 @@ use App\Repository\ParticipantRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
@@ -30,6 +31,7 @@ class Participant
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants", cascade={"persist"})
      * @Assert\NotBlank
+     * @MaxDepth(3)
      * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $user;
@@ -38,7 +40,8 @@ class Participant
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=Walk::class, inversedBy="participants" , cascade={"persist"})
      * @Assert\NotBlank
-     * @Groups ("api_users_read_item")
+     * @MaxDepth(3)
+     * @Groups ("api_users_read_item", "api_walks_read_item")
      */
     private $walk;
 
