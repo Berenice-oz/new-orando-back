@@ -100,6 +100,12 @@ class Walk
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
+     */
+    private $kilometre;
+
+    /**
      * @ORM\Column(type="datetime")
      *  
      */
@@ -140,11 +146,7 @@ class Walk
      */
     private $tags;
 
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * 
-     */
-    private $kilometre;
+   
 
 
     public function __construct()
