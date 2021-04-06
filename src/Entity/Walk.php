@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
+
 
 
 
@@ -126,8 +126,8 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
-     * @MaxDepth(3)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $creator;
 

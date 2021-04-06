@@ -7,11 +7,10 @@ use App\Entity\Walk;
 use App\Repository\ParticipantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+
 
 
 
@@ -22,7 +21,7 @@ class UserController extends AbstractController
      * Data of a user
      * @Route("/api/users/{id<\d+>}", name="api_users_read_item", methods={"GET"})
      */
-    public function readItem(User $user = null, Walk $walk, ParticipantRepository $participantRepository, SerializerInterface $serializer, NormalizerInterface $normalizer):Response
+    public function readItem(User $user = null, Walk $walk, ParticipantRepository $participantRepository):Response
     {
         if ($user === null) {
             $message = [
@@ -41,17 +40,19 @@ class UserController extends AbstractController
             'incomingWalks' => $incomingWalks,
             'archivedWalks' => $archivedWalks,
         ];
-        
-        $result = $serializer->serialize($datas,'json',[AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true]);
+    
 
         return $this->json(
-            $result,
+            $datas,
             Response::HTTP_OK,
             [],
             ['groups' => [
                 'api_users_read_item',
-                'api_walks_read_item'
-            ]
+            ],
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
+                return $object;
+            }
+            
             ]);
     }
 }
