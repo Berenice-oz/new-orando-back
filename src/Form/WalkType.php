@@ -94,7 +94,7 @@ class WalkType extends AbstractType
                     '4 heures' => '4h',
                     '4 heures 30' => '4h30',
                     '5 heures' => '5h',
-                    'plus de 5 heures' => 'plus_5h',
+                    'plus de 5 heures' => '+ de 5h',
                 ],
                 'multiple' => false,
                 'expanded' => false,
