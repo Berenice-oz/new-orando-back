@@ -3,13 +3,18 @@
 	<div class="header_content">
 		<div class="header_top">
 			<a href="http://localhost:8080" class="header_logo_link">
-			<img class="header_logo" src='{{ absolute_url(asset('images/logo.png')) }}' alt="orando logo"/>
+				<img class="header_logo" src='{{ absolute_url(asset('images/logo.png')) }}' alt="orando logo"/>
 			</a>
 			<nav class="header_nav">
 				<a href="http://localhost:8080" class="header_nav_item">Accueil</a>
 				<a href="http://localhost:8000/walk/create" class="header_nav_item">Créer une randonnée</a>
-				<a href="http://localhost:8080/account" class="header_nav_item">Mon Compte</a>
-				<a href="http://localhost:8080/disconnect" class="header_nav_item">Déconnexion</a>
+				{% if is_granted('IS_ANONYMOUS') %}
+				<a href="http://localhost:8000/authentication" class="header_nav_item">Connexion</a>
+				{% endif %}
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<a href="http://localhost:8080/account" class="header_nav_item">Mon Compte</a>
+					<a href="http://localhost:8080/disconnect" class="header_nav_item">Déconnexion</a>
+				{% endif %}
 			</nav>
 		</div>
 		<h1 class="header_title">O'RANDO</h1>
