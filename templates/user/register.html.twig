@@ -1,40 +1,37 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Inscription
 {% endblock %}
-
 {% block body %}
 	<h2>Inscription</h2>
 	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 	<div class="field">
-	{{ form_label(form.area) }}
-	{{ form_widget(form.area) }}
+		{{ form_label(form.area) }}
+		{{ form_widget(form.area) }}
 	</div>
 	<div class="field">
-	{{ form_label(form.email) }}
-	{{ form_widget(form.email) }}
+		{{ form_label(form.email) }}
+		{{ form_widget(form.email) }}
 	</div>
 	<div class="field">
-	{{ form_label(form.nickname) }}
-	{{ form_widget(form.nickname) }}
+		{{ form_label(form.nickname) }}
+		{{ form_widget(form.nickname) }}
 	</div>
 	<div class="field">
-	{{ form_label(form.firstname) }}
-	{{ form_widget(form.firstname) }}
+		{{ form_label(form.firstname) }}
+		{{ form_widget(form.firstname) }}
 	</div>
 	<div class="field">
-	{{ form_label(form.lastname) }}
-	{{ form_widget(form.lastname) }}
+		{{ form_label(form.lastname) }}
+		{{ form_widget(form.lastname) }}
 	</div>
 	<div class="field">
-	{{ form_label(form.password) }}
-	{{ form_widget(form.password) }}
+		{{ form_label(form.password) }}
+		{{ form_widget(form.password) }}
 	</div>
 	<div class="field">
-	{{ form_label(form.imageFile) }}
-	{{ form_widget(form.imageFile) }}
+		{{ form_label(form.imageFile) }}
+		{{ form_widget(form.imageFile) }}
 	</div>
 	<button type="submit" class="btn btn-success">M'inscrire</button>
 	{{ form_end(form) }}
-
 {% endblock %}
