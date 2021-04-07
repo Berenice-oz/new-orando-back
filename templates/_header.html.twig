@@ -6,14 +6,14 @@
 				<img class="header_logo" src='{{ absolute_url(asset('images/logo.png')) }}' alt="orando logo"/>
 			</a>
 			<nav class="header_nav">
-				<a href="http://localhost:8080" class="header_nav_item">Accueil</a>
-				<a href="http://localhost:8000/walk/create" class="header_nav_item">Créer une randonnée</a>
+				<a href="http://localhost:8080" class="header_nav_item"><img class="header_nav_home_logo" src="{{ absolute_url(asset('images/home.png')) }}" alt="logo-orando" />Accueil</a>
+				<a href="http://localhost:8000/walk/create" class="header_nav_item"><img class="header_nav_create_logo" src="{{ absolute_url(asset('images/create.png')) }}" alt="logo-create-walk" />Créer une randonnée</a>
 				{% if is_granted('IS_ANONYMOUS') %}
-				<a href="http://localhost:8000/authentication" class="header_nav_item">Connexion</a>
+				<a href="http://localhost:8000/authentication" class="header_nav_item"><img class="header_nav_home_connect" src="{{ absolute_url(asset('images/login1.png')) }}" alt="logo-connect" />Connexion</a>
 				{% endif %}
 				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-					<a href="http://localhost:8080/account" class="header_nav_item">Mon Compte</a>
-					<a href="http://localhost:8080/disconnect" class="header_nav_item">Déconnexion</a>
+					<a href="http://localhost:8080/account" class="header_nav_item"><img class="header_nav_home_avatar" src="{{ absolute_url(asset('images/054-hiker.png')) }}" alt="logo-avatar" />Mon Compte</a>
+					<a href="http://localhost:8080/disconnect" class="header_nav_item"><img class="header_nav_home_disconnect" src="{{ absolute_url(asset('icones/exit2.svg')) }}" alt="logo-disconnect" />Déconnexion</a>
 				{% endif %}
 			</nav>
 		</div>

@@ -1,21 +1,26 @@
 <nav class="mobilenav">
-	<a href="http://localhost:8080">
+	<a href="http://localhost:8080" class="mobilenav_home_content">
 		<img src="{{ asset('icones/home.svg') }}" alt="home logo" class="mobilenav_home"/>
+		<p class="mobilenav_home_text">Accueil</p>
 	</a>
-	<a href="{{ path('walk_create') }}">
+	<a href="{{ path('walk_create') }}" class="mobilenav_create_content">
 		<img src="{{ asset('icones/create-hike.svg') }}" alt="create hike" class="mobilenav_create"/>
+		<p class="mobilenav_create_text">Créer</p>
 	</a>
 	{% if is_granted('IS_ANONYMOUS') %}
-		<a href="http://localhost:8080/authentication">
+		<a href="http://localhost:8080/authentication" class="mobilenav_login_content">
 			<img src="{{ asset('icones/server.svg') }}" alt="login" class="mobilenav_login"/>
+			<p class="mobilenav_login_text">Connexion</p>
 		</a>
 	{% endif %}
 	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		<a href="http://localhost:8080/account">
+		<a href="http://localhost:8080/account" class="mobilenav_connected_content">
 			<img class="mobilenav_connected" src="{{ asset('icones/bear.svg') }}" alt="logged"/>
+			<p className="mobilenav_connected_text">Mon compte</p>
 		</a>
-		<a href="{{ path('app_logout') }}" class="mobilenav_logout" type="submit">
-			Logout
+		<a href="{{ path('app_logout') }}" class="mobilenav_logout_content" type="submit">
+			<img class="mobilenav_logout" src="{{ asset('icones/exit2.svg') }}" alt="logged" />
+          <p class="mobilenav_logout_text">Deconnexion</p
 		</a>
 	{% endif %}
 	{# <a to="/account">

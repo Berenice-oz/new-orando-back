@@ -1,9 +1,15 @@
 <footer class="footer">
+    <div class="footer_icon_left">
+      <img class="icon_left" src="{{ absolute_url(asset('icones/leaf.svg')) }}" alt="icone" />
+    </div>
     <div class="footer_link">
-      <a href="" class="footer_instructions_link">Fonctionnement du site</a>
+      <a href="" class="footer_instructions_link">Fonctionnement</a>
       <a href="http://localhost:8000/about_us" class="footer_informations_link">
         Qui sommes-nous
       </a>
       <a href="{{ path('contact_form') }}" class="footer_contact_link">Contact</a>
     </div>
-  </footer>
+    <div class="footer_icon_right">
+      <img class="icon_right" src="{{ absolute_url(asset('icones/mushrooms.svg')) }}" alt="icone" />
+    </div>
+</footer>
