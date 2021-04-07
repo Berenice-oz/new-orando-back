@@ -17,7 +17,7 @@ class WalkController extends AbstractController
 {
     /**
      * @param WalkRepository $walkRepository
-     * @return json
+     * @return JSON
      * 
      * Walk's list
      * @Route("/api/walks", name="api_walks", methods={"GET"})
@@ -39,7 +39,7 @@ class WalkController extends AbstractController
     /**
      * @param mixed $walk
      * @param WalkRepository $walkRepository
-     * @return json
+     * @return JSON
      * 
      * Data of a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_read_item", methods={"GET"})
@@ -73,7 +73,7 @@ class WalkController extends AbstractController
     /**
      * @param mixed $walk
      * @param EntityManagerInterface $em
-     * @return json
+     * @return JSON
      * 
      * Delete a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_delete", methods={"DELETE"})

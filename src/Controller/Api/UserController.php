@@ -3,7 +3,6 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
-use App\Entity\Walk;
 use App\Repository\ParticipantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,10 +17,14 @@ use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 class UserController extends AbstractController
 {
     /**
+     * @param User $user
+     * @param ParticipantRepository $participantRepository
+     * @return JSON
+     * 
      * Data of a user
      * @Route("/api/users/{id<\d+>}", name="api_users_read_item", methods={"GET"})
      */
-    public function readItem(User $user = null, Walk $walk, ParticipantRepository $participantRepository):Response
+    public function readItem(User $user = null, ParticipantRepository $participantRepository):Response
     {
         if ($user === null) {
             $message = [

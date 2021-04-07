@@ -12,7 +12,7 @@ class AreaController extends AbstractController
 {
     /**
      * @param AreaRepository $areaRepository
-     * @return json
+     * @return JSON
      * 
      * Area's list with walks
      * @Route("/api/areas", name="api_areas", methods={"GET"})
@@ -40,8 +40,8 @@ class AreaController extends AbstractController
 
     /**
      * @param AreaRepository $areaRepository
-     * @param mixed $area
-     * @return json
+     * @param Area $area
+     * @return JSON
      * 
      * Walk's list by area
      * @Route("/api/areas/{id<\d+>}", name="api_areas_read_item", methods="GET")
