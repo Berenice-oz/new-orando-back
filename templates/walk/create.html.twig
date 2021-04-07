@@ -2,7 +2,9 @@
 {% block title %}Je crée ma randonnée
 {% endblock %}
 {% block body %}
-	<h2>C'est parti ! Je crée ma randonnée</h2>
+	<div class="title_margin">
+		<h2>C'est parti ! Je crée ma randonnée</h2>
+	</div>
 	{# Inclusion of the "partial" form #}
 	{{ include('walk/_form.html.twig') }}
 {% endblock %}
