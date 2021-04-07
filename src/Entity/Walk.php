@@ -14,10 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
-
-
-
-
 /**
  * @ORM\Entity(repositoryClass=WalkRepository::class)
  * @ORM\HasLifecycleCallbacks()
