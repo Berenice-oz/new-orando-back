@@ -2,7 +2,9 @@
 {% block title %}Inscription
 {% endblock %}
 {% block body %}
-	<h2>Inscription</h2>
+	<div class="title_margin">
+		<h2>Inscription</h2>
+	</div>
 	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 	<div class="field">
 		{{ form_label(form.area) }}

@@ -2,9 +2,11 @@
 {% block title %}Je modifie ma randonnée
 {% endblock %}
 {% block body %}
-	<h2>
-		Modification de la randonnée
-	</h2>
+	<div class="title_margin">
+		<h2>
+			Modification de la randonnée
+		</h2>
+	</div>
 	{# Inclusion of the "partial" form #}
 	{{ include('walk/_form.html.twig') }}
 {% endblock %}
