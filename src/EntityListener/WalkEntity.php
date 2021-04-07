@@ -11,11 +11,21 @@ class WalkEntity
 {
     private $tokenStorage;
 
+    /**
+     *
+     * @param TokenStorageInterface $tokenStorage
+     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * 
+     * @param Walk $walk
+     * @param LifecycleEventArgs $event
+     * @return void
+     */
     public function prePersist(Walk $walk, LifecycleEventArgs $event)
     {
         //Set Creator
@@ -35,6 +45,12 @@ class WalkEntity
         $walk->setCreatedAt(new \DateTime());
     }
 
+    /**
+     *
+     * @param Walk $walk
+     * @param LifecycleEventArgs $event
+     * @return void
+     */
     public function preUpdate(Walk $walk, LifecycleEventArgs $event)
     {
         $walk->setUpdatedAt(new \DateTime());

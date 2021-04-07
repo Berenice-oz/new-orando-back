@@ -8,17 +8,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Mailer\MailerInterface $mailer
-     * 
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @return Response|RedirectResponse
      * 
      * @Route("/contact", name="contact_form", methods={"GET", "POST"})
      */
-    public function form(Request $request, MailerInterface $mailer)
+    public function form(Request $request, MailerInterface $mailer): Response
     {
         // creation's form 
         $form = $this->createForm(ContactType::class);

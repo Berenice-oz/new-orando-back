@@ -19,6 +19,12 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class RegisterType extends AbstractType
 {
+    /**
+     * 
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

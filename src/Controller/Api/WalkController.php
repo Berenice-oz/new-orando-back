@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class WalkController extends AbstractController
 {
     /**
-     * @param \App\Repository\WalkRepository $walkRepository
+     * @param WalkRepository $walkRepository
      * @return json
      * 
      * Walk's list
@@ -36,8 +36,8 @@ class WalkController extends AbstractController
     }
 
     /**
-     * @param \App\Entity\Walk $walk
-     * @param \App\Repository\WalkRepository $walkRepository
+     * @param mixed $walk
+     * @param WalkRepository $walkRepository
      * @return json
      * 
      * Data of a walk
@@ -65,6 +65,10 @@ class WalkController extends AbstractController
     }
 
     /**
+     * @param mixed $walk
+     * @param EntityManagerInterface $em
+     * @return json
+     * 
      * Delete a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_delete", methods={"DELETE"})
      */

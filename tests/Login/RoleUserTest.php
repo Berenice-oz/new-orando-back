@@ -24,7 +24,7 @@ class RoleUserTest extends WebTestCase
         // simulate $testUser being logged in
         $client->loginUser($testUser);
 
-        // test e.g. the profile page
+        // test e.g. the walk form create page
         $client->request('GET', '/walk/create');
         $this->assertResponseIsSuccessful();
        

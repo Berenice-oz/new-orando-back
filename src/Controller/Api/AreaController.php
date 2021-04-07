@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AreaController extends AbstractController
 {
     /**
-     * @param \App\Repository\AreaRepository $areaRepository
+     * @param AreaRepository $areaRepository
      * @return json
      * 
      * Area's list with walks
@@ -39,8 +39,8 @@ class AreaController extends AbstractController
     } 
 
     /**
-     * @param \App\Repository\AreaRepository $areaRepository
-     * @param \App\Entity\Area|null $area
+     * @param AreaRepository $areaRepository
+     * @param mixed $area
      * @return json
      * 
      * Walk's list by area
