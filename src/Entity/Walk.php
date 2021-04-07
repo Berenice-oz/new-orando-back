@@ -104,6 +104,7 @@ class Walk
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
+     * @Assert\Positive
      */
     private $kilometre;
 
