@@ -8,13 +8,13 @@ namespace App\DataFixtures\Data;
 class TagData
 {
     static $tagsData = [
-        ["name" => "En famille", "color" => "#84258E"],
-        ["name" => "Animaux bienvenus", "color" => "#5A5F62"],
-        ["name" => "Urbaine", "color" => "#FF6600"],
-        ["name" => "Bord de mer", "color" => "#02D5E6"],
-        ["name" => "Montagne", "color" => "#64391F"],
-        ["name" => "Nocturne", "color" => "#0E3151"],
-        ["name" => "A vélo", "color" => "Corail"],
+        ["name" => "En famille", "color" => "purple"],
+        ["name" => "Animaux bienvenus", "color" => "grey"],
+        ["name" => "Urbaine", "color" => "orange"],
+        ["name" => "Bord de mer", "color" => "blue"],
+        ["name" => "Montagne", "color" => "brown"],
+        ["name" => "Nocturne", "color" => "dark-blue"],
+        ["name" => "A vélo", "color" => "corail"],
 
     ];
 }
