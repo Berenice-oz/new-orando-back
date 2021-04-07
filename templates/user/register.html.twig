@@ -2,38 +2,50 @@
 {% block title %}Inscription
 {% endblock %}
 {% block body %}
-	<div class="title_margin">
-		<h2>Inscription</h2>
+	<div class="page-user-content">
+		<div class="container">
+			<div class="title_margin title_margin--user">
+				<img class="title_image" src="{{ absolute_url(asset('icones/edit.png')) }}" alt="register_icon"/>
+				<h2>Inscription</h2>
+			</div>
+			{{ form_start(form) }}
+			<div class="field">
+				{{ form_label(form.area) }}
+				{{ form_widget(form.area) }}
+				{{ form_errors(form.area) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.email) }}
+				{{ form_widget(form.email) }}
+				{{ form_errors(form.email) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.nickname) }}
+				{{ form_widget(form.nickname) }}
+				{{ form_errors(form.nickname) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.firstname) }}
+				{{ form_widget(form.firstname) }}
+				{{ form_errors(form.firstname) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.lastname) }}
+				{{ form_widget(form.lastname) }}
+				{{ form_errors(form.lastname) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.password) }}
+				{{ form_widget(form.password) }}
+				{{ form_errors(form.password) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.imageFile) }}
+				{{ form_widget(form.imageFile) }}
+				{{ form_errors(form.imageFile) }}
+			</div>
+			<button type="submit" class="btn btn-success">M'inscrire</button>
+			{{ form_end(form) }}
+		</div>
 	</div>
-	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-	<div class="field">
-		{{ form_label(form.area) }}
-		{{ form_widget(form.area) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.email) }}
-		{{ form_widget(form.email) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.nickname) }}
-		{{ form_widget(form.nickname) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.firstname) }}
-		{{ form_widget(form.firstname) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.lastname) }}
-		{{ form_widget(form.lastname) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.password) }}
-		{{ form_widget(form.password) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.imageFile) }}
-		{{ form_widget(form.imageFile) }}
-	</div>
-	<button type="submit" class="btn btn-success">M'inscrire</button>
-	{{ form_end(form) }}
 {% endblock %}

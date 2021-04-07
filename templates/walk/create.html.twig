@@ -2,9 +2,14 @@
 {% block title %}Je crée ma randonnée
 {% endblock %}
 {% block body %}
-	<div class="title_margin">
-		<h2>C'est parti ! Je crée ma randonnée</h2>
+	<div class="page-walk-content">
+		<div class="container">
+			<div class="title_margin title_margin--walk">
+				<img class="title_image" src="{{ absolute_url(asset('icones/trekking.png')) }}" alt="register_icon"/>
+				<h2>C'est parti ! Je crée ma randonnée</h2>
+			</div>
+			{# Inclusion of the "partial" form #}
+			{{ include('walk/_form.html.twig') }}
+		</div>
 	</div>
-	{# Inclusion of the "partial" form #}
-	{{ include('walk/_form.html.twig') }}
 {% endblock %}

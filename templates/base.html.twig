@@ -6,6 +6,8 @@
 			{% block title %}O'Rando
 			{% endblock %}
 		</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1"/>
+		<meta http-equiv="x-ua-compatible" content="ie=edge"/>
 		<link
 		href="{{ asset('css/main.css') }}" rel="stylesheet"/>
 		{# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> #}
@@ -18,11 +20,7 @@
 		{{ include('_header.html.twig') }}
 		{# Inclusion of the "partial" _flash_message #}
 		{{ include('_flash_message.html.twig') }}
-		<div class="page">
-			<div class="page-content">
-				<div class="container"> {% block body %}{% endblock %}
-					</div>
-				</div>
+		<div class="page"> {% block body %}{% endblock %}
 			</div>
 			{{ include('_nav_mobile.html.twig') }}
 			{{ include('_footer.html.twig') }}

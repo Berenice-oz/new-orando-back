@@ -163,7 +163,8 @@ class WalkType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'attr' => ['novalidate' => 'novalidate'],
+            'attr' => ['class' => 'form'],
         ]);
     }
 }

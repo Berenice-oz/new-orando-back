@@ -2,24 +2,38 @@
   border: none;
 }
 
-.page-content {
+.page-user-content {
   background: linear-gradient(#fee5e3, #fff);
-  min-height: 100vh;
-  margin: -15px;
+}
+
+.page-walk-content {
+  background: linear-gradient(#e5ece3, #fff);
 }
 
 .title_margin {
-  margin: 0 50px 50px 0;
-  padding: 25px;
   color: white;
   font-weight: bold;
   font-size: 2.5rem;
-  background: linear-gradient(to bottom right, #E1645F, #f29991);
   border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  margin-left: -3rem;
+  position: relative;
+  left:-1rem;
+  padding: 1rem 1rem;
+  margin-top: 2rem;
+}
+
+.title_image { 
+  width: 60px;
+  margin-left: 2rem;
+}
+
+.title_margin--user {
+  background: linear-gradient(to bottom right, #E1645F, #f29991);
+}
+
+.title_margin--walk {
+  background: linear-gradient(to bottom right, #678e62, #b1c5ae);
 }
 
 .container {
@@ -27,5 +41,9 @@
   flex-wrap: wrap;
   justify-content: space-between;
   flex-direction: column;
-  padding: 3rem;
 }
+
+.form {
+  padding: 0 1rem;
+}
+
