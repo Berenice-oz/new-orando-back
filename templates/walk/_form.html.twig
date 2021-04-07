@@ -1,62 +1,98 @@
 {{ form_start(form) }}
 {# génère tous les champs du form#}
 <div class="field">
-	{{ form_label(form.title) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/title.png'))}}" class="field-icones">
+		{{ form_label(form.title) }}
+	</div>
 	{{ form_widget(form.title) }}
 	{{ form_errors(form.title) }}
 </div>
 <div class="field">
-	{{ form_label(form.area) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/location.png'))}}" class="field-icones">
+		{{ form_label(form.area) }}
+	</div>
 	{{ form_widget(form.area) }}
 	{{ form_errors(form.area) }}
 </div>
 <div class="field">
-	{{ form_label(form.tags) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/tags.png'))}}" class="field-icones">
+		{{ form_label(form.tags) }}
+	</div>
 	{{ form_widget(form.tags) }}
 	{{ form_errors(form.tags) }}
 </div>
 <div class="field">
-	{{ form_label(form.startingPoint) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/047-mountain.svg'))}}" class="field-icones">
+		{{ form_label(form.startingPoint) }}
+	</div>
 	{{ form_widget(form.startingPoint) }}
 	{{ form_errors(form.startingPoint) }}
 </div>
 <div class="field">
-	{{ form_label(form.endPoint) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/retour.svg'))}}" class="field-icones">
+		{{ form_label(form.endPoint) }}
+	</div>
 	{{ form_widget(form.endPoint) }}
 </div>
 <div class="field">
-	{{ form_label(form.date) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/calendar.png'))}}" class="field-icones">
+		{{ form_label(form.date) }}
+	</div>
 	{{ form_widget(form.date) }}
 	{{ form_errors(form.date) }}
 </div>
 <div class="field">
-	{{ form_label(form.duration) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/clock.svg'))}}" class="field-icones">
+		{{ form_label(form.duration) }}
+	</div>
 	{{ form_widget(form.duration) }}
 	{{ form_errors(form.duration) }}
 </div>
 <div class="field">
-	{{ form_label(form.kilometre) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/clock.svg'))}}" class="field-icones">
+		{{ form_label(form.kilometre) }}
+	</div>
 	{{ form_widget(form.kilometre) }}
 	{{ form_errors(form.kilometre) }}
 </div>
 <div class="field">
-	{{ form_label(form.difficulty) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/climbing.svg'))}}" class="field-icones">
+		{{ form_label(form.difficulty) }}
+	</div>
 	{{ form_widget(form.difficulty) }}
 	{{ form_errors(form.difficulty) }}
 </div>
 <div class="field">
-	{{ form_label(form.elevation) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/hiking.svg'))}}" class="field-icones">
+		{{ form_label(form.elevation) }}
+	</div>
 	{{ form_widget(form.elevation) }}
 	{{ form_errors(form.elevation) }}
 </div>
 <div class="field">
-	{{ form_label(form.maxNbPersons) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/two_hikes.svg'))}}" class="field-icones">
+		{{ form_label(form.maxNbPersons) }}
+	</div>
 	{{ form_widget(form.maxNbPersons) }}
-    <small>{{ form_help(form.maxNbPersons) }}</small>
+	<small>{{ form_help(form.maxNbPersons) }}</small>
 	{{ form_errors(form.maxNbPersons) }}
 </div>
 <div class="field">
-	{{ form_label(form.description) }}
+	<div class="field-label">
+		<img src="{{ absolute_url(asset('icones/info.svg'))}}" class="field-icones">
+		{{ form_label(form.description) }}
+	</div>
 	{{ form_widget(form.description) }}
 	{{ form_errors(form.description) }}
 </div>
@@ -65,5 +101,5 @@
 	{{ form_widget(form.status) }}
 	{{ form_errors(form.status) }}
 </div> #}
-<button type="submit" class="btn btn-success">Valider</button>
+<button type="submit" class="field-submit">Valider</button>
 {{ form_end(form) }}
