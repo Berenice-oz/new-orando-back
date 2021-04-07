@@ -1,0 +1,27 @@
+<nav class="mobilenav">
+	<a href="http://localhost:8080">
+		<img src="{{ asset('icones/home.svg') }}" alt="home logo" class="mobilenav_home"/>
+	</a>
+	<a href="{{ path('walk_create') }}">
+		<img src="{{ asset('icones/create-hike.svg') }}" alt="create hike" class="mobilenav_create"/>
+	</a>
+	{% if is_granted('IS_ANONYMOUS') %}
+		<a href="http://localhost:8080/authentication">
+			<img src="{{ asset('icones/server.svg') }}" alt="login" class="mobilenav_login"/>
+		</a>
+	{% endif %}
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<a href="http://localhost:8080/account">
+			<img class="mobilenav_connected" src="{{ asset('icones/bear.svg') }}" alt="logged"/>
+		</a>
+		<a href="{{ path('app_logout') }}" class="mobilenav_logout" type="submit">
+			Logout
+		</a>
+	{% endif %}
+	{# <a to="/account">
+		          <img class="mobilenav_connected" src={bear} alt="logged" />
+		        </a>
+		        <a href="https://orando.me/o/logout" class="mobilenav_logout" type="submit" onClick={handleLogout}>
+		          <RiLogoutCircleRLine size={46} />
+		        </a> #}
+</nav>

@@ -1,0 +1,51 @@
+.field .input--no-border {
+  border: none;
+}
+
+.page-user-content {
+  background: linear-gradient(#fee5e3, #fff);
+}
+
+.page-walk-content {
+  background: linear-gradient(#e5ece3, #fff);
+}
+
+.title_margin {
+  color: white;
+  font-weight: bold;
+  font-size: 2.5rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left:-1rem;
+  padding: 1rem 1rem;
+  margin-top: 2rem;
+}
+
+.title_image { 
+  width: 60px;
+  margin-left: 2rem;
+}
+
+.title_margin--user {
+  background: linear-gradient(to bottom right, #E1645F, #f29991);
+}
+
+.title_margin--walk {
+  background: linear-gradient(to bottom right, #678e62, #b1c5ae);
+}
+
+.input--walk:focus{border-color:#678e62}.field .input:focus+.label{color:#678e62}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.form {
+  padding: 0 1rem;
+}
+

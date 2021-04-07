@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Je crée ma randonnée{% endblock %}
-
+{% block title %}Je crée ma randonnée
+{% endblock %}
 {% block body %}
-<h1> C'est parti ! Je crée ma randonnée </h1>
-
-{# Inclusion of the "partial" form #}
-{{ include('walk/_form.html.twig') }}
-
-
-
+	<div class="page-walk-content">
+		<div class="container">
+			<div class="title_margin title_margin--walk">
+				<img class="title_image" src="{{ absolute_url(asset('icones/075-route.svg')) }}" alt="register_icon"/>
+				<h2>C'est parti ! Je crée ma randonnée</h2>
+			</div>
+			{# Inclusion of the "partial" form #}
+			{{ include('walk/_form.html.twig') }}
+		</div>
+	</div>
 {% endblock %}

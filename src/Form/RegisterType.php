@@ -30,27 +30,33 @@ class RegisterType extends AbstractType
                         ->orderBy('a.name', 'ASC');
                 },
                 'label' => 'Région',
-                'placeholder' => 'Sélectionner votre région...',
+                'placeholder' => 'Sélectionnez votre région...',
                 'constraints' => [
                     new NotBlank(),
                 ],
+                'attr' => ['class' => 'input']
                 
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Votre email:'
+                'label' => 'Votre email:',
+                'attr' => ['class' => 'input']
             ])
             ->add('nickname', TextType::class, [
                 'label' => 'Votre pseudo:',
+                'attr' => ['class' => 'input']
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'Votre prénom:',
+                'attr' => ['class' => 'input']
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Votre nom:',
+                'attr' => ['class' => 'input']
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'empty_data' => '',
+                'attr' => ['class' => 'input']
             ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Votre photo',
@@ -63,7 +69,8 @@ class RegisterType extends AbstractType
                             ],
                             'mimeTypesMessage' => 'Le fichier n\'est pas au bon format (formats acceptés: .png, .jpg, .jpeg)',
                         ]),
-                    ]
+                ],
+                'attr' => ['class' => 'input']
             ])
         ;
     }
@@ -73,6 +80,7 @@ class RegisterType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'attr' => ['novalidate' => 'novalidate'],
+            'attr' => ['class' => 'form'],
         ]);
     }
 }

@@ -31,6 +31,7 @@ class WalkType extends AbstractType
             // this line means(and the others means the same) : the field => title (arbitrary name of the field ) is known as Text
             ->add('title', TextType::class, [
                 'label' => 'Titre*',
+                'attr' => ['class' => 'input']
             ])
             ->add('area', EntityType::class, [
                 'class' => Area::class,
@@ -47,6 +48,7 @@ class WalkType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
+                'attr' => ['class' => 'input']
                
             ])
 
@@ -65,13 +67,16 @@ class WalkType extends AbstractType
                 // multiple => true is important because tags is a collection(cf Entity Walk => tags)
                 'multiple' => true,
                 'expanded' => true,
+                'attr' => ['class' => 'input--no-border']
             ])
             
             ->add('startingPoint', TextType::class, [
                 'label' => 'Point de départ*',
+                'attr' => ['class' => 'input']
             ])
             ->add('endPoint', TextType::class, [
                 'label' => 'Point d\'arrivée (si différent du point de départ)',
+                'attr' => ['class' => 'input']
             ])
             ->add('date', DateTimeType::class, [
                 'label' => 'Date et heure de départ*',
@@ -79,7 +84,8 @@ class WalkType extends AbstractType
                     'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
                 ],
                 'years' => range(date('Y'), date('Y')+5),
-                'input_format' => 'd-m-Y H:m'
+                'input_format' => 'd-m-Y H:m',
+                'attr' => ['class' => 'input--no-border']
             ])
             ->add('duration', ChoiceType::class, [
                 'label' => 'Durée approximative*',
@@ -94,41 +100,45 @@ class WalkType extends AbstractType
                     '4 heures' => '4h',
                     '4 heures 30' => '4h30',
                     '5 heures' => '5h',
-                    'plus de 5 heures' => 'plus_5h',
+                    'plus de 5 heures' => '+ de 5h',
                 ],
                 'multiple' => false,
                 'expanded' => false,
-                
+                'attr' => ['class' => 'input']
             ])
             ->add('kilometre', IntegerType::class, [
                 'label' => 'Nombre de kilomètres(environ)',
-                
+                'attr' => ['class' => 'input']
             ])
             ->add('difficulty', null, [
                 'label' => 'Niveau de difficulté*',
                 'multiple' => false,
                 'expanded' => true,
+                'attr' => ['class' => 'input--no-border']
             ])
             ->add('elevation', IntegerType::class, [
                 'label' => 'Dénivelé (en mètres)',
                 'attr' => [
                     'min' => 1,
                     'max' => 2000
-                ]
+                ],
+                'attr' => ['class' => 'input']
             ])
             ->add('maxNbPersons', IntegerType::class, [
                 'label' => 'Nombre de personnes maximum',
                 'attr' => [
                     'min' => 1,
-                ]
+                ],
+                'attr' => ['class' => 'input']
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description / infos pratiques*',
-                'help' => 'toute information utile pour les participants : adresse exacte du point de départ, matériel recommandé, présence de points d’eau ...'
+                'help' => 'toute information utile pour les participants : adresse exacte du point de départ, matériel recommandé, présence de points d’eau ...',
+                'attr' => ['class' => 'input']
             ])
 
             // we add an event because when we create a walk , we don't need status field
-            // except when it is to edit the walk 
+            // except when it is to edit the walk
             // PRE_SET_DATA allow to interact with the form and the Entity
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $walk = $event->getData();
@@ -143,18 +153,19 @@ class WalkType extends AbstractType
                             'Annulée' => 0,
                             'A venir' => 1,
                             'Terminée' => 2,
-                        ]
+                        ],
+                        'attr' => ['class' => 'input']
                     ]);
-                } 
+                }
             })
         ;
-    
-    }   
+    }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'attr' => ['novalidate' => 'novalidate'],
+            'attr' => ['class' => 'form'],
         ]);
     }
 }
