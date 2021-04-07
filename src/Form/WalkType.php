@@ -153,7 +153,8 @@ class WalkType extends AbstractType
                             'Annulée' => 0,
                             'A venir' => 1,
                             'Terminée' => 2,
-                        ]
+                        ],
+                        'attr' => ['class' => 'input']
                     ]);
                 }
             })

@@ -60,5 +60,10 @@
 	{{ form_widget(form.description) }}
 	{{ form_errors(form.title) }}
 </div>
+<div class="field">
+	{{ form_label(form.status) }}
+	{{ form_widget(form.status) }}
+	{{ form_errors(form.status) }}
+</div>
 <button type="submit" class="btn btn-success">Valider</button>
 {{ form_end(form) }}
