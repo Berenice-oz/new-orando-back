@@ -11,7 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AreaController extends AbstractController
 {
     /**
-     * area's list
+     * @param AreaRepository $areaRepository
+     * @return JSON
+     * 
+     * Area's list with walks
      * @Route("/api/areas", name="api_areas", methods={"GET"})
      */
     public function read(AreaRepository $areaRepository): Response
@@ -36,6 +39,10 @@ class AreaController extends AbstractController
     } 
 
     /**
+     * @param AreaRepository $areaRepository
+     * @param Area $area
+     * @return JSON
+     * 
      * Walk's list by area
      * @Route("/api/areas/{id<\d+>}", name="api_areas_read_item", methods="GET")
      */
@@ -53,7 +60,7 @@ class AreaController extends AbstractController
         // To get back walks'list by area ,I coded a custom method in the AreaRepository
         $walksByArea = $areaRepository->findAllWalkJoinedToArea($area);
 
-        // we give in Json format
+        // we give data in Json format
         return $this->json(
             $walksByArea,
             Response::HTTP_OK,

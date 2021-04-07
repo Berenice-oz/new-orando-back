@@ -10,18 +10,21 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class WalkController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response|RedirectReponse
+     * 
      * This method display walk form(methods = GET) and treat data of the form (methods="POST")
      * 
      * @Route("/walk/create", name="walk_create", methods={"GET", "POST"})
      */
-    public function create(Request $request, EntityManagerInterface $em, SessionInterface $session): Response
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
         // we create a new Walk
         $walk = new Walk;
@@ -65,18 +68,23 @@ class WalkController extends AbstractController
 
         return $this->render('walk/create.html.twig', [
             'walk' => $walk,
-            //we send to the template "a view of the form" thank to createView()
+            //we send to a template form thank to createView()
             'form' => $form->createView(),
         ]);
     }
 
     /**
+     * @param Walk $walk
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response|RedirectResponse
+     * 
      * Edit a walk
      * 
      * @Route("/walk/edit/{id<\d+>}", name="walk_edit", methods={"GET","POST"})
      *
      */
-    public function edit(Walk $walk = null, Request $request, EntityManagerInterface $em, SessionInterface $session)
+    public function edit(Walk $walk = null, Request $request, EntityManagerInterface $em): Response
     {
         // managing error => 404 
         if (null === $walk) {
@@ -121,4 +129,6 @@ class WalkController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
 }

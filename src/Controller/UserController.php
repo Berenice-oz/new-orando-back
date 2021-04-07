@@ -18,9 +18,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response|RedirectResponse
+     * 
      * @Route("/register", name="user_register", methods={"GET","POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder)
+    public function register(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
 
@@ -48,6 +52,11 @@ class UserController extends AbstractController
 
 
     /**
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @param User $user
+     * @return Response|RedirectResponse
+     * 
      * Form to contact a user and send message by mail
      * @Route("/profile/{id<\d+>}/contact-user", name="contact_user", methods={"GET","POST"})
      */

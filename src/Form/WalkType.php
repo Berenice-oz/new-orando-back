@@ -25,6 +25,12 @@ class WalkType extends AbstractType
     // This class WalkType allow to create some field in your form with Form Field Type Reference
     // thank to this method => buildform
     // Form Fiel Types Reference is for instance in our case TextType::class, EntityType::class etc
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

@@ -18,6 +18,9 @@ class SecurityController extends AbstractController
    
     
     /**
+     * @param AutenticationUtils $authenticationUtils
+     * @return Response
+     * 
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -52,6 +55,13 @@ class SecurityController extends AbstractController
 
 
     /**
+     * 
+     * @param LoginFormAuthenticator $authenticator
+     * @param GuardAuthenticatorHandler $guardHandler
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param UserPasswordEncoderInterface $userEncoder
+     * 
      * @Route("/api/login/check", name="login_check", methods={"POST"})
      *
      */
@@ -78,7 +88,10 @@ class SecurityController extends AbstractController
         );
        
         
-
-        
     }
+
+ 
+
+   
+
 }

@@ -16,6 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ParticipantController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param EntityManagerInterface $entityManager
+     * @param ValidatorInterface $validator
+     * @return json
+     * 
      * User's Participation to a walk
      * @Route("/api/participant", name="api_participant_create", methods={"POST"})
      */
@@ -42,6 +48,11 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param ParticipantRepository $participantRepository
+     * @param EntityManagerInterface $entityManager
+     * @return JSON
+     * 
      * @Route("/api/participant", name="api_participant_update", methods={"PATCH"})
      */
     public function update(Request $request, ParticipantRepository $participantRepository,EntityManagerInterface $entityManager)
