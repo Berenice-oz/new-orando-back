@@ -16,6 +16,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 
 
+
+
 /**
  * @ORM\Entity(repositoryClass=WalkRepository::class)
  * @ORM\HasLifecycleCallbacks()
@@ -124,7 +126,8 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * 
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $creator;
 

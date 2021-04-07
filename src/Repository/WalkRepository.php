@@ -20,6 +20,5 @@ class WalkRepository extends ServiceEntityRepository
     }
 
     
-  
     
 }
