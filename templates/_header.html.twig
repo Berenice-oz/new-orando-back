@@ -7,9 +7,9 @@
 			</a>
 			<nav class="header_nav">
 				<a href="http://localhost:8080" class="header_nav_item"><img class="header_nav_home_logo" src="{{ absolute_url(asset('images/home.png')) }}" alt="logo-orando" />Accueil</a>
-				<a href="http://localhost:8000/walk/create" class="header_nav_item"><img class="header_nav_create_logo" src="{{ absolute_url(asset('images/create.png')) }}" alt="logo-create-walk" />Créer une randonnée</a>
+				<a href="{{ path('walk_create') }}" class="header_nav_item"><img class="header_nav_create_logo" src="{{ absolute_url(asset('images/create.png')) }}" alt="logo-create-walk" />Créer une randonnée</a>
 				{% if is_granted('IS_ANONYMOUS') %}
-				<a href="http://localhost:8000/authentication" class="header_nav_item"><img class="header_nav_home_connect" src="{{ absolute_url(asset('icones/enter.svg')) }}" alt="logo-connect" />Connexion</a>
+				<a href="http://localhost:8080/authentication" class="header_nav_item"><img class="header_nav_home_connect" src="{{ absolute_url(asset('icones/enter.svg')) }}" alt="logo-connect" />Connexion</a>
 				{% endif %}
 				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 					<a href="http://localhost:8080/account" class="header_nav_item"><img class="header_nav_home_avatar" src="{{ absolute_url(asset('images/054-hiker.png')) }}" alt="logo-avatar" />Mon Compte</a>
