@@ -13,7 +13,7 @@
 				{% endif %}
 				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 					<a href="http://localhost:8080/account" class="header_nav_item"><img class="header_nav_home_avatar" src="{{ absolute_url(asset('images/054-hiker.png')) }}" alt="logo-avatar" />Mon Compte</a>
-					<a href="http://localhost:8080/disconnect" class="header_nav_item"><img class="header_nav_home_disconnect" src="{{ absolute_url(asset('icones/exit2.svg')) }}" alt="logo-disconnect" />Déconnexion</a>
+					<a href="{{ path('app_logout') }}" class="header_nav_item"><img class="header_nav_home_disconnect" src="{{ absolute_url(asset('icones/exit2.svg')) }}" alt="logo-disconnect" />Déconnexion</a>
 				{% endif %}
 			</nav>
 		</div>
