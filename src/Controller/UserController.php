@@ -100,7 +100,7 @@ class UserController extends AbstractController
                     'expeditor' => $expeditor
                 ]);
             $mailer->send($email);
-            $this->addFlash('success', 'Votre message a bien été envoyé. <a href=\'http://localhost:8080/'. $expeditor->getId() .'\'> -> Retour votre profil</a>.');
+            $this->addFlash('success', 'Votre message a bien été envoyé. <a class="alert-link" href=\'http://localhost:8080/profile/'. $expeditor->getId() .'\'> Retour vers votre profil</a>');
 
             //Redirection
             return $this->redirectToRoute('contact_user', ['id' => $user->getId()]);

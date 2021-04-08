@@ -113,7 +113,7 @@ class WalkController extends AbstractController
             $id = $walk->getId();
 
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Vos modifications ont bien été pris en compte. <a href=\'http://localhost:8080/walks/' . $id . '\'> -> Consulter votre randonnée</a>.');
+            $this->addFlash('success', 'Vos modifications ont bien été prises en compte. <a class="alert-link" href=\'http://localhost:8080/walks/' . $id . '\'> Consulter votre randonnée</a>');
 
 
             return $this->render('walk/edit.html.twig', [
