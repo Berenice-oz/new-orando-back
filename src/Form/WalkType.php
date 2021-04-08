@@ -97,7 +97,7 @@ class WalkType extends AbstractType
             ])
             ->add('duration', ChoiceType::class, [
                 'label' => 'Durée approximative*',
-                'placeholder' => 'Quelle est la durée de votre randonnée?',
+                'placeholder' => 'Durée',
                 'choices' => [
                     '1 heure' => '1h',
                     '1 heure 30' => '1h30',
@@ -120,7 +120,7 @@ class WalkType extends AbstractType
             ])
             ->add('difficulty', null, [
                 'label' => 'Niveau de difficulté*',
-                'placeholder' => 'Quel est le niveau de difficulté?',
+                'placeholder' => 'Difficulté',
                 'multiple' => false,
                 'expanded' => false,
                 'attr' => ['class' => 'input']

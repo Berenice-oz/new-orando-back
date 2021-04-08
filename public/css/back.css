@@ -4,6 +4,7 @@
 
 .page-walk-content {
   background: linear-gradient(#e5ece3, #fff);
+  font-size: 1.2rem;
 }
 
 .page-contact-content {
@@ -94,6 +95,11 @@
   width: 100%;
 }
 
+.field-submit:hover {
+  box-shadow: 5px 5px 5px #fbc46d;
+  transform: scale(1.1);
+}
+
 .field select:focus {
   border-color: #e1645f
 }
@@ -159,6 +165,7 @@
   width: 50%;
   margin: auto;
   text-align: center;
+  font-size: 1rem;
 }
 
 .alert-success {
@@ -166,6 +173,14 @@
   background-color: #8C9F75;
   border-radius: 4px;
   padding: 1rem;
+  margin-bottom:1rem;
+}
+
+.alert-link {
+  cursor:pointer;
+  color: #eda80a;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 
@@ -199,6 +214,10 @@
   .field-submit { 
     max-width: 300px;
     margin: auto;
+  }
+
+  .page-walk-content {
+    font-size: 1.5rem;
   }
  
 }
