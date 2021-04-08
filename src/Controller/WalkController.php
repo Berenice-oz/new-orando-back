@@ -60,7 +60,7 @@ class WalkController extends AbstractController
             $id = $walk->getId();
 
             // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Votre randonnée a bien été crée <a href=\'http://localhost:8080/walks/' . $id . '\'> -> Consulter votre randonnée</a>.');
+            $this->addFlash('success', 'Votre randonnée a bien été crée <a class="alert-link"href=\'http://localhost:8080/walks/' . $id . '\'> Consulter votre randonnée</a>');
 
             // redirection
             return $this->redirectToRoute('walk_create');
