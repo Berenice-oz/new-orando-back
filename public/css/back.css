@@ -155,6 +155,19 @@
   text-align: left;
 }
 
+.alert {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+.alert-success {
+  border: 1px solid #678E62;
+  background-color: #8C9F75;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
 
 /*************************************RESPONSIVE*********************************************/
 

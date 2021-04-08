@@ -9,6 +9,7 @@
 				<h2>Nous contacter</h2>
 			</div>
 			{{ form_start(form) }}
+			{{ include('_flash_message.html.twig') }}
 			{# génerate all field of the form #}
 			<div class="field">
 				{{ form_label(form.subject) }}
