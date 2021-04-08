@@ -2,24 +2,30 @@
 {% block title %}Nous contacter
 {% endblock %}
 {% block body %}
-	<div class="title_margin">
-		<h2>
-			Nous contacter</h2>
+	<div class="page-contact-content">
+		<div class="container">
+			<div class="title_margin title_margin--contact">
+				<img class="title_image" src="{{ absolute_url(asset('icones/email.png')) }}" alt="contact_icon"/>
+				<h2>Nous contacter</h2>
+			</div>
+			{{ form_start(form) }}
+			{# génerate all field of the form #}
+			<div class="field">
+				{{ form_label(form.subject) }}
+				{{ form_widget(form.subject) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.mail) }}
+				{{ form_widget(form.mail) }}
+				{{ form_errors(form.mail) }}
+			</div>
+			<div class="field">
+				{{ form_label(form.message) }}
+				{{ form_widget(form.message) }}
+				{{ form_errors(form.message) }}
+			</div>
+			<button type="submit" class="field-submit">Valider</button>
+			{{ form_end(form) }}
+		</div>
 	</div>
-	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-	{# génerate all field of the form #}
-	<div class="field">
-		{{ form_label(form.subject) }}
-		{{ form_widget(form.subject) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.mail) }}
-		{{ form_widget(form.mail) }}
-	</div>
-	<div class="field">
-		{{ form_label(form.message) }}
-		{{ form_widget(form.message) }}
-	</div>
-	<button type="submit" class="btn btn-success">Valider</button>
-	{{ form_end(form) }}
 {% endblock %}
