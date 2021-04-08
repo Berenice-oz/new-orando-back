@@ -29,7 +29,7 @@ class RegisterType extends AbstractType
                     return $er->createQueryBuilder('a')
                         ->orderBy('a.name', 'ASC');
                 },
-                'label' => 'Région',
+                'label' => 'Région*',
                 'placeholder' => 'Sélectionnez votre région...',
                 'constraints' => [
                     new NotBlank(),
@@ -38,23 +38,23 @@ class RegisterType extends AbstractType
                 
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Votre email:',
+                'label' => 'Votre email*',
                 'attr' => ['class' => 'input']
             ])
             ->add('nickname', TextType::class, [
-                'label' => 'Votre pseudo:',
+                'label' => 'Votre pseudo*',
                 'attr' => ['class' => 'input']
             ])
             ->add('firstname', TextType::class, [
-                'label' => 'Votre prénom:',
+                'label' => 'Votre prénom*',
                 'attr' => ['class' => 'input']
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'Votre nom:',
+                'label' => 'Votre nom*',
                 'attr' => ['class' => 'input']
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
+                'label' => 'Mot de passe*',
                 'empty_data' => '',
                 'attr' => ['class' => 'input']
             ])

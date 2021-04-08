@@ -72,8 +72,8 @@ class WalkType extends AbstractType
                 ],
                 // multiple => true is important because tags is a collection(cf Entity Walk => tags)
                 'multiple' => true,
-                'expanded' => true,
-                'attr' => ['class' => 'input--no-border']
+                'expanded' => false,
+                'attr' => ['class' => 'input']
             ])
             
             ->add('startingPoint', TextType::class, [
@@ -118,9 +118,10 @@ class WalkType extends AbstractType
             ])
             ->add('difficulty', null, [
                 'label' => 'Niveau de difficulté*',
+                'placeholder' => 'Quelle est le niveau de difficulté?',
                 'multiple' => false,
-                'expanded' => true,
-                'attr' => ['class' => 'input--no-border']
+                'expanded' => false,
+                'attr' => ['class' => 'input']
             ])
             ->add('elevation', IntegerType::class, [
                 'label' => 'Dénivelé (en mètres)',

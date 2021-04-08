@@ -15,7 +15,7 @@
 	{% endif %}
 	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 		<a href="http://localhost:8080/account" class="mobilenav_connected_content">
-			<img class="mobilenav_connected" src="{{ asset('icones/bear.svg') }}" alt="logged"/>
+			<img class="mobilenav_connected" src="{{ asset('icones/hiker.svg') }}" alt="logged"/>
 			<p className="mobilenav_connected_text">Mon compte</p>
 		</a>
 		<a href="{{ path('app_logout') }}" class="mobilenav_logout_content" type="submit">

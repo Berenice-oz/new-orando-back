@@ -1,12 +1,25 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}{% endblock %}
-
-{% block body %}
-	Envoyer un message à
+{% block title %}Contactez
 	{{ user.getNickname }}
-	{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-	{{ form_widget(form) }}
-	<button type="submit" class="btn btn-success">Envoyer</button>
-	{{ form_end(form) }}
+{% endblock %}
+{% block body %}
+	<div class="page-user-content">
+		<div class="container">
+			<div class="title_margin title_margin--user">
+				<img class="title_image" src="{{ absolute_url(asset('icones/chat.png')) }}" alt="chat_icon"/>
+				<h2>Contactez
+					{{ user.getNickname }}</h2>
+			</div>
+			{{ form_start(form) }}
+			<div class="field">
+				<div class="field-label">
+					{{ form_label(form.message) }}
+				</div>
+				{{ form_widget(form.message) }}
+				{{ form_errors(form.message) }}
+			</div>
+			<button type="submit" class="field-submit">Envoyer</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
 {% endblock %}
