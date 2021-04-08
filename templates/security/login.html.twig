@@ -10,7 +10,6 @@
 				{% if error %}
 					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 				{% endif %}
-				<h2>Se connecter</h2>
 				<div class="field">
 					<label for="inputEmail" class="label-login">Adresse e-mail</label>
 					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="input" placeholder="toto@oclock.io" required autofocus>

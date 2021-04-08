@@ -131,6 +131,11 @@
   width: 60%;
 }
 
+.authentication_submit:hover {
+  box-shadow: 5px 5px 5px #8C9F75;
+  transform: scale(1.1);
+}
+
 .authentication_inscription_button {
   padding: 0.5rem;
   background-color: #ffcf34;
@@ -143,6 +148,11 @@
   font-weight: bold;
   font-size: 1.2rem;
   width: 60%;
+}
+
+.authentication_inscription_button:hover {
+  box-shadow: 5px 5px 5px #EDA80A;
+  transform: scale(1.1);
 }
 
 .authentication_submit_picture,
