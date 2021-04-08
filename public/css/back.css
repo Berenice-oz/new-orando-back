@@ -1,5 +1,6 @@
 .page-user-content {
   background: linear-gradient(#fee5e3, #fff);
+  font-size: 1.2rem;
 }
 
 .page-walk-content {
@@ -9,6 +10,7 @@
 
 .page-contact-content {
   background: linear-gradient(#fff0da, #fff);
+  font-size: 1.2rem;
 }
 
 .title_margin {
@@ -216,7 +218,9 @@
     margin: auto;
   }
 
-  .page-walk-content {
+  .page-walk-content,
+  .page-user-content,
+  .page-contact-content  {
     font-size: 1.5rem;
   }
  
