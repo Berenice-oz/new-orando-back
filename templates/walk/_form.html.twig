@@ -1,6 +1,7 @@
 <p class="form-legend"><em>(*)Champs obligatoires</em><p>
 {{ form_start(form) }}
 {# génère tous les champs du form#}
+<div class="form-col">
 <div class="field">
 	<div class="field-label">
 		<img src="{{ absolute_url(asset('icones/title.png'))}}" class="field-icones">
@@ -48,6 +49,8 @@
 	{{ form_widget(form.date) }}
 	{{ form_errors(form.date) }}
 </div>
+</div>
+<div class="form-col">
 <div class="field">
 	<div class="field-label">
 		<img src="{{ absolute_url(asset('icones/clock.svg'))}}" class="field-icones">
@@ -104,5 +107,6 @@
 	{{ form_errors(form.status) }}
 </div>
 {% endif %}
+</div>
 <button type="submit" class="field-submit">Valider</button>
 {{ form_end(form) }}
