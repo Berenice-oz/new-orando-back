@@ -91,7 +91,7 @@ class User implements UserInterface
     
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups ("api_users_read_item")
+     * @Groups ({"api_users_read_item", "api_walks_read_item", "api_walks_read"})
      */
     private $picture;
 
