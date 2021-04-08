@@ -106,6 +106,7 @@
 .form-legend {
   margin-bottom: 1rem;
   font-style: italic;
+  width: 100%;
 }
 
 .authentication_submit {
@@ -152,6 +153,19 @@
   color: #8c9f75;
   width: 100%;
   text-align: left;
+}
+
+.alert {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+.alert-success {
+  border: 1px solid #678E62;
+  background-color: #8C9F75;
+  border-radius: 4px;
+  padding: 1rem;
 }
 
 

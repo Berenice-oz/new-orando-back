@@ -11,6 +11,7 @@
 					{{ user.getNickname }}</h2>
 			</div>
 			{{ form_start(form) }}
+			{{ include('_flash_message.html.twig') }}
 			<div class="field">
 				<div class="field-label">
 					{{ form_label(form.message) }}

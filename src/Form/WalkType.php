@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class WalkType extends AbstractType
 {
@@ -91,6 +92,7 @@ class WalkType extends AbstractType
                 ],
                 'years' => range(date('Y'), date('Y')+5),
                 'input_format' => 'd-m-Y H:m',
+                'constraints' => [new GreaterThanOrEqual("+1 hours")],
                 'attr' => ['class' => 'input--no-border']
             ])
             ->add('duration', ChoiceType::class, [
@@ -118,7 +120,7 @@ class WalkType extends AbstractType
             ])
             ->add('difficulty', null, [
                 'label' => 'Niveau de difficulté*',
-                'placeholder' => 'Quelle est le niveau de difficulté?',
+                'placeholder' => 'Quel est le niveau de difficulté?',
                 'multiple' => false,
                 'expanded' => false,
                 'attr' => ['class' => 'input']

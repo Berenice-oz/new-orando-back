@@ -8,8 +8,9 @@
 				<img class="title_image" src="{{ absolute_url(asset('icones/edit.png')) }}" alt="register_icon"/>
 				<h2>M'inscrire</h2>
 			</div>
-			<p class="form-legend"><em>(*)Champs obligatoires</em><p>
 			{{ form_start(form) }}
+			{{ include('_flash_message.html.twig') }}
+			<p class="form-legend"><em>(*)Champs obligatoires</em><p>
 			<div class="field">
 				<div class="field-label">
 					<img src="{{ absolute_url(asset('icones/location.png'))}}" class="field-icones">
