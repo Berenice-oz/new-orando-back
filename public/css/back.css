@@ -202,3 +202,62 @@
   }
  
 }
+
+
+
+.image_error{
+  text-align:center;
+  margin:auto;
+  display:flex;
+  width: 80%;
+  margin-top: 35px;
+  
+}
+
+
+
+.title_error{
+  font-size: 2em;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.text_error{
+  font-size: 1em;
+  margin-top: 10px;
+  text-align:center;
+}
+
+@media (max-width: 768px){
+  .image_error{
+    margin-bottom: 50px;
+  }
+
+  .title_error{
+    font-size:3.5em;
+  }
+
+  .text_error{
+    font-size:2em;
+    padding:10px;
+  }
+
+}
+
+@media (min-width:768px){
+  .image_error{
+    width: 60%;
+    padding:35px;
+    margin-bottom:15px;
+  }
+
+  .title_error{
+    font-size:3.5em;
+  }
+
+  .text_error{
+    font-size:2em;
+    padding:20px;
+  }
+
+}
