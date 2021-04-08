@@ -4,6 +4,9 @@
 {% block body %}
 	<div class="page-walk-content">
 		<div class="container">
+			<a href="http://localhost:8080/walks/{{ app.request.get('id') }}">
+            <img class="img_return" src="{{ absolute_url(asset('icones/sign3.svg')) }}" alt="retour" />
+          	</a>
 			<div class="title_margin title_margin--walk">
 				<img class="title_image" src="{{ absolute_url(asset('icones/create-hike.svg')) }}" alt="register_icon"/>
 				<h2>Modifier ma randonnée</h2>

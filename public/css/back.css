@@ -195,6 +195,12 @@
   text-decoration: underline;
 }
 
+.img_return {
+  width: 90px;
+  padding: 15px;
+  transform: rotateY(180deg);
+}
+
 
 /*************************************RESPONSIVE*********************************************/
 
