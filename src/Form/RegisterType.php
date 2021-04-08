@@ -79,7 +79,7 @@ class RegisterType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'attr' => ['class' => 'form', 'novalidate' => 'novalidate'],
+            'attr' => ['class' => 'form form--one-column', 'novalidate' => 'novalidate'],
         ]);
     }
 }
