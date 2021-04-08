@@ -1,3 +1,4 @@
+<p class="form-legend"><em>(*)Champs obligatoires</em><p>
 {{ form_start(form) }}
 {# génère tous les champs du form#}
 <div class="field">
@@ -96,10 +97,12 @@
 	{{ form_widget(form.description) }}
 	{{ form_errors(form.description) }}
 </div>
-{# <div class="field">
+{% if app.request.attributes.get('_route') == 'walk_edit' %}
+<div class="field">
 	{{ form_label(form.status) }}
 	{{ form_widget(form.status) }}
 	{{ form_errors(form.status) }}
-</div> #}
+</div>
+{% endif %}
 <button type="submit" class="field-submit">Valider</button>
 {{ form_end(form) }}

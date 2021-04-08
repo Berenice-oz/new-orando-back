@@ -77,7 +77,7 @@
   margin-bottom: 10px;
   margin-right: 10px;
   padding: 1rem;
-  background-color: #E1645F;
+  background-color: #EDA80A;
   border: none;
   border-radius: 10px;
   width: 100%;
@@ -90,6 +90,11 @@
 .field ul {
   color : #e1645f;
   margin-top: 1rem;
+}
+
+.form-legend {
+  margin-bottom: 1rem;
+  font-style: italic;
 }
 
 
