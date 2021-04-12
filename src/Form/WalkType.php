@@ -115,7 +115,7 @@ class WalkType extends AbstractType
                 'attr' => ['class' => 'input']
             ])
             ->add('kilometre', IntegerType::class, [
-                'label' => 'Nombre de kilomètres(environ)',
+                'label' => 'Nombre de kilomètres (environ)',
                 'attr' => ['class' => 'input']
             ])
             ->add('difficulty', null, [
