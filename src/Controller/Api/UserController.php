@@ -10,18 +10,22 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 
-
-
-
-
 class UserController extends AbstractController
 {
     /**
+     * API endpoint to read a single user's datas
+     * 
      * @param User $user
      * @param ParticipantRepository $participantRepository
      * @return JSON
+     * @link https://symfony.com/doc/current/components/serializer.html#normalizers
      * 
-     * Data of a user
+     * Get the user from params
+     * 
+     * If exist, find incoming and archived walks with participant repository
+     * 
+     * Send user's and user's walk datas in JSON Response by using the normalizer who read the content of the class by calling the “getters” 
+     * 
      * @Route("/api/users/{id<\d+>}", name="api_users_read_item", methods={"GET"})
      */
     public function readItem(User $user = null, ParticipantRepository $participantRepository):Response
@@ -34,8 +38,6 @@ class UserController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-        
-      
         $incomingWalks = $participantRepository->findIncomingWalksByUser($user);
         $archivedWalks = $participantRepository->findArchivedWalksByUser($user);
         $datas = [
@@ -43,8 +45,6 @@ class UserController extends AbstractController
             'incomingWalks' => $incomingWalks,
             'archivedWalks' => $archivedWalks,
         ];
-    
-
         return $this->json(
             $datas,
             Response::HTTP_OK,
@@ -54,8 +54,7 @@ class UserController extends AbstractController
             ],
             ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
                 return $object;
-            }
-            
-            ]);
+            }    
+        ]);
     }
 }
