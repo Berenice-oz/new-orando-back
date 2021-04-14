@@ -29,7 +29,7 @@ security:
         api_users:
             pattern: ^/api/users
             stateless: true
-            methods: [GET,PATCH]
+            methods: [GET]
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
@@ -44,7 +44,7 @@ security:
         api_walks:
             pattern: ^/api/walks
             stateless: true
-            methods: [DELETE]
+            methods: [DELETE, POST, PATCH]
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
