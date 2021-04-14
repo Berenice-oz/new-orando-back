@@ -11,10 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AreaController extends AbstractController
 {
     /**
+     * API endpoint who list Areas
      * @param AreaRepository $areaRepository
      * @return JSON
      * 
-     * Area's list with walks
      * @Route("/api/areas", name="api_areas", methods={"GET"})
      */
     public function read(AreaRepository $areaRepository): Response
@@ -39,11 +39,11 @@ class AreaController extends AbstractController
     } 
 
     /**
+     * API endpoint who list walks by area
      * @param AreaRepository $areaRepository
      * @param Area $area
      * @return JSON
      * 
-     * Walk's list by area
      * @Route("/api/areas/{id<\d+>}", name="api_areas_read_item", methods="GET")
      */
     public function readItem(AreaRepository $areaRepository, Area $area = null)
