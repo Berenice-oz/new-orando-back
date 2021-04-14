@@ -27,12 +27,20 @@ security:
 
         # JWT Authentification for API routes
         api_users:
-            pattern: ^/api/(users|participant)
+            pattern: ^/api/users
+            stateless: true
+            methods: [GET,PATCH]
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        
+        api_participants:
+            pattern: ^/api/participant
             stateless: true
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
-
+        
         api_walks:
             pattern: ^/api/walks
             stateless: true

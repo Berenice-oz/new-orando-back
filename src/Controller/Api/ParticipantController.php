@@ -35,7 +35,6 @@ class ParticipantController extends AbstractController
      */
     public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
-
         $jsonContent = $request->getContent();
         $participation = $serializer->deserialize($jsonContent, Participant::class, 'json');
         $errors = $validator->validate($participation);
