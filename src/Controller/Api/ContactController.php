@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     /**
+     * Api endpoint to send an email to the website team
+     * 
      * @param Request $request
      * @param MailerInterface $mailer
      * @return JSON
