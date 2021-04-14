@@ -69,7 +69,7 @@ class ParticipantController extends AbstractController
      * 
      * @Route("/api/participant", name="api_participant_update", methods={"PATCH"})
      */
-    public function update(Request $request, ParticipantRepository $participantRepository,EntityManagerInterface $entityManager)
+    public function update(Request $request, ParticipantRepository $participantRepository,EntityManagerInterface $entityManager): Response
     {
         $jsonContent = $request->toArray();
         $user = $jsonContent['user'];
