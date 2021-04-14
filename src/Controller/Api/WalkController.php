@@ -145,4 +145,38 @@ class WalkController extends AbstractController
 
 
     }
+
+    /**
+     * 
+     *
+     * @Route("/api/walks/{id<\d+>}", name="api_walks_patch", methods={"PATCH"})
+     */
+    public function patch(Request $request, Walk $walk = null, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
+    {
+        if($walk === null){
+            
+            return $this->json(['error' => 'Randonnée non trouvée'], Response::HTTP_NOT_FOUND);
+        }
+        
+        $jsonContent = $request->getContent();
+
+        
+        $walk = $serializer->deserialize(
+            $jsonContent,
+            Walk::class,
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $walk]
+        );
+
+        $errors = $validator->validate($walk);
+
+        if(count($errors) > 0){
+
+            return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $em->flush($walk);
+
+        return $this->json(['message' => 'Randonnée modifiée.'], Response::HTTP_OK);
+    }
 }
