@@ -116,7 +116,17 @@ class WalkController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param ValidatorInterface $validator
+     * @param EntityManagerInterface $em
+     * @return RedirectResponse
      * 
+     * Get the JSON Content
+     * 
+     * Transform this JSON in Walk Entity thank to the Serializer
+     * 
+     * Saving the walk which has been created in database if there are not some errors
      *
      * @Route("/api/walks", name="api_walks_create", methods={"POST"})
      */
@@ -147,7 +157,20 @@ class WalkController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param Walk $walk
+     * @param SerializerInterface $serializer
+     * @param ValidatorInterface $validator
+     * @param EntityManagerInterface $em
+     * @return JSON
      * 
+     * Get the JSON Content
+     * 
+     * Transform this JSON in walk Entity thank to the Serializer
+     * 
+     * Using AbstractNormalizer allow to know which walk would be changed 
+     * 
+     * Saving in database the modifications on the walk if there are not some errors
      *
      * @Route("/api/walks/{id<\d+>}", name="api_walks_patch", methods={"PATCH"})
      */
