@@ -119,6 +119,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Area::class)
      * @Groups ("api_users_read_item")
+     * @Assert\NotBlank
      */
     private $area;
 
