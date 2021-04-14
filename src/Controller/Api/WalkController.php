@@ -137,8 +137,11 @@ class WalkController extends AbstractController
         
         $jsonContent = $request->getContent();
 
-        $walk = $serializer->deserialize($jsonContent, Walk::class, 'json', [
-            'groups' => 'api_walks_read_item',
+        $walk = $serializer->deserialize(
+            $jsonContent, 
+            Walk::class, 
+            'json', 
+            ['groups' => 'api_walks_read_item',
             ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
                 return $object;
             }  
