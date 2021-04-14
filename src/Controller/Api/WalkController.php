@@ -116,6 +116,8 @@ class WalkController extends AbstractController
     }
 
     /**
+     * Api endpoint to create a walk
+     * 
      * @param Request $request
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
@@ -134,7 +136,12 @@ class WalkController extends AbstractController
     {
         $jsonContent = $request->getContent();
 
-        $walk = $serializer->deserialize($jsonContent, Walk::class, 'json');
+        $walk = $serializer->deserialize($jsonContent, Walk::class, 'json', [
+            'groups' => 'api_walks_read_item',
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
+                return $object;
+            }  
+        ]);
 
         $errors = $validator->validate($walk);
 
@@ -157,6 +164,8 @@ class WalkController extends AbstractController
     }
 
     /**
+     * Api endpoint to edit a walk
+     * 
      * @param Request $request
      * @param mixed Walk $walk
      * @param SerializerInterface $serializer
@@ -188,8 +197,13 @@ class WalkController extends AbstractController
             $jsonContent,
             Walk::class,
             'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $walk]
-        );
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $walk,
+            'groups' => 'api_walks_read_item',
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
+                return $object;
+            }  
+            ]);
+        
 
         $errors = $validator->validate($walk);
 
