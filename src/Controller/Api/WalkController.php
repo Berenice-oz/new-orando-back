@@ -158,7 +158,7 @@ class WalkController extends AbstractController
 
     /**
      * @param Request $request
-     * @param Walk $walk
+     * @param mixed Walk $walk
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
      * @param EntityManagerInterface $em
