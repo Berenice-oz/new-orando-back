@@ -13,6 +13,8 @@ class TagController extends AbstractController
      * Api endpoint to read all tags
      *
      * @param TagRepository $tagRepository
+     * @return JSON
+     * 
      * @Route("/api/tags", name="api_tags", methods={"GET"})
      */
     public function read(TagRepository $tagRepository)
