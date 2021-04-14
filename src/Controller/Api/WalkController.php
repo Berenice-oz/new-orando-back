@@ -134,6 +134,7 @@ class WalkController extends AbstractController
      */
     public function create(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
     {
+        
         $jsonContent = $request->getContent();
 
         $walk = $serializer->deserialize($jsonContent, Walk::class, 'json', [
