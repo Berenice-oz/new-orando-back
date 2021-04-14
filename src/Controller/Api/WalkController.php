@@ -6,12 +6,14 @@ use App\Entity\User;
 use App\Entity\Walk;
 use App\Repository\WalkRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 class WalkController extends AbstractController
 {
@@ -111,5 +113,36 @@ class WalkController extends AbstractController
         $message,
         Response::HTTP_OK
         );
+    }
+
+    /**
+     * 
+     *
+     * @Route("/api/walks", name="api_walks_create", methods={"POST"})
+     */
+    public function create(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
+    {
+        $jsonContent = $request->getContent();
+
+        $walk = $serializer->deserialize($jsonContent, Walk::class, 'json');
+
+        $errors = $validator->validate($walk);
+
+        if(count($errors)>0){
+
+            return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $em->persist($walk);
+        $em->flush();
+
+        return $this->redirectToRoute(
+            'api_walks_read_item',
+            ['id' => $walk->getId()],
+            Response::HTTP_CREATED
+        );
+
+
+
     }
 }
