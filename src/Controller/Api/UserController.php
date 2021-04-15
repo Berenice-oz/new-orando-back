@@ -105,19 +105,19 @@ class UserController extends AbstractController
             // this is needed to safely include the file name as part of the URL
             $safeFilename = $slugger->slug($originalFilename);
             $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
-
-            // Move the file to the directory where brochures are stored
             try {
                 $pictureFile->move(
                     $this->getParameter('profil_picture_directory'),
                     $newFilename
                 );
             } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+                $message = [
+                    'error' => 'Un problème est survenu lors de l\'enregistrement de l\'image',
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                ];
+    
+                return $this->json($message, Response::HTTP_UNPROCESSABLE_ENTITY);
             }
-
-            // updates the 'brochureFilename' property to store the PDF file name
-            // instead of its contents
             $user->setPicture($newFilename);
         }
         $entityManager->persist($user);
