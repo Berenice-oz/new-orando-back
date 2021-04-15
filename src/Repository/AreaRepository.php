@@ -37,7 +37,8 @@ class AreaRepository extends ServiceEntityRepository
             'SELECT w, a
             FROM App\Entity\Walk w
             INNER JOIN w.area a
-            WHERE w.area = :area'
+            WHERE w.area = :area
+            ORDER BY w.date ASC'
         )->setParameter('area', $area);
 
         return $query->getResult();

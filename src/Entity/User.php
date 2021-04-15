@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -367,7 +368,9 @@ class User implements UserInterface
      */
     public function getWalks(): Collection
     {
-        return $this->walks;
+        $criteria = Criteria::create()
+            ->orderBy(array("date" => Criteria::ASC));
+        return $this->walks->matching($criteria);
     }
 
     public function addWalk(Walk $walk): self
