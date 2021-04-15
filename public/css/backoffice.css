@@ -1,0 +1,21 @@
+.image_mountain{
+    
+    background-size: cover center;
+    width:100vw;
+
+}
+
+h3{
+    text-align:center;
+    margin: 10px 0 10px 0;
+}
+
+.btn-success{
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+
+.table{
+    margin-left:10px;
+  
+}
