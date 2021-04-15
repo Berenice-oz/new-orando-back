@@ -31,7 +31,7 @@ class TagController extends AbstractController
 
 
     /**
-     * Add a new tag
+     * BackOffice : Add a new tag
      * 
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -67,7 +67,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * Edit a walk
+     * BackOffice : Edit a walk
      * 
      * @param mixed Tag $tag
      * @param Request $request
@@ -107,7 +107,32 @@ class TagController extends AbstractController
 
     }
 
-    
+    /**
+     * BackOffice : Delete a walk
+     *
+     * @Route("/back/walk/delete/{id<\d+>}", name="tag_delete", methods={"DELETE"})
+     */
+    public function delete(Tag $tag = null, Request $request, EntityManagerInterface $em)
+    {
+        if($tag === null){
+
+            throw $this->createNotFoundException('Tag non trouvé.');
+        }
+
+        $submittedToken = $request->request->get('token');
+
+        if(!$this->isCsrfTokenValid('delete_tag', $submittedToken)){
+            
+            throw $this->createAccessDeniedException('Action non autorisée.');
+        }
+
+        $em->remove($tag);
+        $em->flush();
+
+        $this->addFlash('success', 'Suppression du tag effectuée.');
+
+        return $this->redirectToRoute('tag_browse');
+    }
     
 }
 

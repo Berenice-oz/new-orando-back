@@ -30,7 +30,13 @@
       <td>{{ tag.color }}</td>
       <td><a href="{{ path('tag_edit', {id:tag.id}) }}" type="button" class="btn btn-warning">Modifier</a></td>
       <td>
-        <button type="submit" class="btn btn-danger" >Supprimer</a></button>
+        <form action="{{ path('tag_delete', {id: tag.id}) }}" method ="POST" onsubmit="return confirm('Supprimer le tag #{{ tag.id }} ?')">
+       {# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+        <input type="hidden" name="_method" value="DELETE"/>
+         <input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>
+        <button type="submit" class="btn btn-danger" >Supprimer</button>
+         
+      </form>
       </td>
     </tr>
  
