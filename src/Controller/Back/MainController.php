@@ -10,7 +10,7 @@ class MainController extends AbstractController
     /**
      * Back-Office home page
      *
-     * @Route("/back/home", name="main_home", methods={"GET"})
+     * @Route("/", name="home", methods={"GET"})
      * 
      * @return Response
      */

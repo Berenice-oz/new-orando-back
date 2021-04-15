@@ -4,28 +4,6 @@
 
 {% block body %}
 
-<h1>Back-Office</h1>
-
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Tags</h5>
-    <a type ="button" class="btn-btn primary" href="{{ path('tag_browse') }}" >Accéder</a>
-  </div>
-</div>
-
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Randonnées</h5>
-    <button type ="button" class="btn-btn primary" href="#" >Accéder</button>
-  </div>
-</div>
-
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Utlisateurs</h5>
-    <button type ="button" class="btn-btn primary" href="#" >Accéder</button>
-  </div>
-</div>
-
+{{ include('back/_nav_back.html.twig') }}
 
 {% endblock %}
