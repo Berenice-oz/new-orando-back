@@ -4,9 +4,12 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ParticipantRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -127,11 +130,68 @@ class UserController extends AbstractController
             
             return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        //todo encoder le mdp si il est renseigné
+        //todo encoder le mdp si il est renseigné et non null
         $entityManager->flush();
         return $this->json(
             ['message' => 'Les informations de l\'utilisateur '. $user->getNickname() .' ont bien été modifiées.'],
             Response::HTTP_OK
         );
+    }
+
+    /**
+     * API endpoint to contact a user by sending a message by mail
+     * @Route("/api/contact-user/{id<\d+>}", name="api_contact_user", methods={"POST"})
+     */
+    public function userContact(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator, MailerInterface $mailer, User $user = null, UserRepository $userRepository): Response
+    {
+        if ($user === null) {
+            $message = [
+                'error' => 'User not found.',
+                'status' => Response::HTTP_NOT_FOUND,
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+        $jsonContent = $request->toArray();
+        $userMessage = $jsonContent['message'];
+        if (!$userMessage || $userMessage = ""){
+            $message = [
+                'error' => 'Le message ne doit pas être vide.',
+                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ];
+
+            return $this->json($message, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        $userMessage = $jsonContent['message'];
+        //Sinon on envoie le mail
+        //User's email
+        $recipientUserEmail =  $user->getEmail();
+        //Expeditor
+        $expeditor = $userRepository->find($jsonContent['user']);
+        //Send mail
+        $email = (new TemplatedEmail());
+        $email->getHeaders()->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
+        $email->from(new Address('contact@orando.me'))
+            ->to($recipientUserEmail)
+            ->subject('O\'Rando - Vous avez reçu un nouveau message de ' . $expeditor->getNickname() . '!')
+            ->htmlTemplate('email/email-contact_user.html.twig')
+            ->text('Bonjour '.$user->getNickname().'
+
+            Vous avez reçu un nouveau message de '.$expeditor->getNickname().' sur Orando.me :
+            
+            '.$userMessage.'
+            ')
+            ->context([
+                'message' => $userMessage,
+                'user' => $user,
+                'expeditor' => $expeditor
+            ]);
+        $mailer->send($email);
+
+        return $this->json(
+            ['message' => 'Le message a bien été envoyé'],
+            Response::HTTP_OK
+        );
+
     }
 }
