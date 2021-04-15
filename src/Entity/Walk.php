@@ -8,6 +8,7 @@ use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\WalkRepository;
 use App\DBAL\Types\WalkDifficultyType;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -145,7 +146,7 @@ class Walk
      */
     private $tags;
 
-   
+
 
 
     public function __construct()
@@ -154,7 +155,6 @@ class Walk
         //$this->status = 1;
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
-
     }
 
     public function getId(): ?int
@@ -233,7 +233,7 @@ class Walk
 
         return $this;
     }
-    
+
 
     public function getElevation(): ?int
     {
@@ -324,7 +324,9 @@ class Walk
      */
     public function getParticipants(): Collection
     {
-        return $this->participants;
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq("requestStatus", "1"));
+        return $this->participants->matching($criteria);
     }
 
     public function addParticipant(Participant $participant): self
@@ -397,5 +399,4 @@ class Walk
 
         return $this;
     }
-
 }

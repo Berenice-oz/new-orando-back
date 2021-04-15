@@ -60,6 +60,7 @@ class ParticipantRepository extends ServiceEntityRepository
         ->andWhere('w.status = :status')
         ->andWhere('p.requestStatus = :requestStatus')
         ->setParameters(array('user' => $user, 'status' => 1, 'requestStatus' => 1))
+        ->orderBy("w.date", "ASC")
         ->getQuery()
         ->getResult()
     ; 
@@ -77,6 +78,7 @@ class ParticipantRepository extends ServiceEntityRepository
         ->andWhere('w.status = :status')
         ->andWhere('p.requestStatus = :requestStatus')
         ->setParameters(array('user' => $user, 'status' => 2, 'requestStatus' => 1))
+        ->orderBy("w.date", "ASC")
         ->getQuery()
         ->getResult()
     ; 
