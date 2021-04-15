@@ -1,0 +1,42 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Liste des Tags{% endblock %}
+
+{% block body %}
+
+
+
+<h2>Liste des Tags</h2> 
+<a href="" type="button" class="btn btn-success">Ajouter</a>
+
+
+
+
+<table class="table">
+    
+            
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Couleur</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for tag in tagsList %}
+    <tr>
+      <th scope="row">{{ tag.id }}</th>
+      <td>{{ tag.name }}</td>
+      <td>{{ tag.color }}</td>
+      <td><a href="" type="button" class="btn btn-warning">Modifier</a></td>
+      <td>
+        <button type="submit" class="btn btn-danger" >Supprimer</a></button>
+      </td>
+    </tr>
+ 
+ </tbody>
+
+    {% endfor %}
+</table>
+
+{% endblock %}

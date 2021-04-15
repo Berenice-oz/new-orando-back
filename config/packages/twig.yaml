@@ -5,3 +5,5 @@ twig:
     paths:
         '%kernel.project_dir%/public/images': images
         '%kernel.project_dir%/public/css': styles
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'
