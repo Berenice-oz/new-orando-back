@@ -13,10 +13,12 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -80,27 +82,44 @@ class UserController extends AbstractController
      * 
      * @Route("/api/users", name="api_users_create", methods={"POST"})
      */
-    public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder): Response
+    public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
     {
-        // $jsonContent = $request->getContent();
-        // $user = $serializer->deserialize($jsonContent, User::class, 'json');
-        // $errors = $validator->validate($user);
-        // if (count($errors) > 0) {
-        //     $errorsList = [];
-        //     foreach ($errors as $error){
-        //         $label = $error->getPropertyPath();
-        //         $message = $error->getMessage();
-        //         $errorsList[$label] =  $message;
-        //     }
-            
-        //     return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
-        // }
-        // $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-        $user = new User();
         $data = $request->request->all();
         $data = $serializer->serialize($data,'json');
         $user = $serializer->deserialize($data, User::class, 'json');
-        $uploadedFile = $request->files->get('picture');
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            $errorsList = [];
+            foreach ($errors as $error){
+                $label = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $errorsList[$label] =  $message;
+            }
+            
+            return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+        $pictureFile = $request->files->get('picture');
+        if ($pictureFile) {
+            $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+            // this is needed to safely include the file name as part of the URL
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            try {
+                $pictureFile->move(
+                    $this->getParameter('profil_picture_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+            // updates the 'brochureFilename' property to store the PDF file name
+            // instead of its contents
+            $user->setPicture($newFilename);
+        }
         $entityManager->persist($user);
         $entityManager->flush();
         return $this->json(
