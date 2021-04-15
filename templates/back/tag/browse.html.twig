@@ -7,10 +7,10 @@
 
 
 <h2>Liste des Tags</h2> 
-<a href="" type="button" class="btn btn-success">Ajouter</a>
+<a href="{{ path('tag_add') }}" type="button" class="btn btn-success">Ajouter</a>
 
 
-
+{{ include('back/_flash_message.html.twig') }}
 
 <table class="table">
     
@@ -28,7 +28,7 @@
       <th scope="row">{{ tag.id }}</th>
       <td>{{ tag.name }}</td>
       <td>{{ tag.color }}</td>
-      <td><a href="" type="button" class="btn btn-warning">Modifier</a></td>
+      <td><a href="{{ path('tag_edit', {id:tag.id}) }}" type="button" class="btn btn-warning">Modifier</a></td>
       <td>
         <button type="submit" class="btn btn-danger" >Supprimer</a></button>
       </td>
