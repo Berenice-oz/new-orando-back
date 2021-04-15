@@ -84,7 +84,6 @@ class UserController extends AbstractController
      */
     public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
     {
-<<<<<<< HEAD
         $data = $request->request->all();
         $data = $serializer->serialize($data,'json');
         $user = $serializer->deserialize($data, User::class, 'json');
@@ -121,27 +120,6 @@ class UserController extends AbstractController
             }
             $user->setPicture($newFilename);
         }
-=======
-        // $jsonContent = $request->getContent();
-        // $user = $serializer->deserialize($jsonContent, User::class, 'json');
-        // $errors = $validator->validate($user);
-        // if (count($errors) > 0) {
-        //     $errorsList = [];
-        //     foreach ($errors as $error){
-        //         $label = $error->getPropertyPath();
-        //         $message = $error->getMessage();
-        //         $errorsList[$label] =  $message;
-        //     }
-            
-        //     return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
-        // }
-        // $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-        $user = new User();
-        $data = $request->request->all();
-        $data = $serializer->serialize($data,'json');
-        $user = $serializer->deserialize($data, User::class, 'json');
-        $uploadedFile = $request->files->get('picture');
->>>>>>> 76566f44259d9c81ae87215625d041fad3766e63
         $entityManager->persist($user);
         $entityManager->flush();
         return $this->json(
