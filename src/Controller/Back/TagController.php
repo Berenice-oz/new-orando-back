@@ -67,7 +67,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * BackOffice : Edit a walk
+     * BackOffice : Edit a Tag
      * 
      * @param mixed Tag $tag
      * @param Request $request
@@ -108,9 +108,9 @@ class TagController extends AbstractController
     }
 
     /**
-     * BackOffice : Delete a walk
+     * BackOffice : Delete a Tag
      *
-     * @Route("/back/walk/delete/{id<\d+>}", name="tag_delete", methods={"DELETE"})
+     * @Route("/back/tag/delete/{id<\d+>}", name="tag_delete", methods={"DELETE"})
      */
     public function delete(Tag $tag = null, Request $request, EntityManagerInterface $em)
     {
