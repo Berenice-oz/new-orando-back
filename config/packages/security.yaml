@@ -44,7 +44,7 @@ security:
         api_walks:
             pattern: ^/api/walks
             stateless: true
-            methods: [DELETE]
+            methods: [DELETE, POST]
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator

@@ -83,7 +83,8 @@ class WalkType extends AbstractType
             ])
             ->add('endPoint', TextType::class, [
                 'label' => 'Point d\'arrivée (si différent du point de départ)',
-                'attr' => ['class' => 'input']
+                'attr' => ['class' => 'input'],
+                
             ])
             ->add('date', DateTimeType::class, [
                 'label' => 'Date et heure de départ*',
