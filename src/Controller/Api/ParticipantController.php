@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -90,6 +91,29 @@ class ParticipantController extends AbstractController
         return $this->json(
             ['message' => 'Le statut de votre participation a bien été modifié.'],
             Response::HTTP_OK
+        );
+    }
+
+    /**
+     * @Route("/api/participant_check", name="api_participant_check", methods={"POST"})
+     */
+    public function participantCheck(Request $request, ParticipantRepository $participantRepository, SerializerInterface $serializer)
+    {
+        $jsonContent = $request->toArray();
+        $user = $jsonContent['user'];
+        $walk = $jsonContent['walk'];
+        $participant = $participantRepository->findOneBy(['user' => $user,'walk' => $walk]);
+        $participant = $serializer->serialize($participant,'json');
+        $serializer->deserialize($jsonContent, Participant::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $participant]);
+        return $this->json(
+            $participant,
+            Response::HTTP_OK,
+            [],
+            [
+                // ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
+                //     return $object->getId();
+                // }
+            ],
         );
     }
 }
