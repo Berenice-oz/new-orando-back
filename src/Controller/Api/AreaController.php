@@ -21,6 +21,7 @@ class AreaController extends AbstractController
     {
         // We get back all areas
         $areas = $areaRepository->findBy([], ['name' => 'ASC']);
+        // $areas = $areaRepository->findAllWithWalk();
         
         // We give data in Json format : 
         // first argument : data , second argument : status , 

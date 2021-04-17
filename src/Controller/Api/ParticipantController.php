@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -16,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ParticipantController extends AbstractController
 {
     /**
-     * API endpoint to create a user's participation for a walk
+     * API endpoint for creating a user's participation for a walk
      * 
      * @param Request $request
      * @param SerializerInterface $serializer
@@ -51,7 +52,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * API endpoint to update a user's status participation to a walks
+     * API endpoint for updating a user's status participation to a walks
      * 
      * @param Request $request
      * @param ParticipantRepository $participantRepository
@@ -69,12 +70,12 @@ class ParticipantController extends AbstractController
      * 
      * @Route("/api/participant", name="api_participant_update", methods={"PATCH"})
      */
-    public function update(Request $request, ParticipantRepository $participantRepository,EntityManagerInterface $entityManager): Response
+    public function update(Request $request, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager): Response
     {
         $jsonContent = $request->toArray();
         $user = $jsonContent['user'];
         $walk = $jsonContent['walk'];
-        $participant = $participantRepository->findOneBy(['user' => $user,'walk' => $walk]);
+        $participant = $participantRepository->findOneBy(['user' => $user, 'walk' => $walk]);
         if ($participant === null) {
             $message = [
                 'error' => 'Participation non trouvée.',
@@ -90,6 +91,52 @@ class ParticipantController extends AbstractController
         return $this->json(
             ['message' => 'Le statut de votre participation a bien été modifié.'],
             Response::HTTP_OK
+        );
+    }
+
+    /**
+     * API endpoint for checking if a user have a participation (accepted or canceled)
+     * 
+     * @param Request $request
+     * @param ParticipantRepository $participantRepository
+     * 
+     * Get the JSON content and transform it in a array
+     * 
+     * Get the user and the walk in this array
+     * 
+     * Find the participation with Participant Repository
+     * 
+     * If is exist, return the participation status
+     * 
+     * @Route("/api/participant_check", name="api_participant_check", methods={"POST"})
+     */
+    public function participantCheck(Request $request, ParticipantRepository $participantRepository)
+    {
+        $jsonContent = $request->toArray();
+        $user = $jsonContent['user'];
+        $walk = $jsonContent['walk'];
+        $participant = $participantRepository->findOneBy(['user' => $user, 'walk' => $walk]);
+        if ($participant === null) {
+            $message = [
+                'error' => 'Participation non trouvée.',
+                'status' => Response::HTTP_NOT_FOUND,
+            ];
+
+            return $this->json($message, Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json(
+            $participant,
+            Response::HTTP_OK,
+            [],
+            [
+                'groups' => [
+                    'api_participant_check',
+                ],
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    return $object;
+                }
+            ],
         );
     }
 }

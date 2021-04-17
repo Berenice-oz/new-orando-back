@@ -35,7 +35,7 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
         
         api_participants:
-            pattern: ^/api/participant
+            pattern: ^/api/participant$
             stateless: true
             guard:
                 authenticators:
@@ -76,5 +76,5 @@ security:
         # #WEB/API
         - { path: "^/api/users", roles: ROLE_USER, methods: GET }
         - { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
-        - { path: "^/api/participant", roles: ROLE_USER, methods: POST }
+        - { path: "^/api/participant$", roles: ROLE_USER, methods: POST }
         - { path: "^/api/participant", roles: ROLE_USER, methods: PATCH }

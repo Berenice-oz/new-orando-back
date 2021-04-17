@@ -19,7 +19,7 @@ class AreaRepository extends ServiceEntityRepository
         parent::__construct($registry, Area::class);
     }
 
-      /**
+    /**
      * We get back walk's list of an area
      *
      * Here : SQL request associate
@@ -43,9 +43,20 @@ class AreaRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
-    
 
-    
+    public function findAllWithWalk()
+    {
+        return $this->createQueryBuilder('a')
+            ->leftjoin('a.walks', 'w')
+            ->addSelect('w')
+            ->andWhere('w.status = :status')
+            ->orderBy('w.date' ,'ASC')
+            ->setParameter('status' ,1)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     /*public function findAllByAsc($area)
     {
         return $this->createQueryBuilder('a')
