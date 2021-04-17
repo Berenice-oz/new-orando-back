@@ -25,7 +25,7 @@ class Walk
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item", "api_participant_check"})
      */
     private $id;
 

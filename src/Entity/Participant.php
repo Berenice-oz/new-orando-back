@@ -24,6 +24,9 @@ class Participant
      * max = 2,
      * notInRangeMessage = "La valeur doit être comprise entre {{ min }} et {{ max }}"
      * )
+     * 
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_participant_check"})
+     * 
      */
     private $requestStatus;
 
@@ -32,7 +35,7 @@ class Participant
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants", cascade={"persist"})
      * @Assert\NotBlank
      * 
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_participant_check"})
      */
     private $user;
 
@@ -41,7 +44,7 @@ class Participant
      * @ORM\ManyToOne(targetEntity=Walk::class, inversedBy="participants" , cascade={"persist"})
      * @Assert\NotBlank
      * 
-     * @Groups ("api_users_read_item", "api_walks_read_item")
+     * @Groups({"api_users_read_item", "api_walks_read_item", "api_participant_check"})
      */
     private $walk;
 
