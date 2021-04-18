@@ -13,9 +13,6 @@ class BackWalkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',TextType::class, [
-                'label' => 'Titre'
-            ])
             ->add('status', ChoiceType::class, [
                         
                 'label' => 'Statut de la randonnée',

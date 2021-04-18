@@ -31,8 +31,11 @@
       <th scope="row">{{ walk.id }}</th>
       <td>{{ walk.title }}</td>
       <td>{{ walk.description }}</td>
-      <td>{{ walk.status }}<td>
-      <td><a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">Modifier</a></td>
+      <td>{{ walk.status }}</td>
+      <td>
+        <a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">Modifier</a>
+      </td>
+    
            
     </tr>
     

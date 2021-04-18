@@ -8,16 +8,14 @@
 
 <div class="container">
 
-<h3>Modifier une randonnée</h3>
+<h3>Modifier la randonnée: {{ walk.title }}</h3>
+  
+
 
 {{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
 
-    <div class="form_group">
-        <div>
-            {{ form_row(form.title) }}
-        </div>
-    </div>
 
+    
     <div class="form_group">
         <div>
             {{ form_row(form.status) }}
@@ -27,6 +25,7 @@
     <button class="btn btn-lg btn-success" type="submit">
         Enregistrer
     </button>
+    
     
    {{ form_end(form) }}
 
