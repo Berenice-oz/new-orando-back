@@ -6,11 +6,31 @@
 
 {{ include('back/_nav_back.html.twig') }}
 
+<div class="container">
 
 <h3>Modifier un Tag</h3>
 
 
-{{ include('back/_form.html.twig') }}
+{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
 
+    <div class="form_group">
+        <div>
+            {{ form_row(form.name) }}
+        </div>
+    </div>
+
+    <div class="form_group">
+        <div>
+            {{ form_row(form.color) }}
+        </div>
+    </div>
+
+    <button class="btn btn-lg btn-success" type="submit">
+        Enregistrer
+    </button>
+    
+   {{ form_end(form) }}
+
+</div>
 
 {% endblock %}

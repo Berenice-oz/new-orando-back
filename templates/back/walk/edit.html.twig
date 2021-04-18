@@ -6,11 +6,30 @@
 
 {{ include('back/_nav_back.html.twig') }}
 
+<div class="container">
 
 <h3>Modifier une randonnée</h3>
 
+{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
 
-{{ include('back/_form.html.twig') }}
+    <div class="form_group">
+        <div>
+            {{ form_row(form.title) }}
+        </div>
+    </div>
 
+    <div class="form_group">
+        <div>
+            {{ form_row(form.status) }}
+        </div>
+    </div>
+
+    <button class="btn btn-lg btn-success" type="submit">
+        Enregistrer
+    </button>
+    
+   {{ form_end(form) }}
+
+</div>
 
 {% endblock %}
