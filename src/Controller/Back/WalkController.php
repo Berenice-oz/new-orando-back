@@ -19,16 +19,13 @@ class WalkController extends AbstractController
      * Pass the object walksList to the template
      *
      * @param WalkRepository $walkRepository
-     * @param SessionInterface $session
      * @return Response
      * 
      * @Route("/back/walks", name="walk_browse", methods={"GET"})
      */
-    public function browse(WalkRepository $walkRepository, SessionInterface $session)
+    public function browse(WalkRepository $walkRepository)
     {
        $walksList = $walkRepository->findAll();
-
-       $session->set('walksList', $walksList);
 
        return $this->render('back/walk/browse.html.twig', [
            
