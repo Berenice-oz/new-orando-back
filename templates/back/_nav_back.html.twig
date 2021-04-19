@@ -21,7 +21,7 @@
 			{# is the user connected ? #}
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				<li class="nav-item">
-					<a href="{{ path('app_logout') }}" class="btn btn-outline-light">Déconnexion</a>
+					<a href="{{ path('app_logout') }}" class="btn btn-outline-light nav-link--logout">Déconnexion</a>
 				</li>
 			{% else %}
 				<li class="nav-item">

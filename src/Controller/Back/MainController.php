@@ -2,6 +2,9 @@
 
 namespace App\Controller\Back;
 
+use App\Repository\TagRepository;
+use App\Repository\UserRepository;
+use App\Repository\WalkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,8 +17,15 @@ class MainController extends AbstractController
      * 
      * @return Response
      */
-    public function home()
+    public function home(WalkRepository $walkRepository, UserRepository $userRepository, TagRepository $tagRepository)
     {
-        return $this->render('back/home.html.twig');
+        $walks = $walkRepository->findLast();
+        $users = $userRepository->findLast();
+        $tags = $tagRepository->findLast();
+        return $this->render('back/home.html.twig', [
+            'walks' => $walks,
+            'users' => $users,
+            'tags' => $tags
+        ]);
     }
 }

@@ -12,7 +12,7 @@ h3 {
     padding: 20px;
 }
 
-.btn-success {
+/* .btn-success {
     margin-bottom: 10px;
     margin-left: 15px;
     background-color: #BD7A4A;
@@ -51,7 +51,9 @@ h3 {
 .btn-primary {
     margin-top: 15px;
     margin-left: 10px;
-}
+} */
+
+/***********************************************/
 
 .navbar-brand em {
     font-size: 0.8rem;
@@ -67,4 +69,33 @@ h3 {
 
 .navbar .nav-item a.nav-link--custom:hover{
     color: #EDA80A;
+}
+
+.navbar .nav-item a.nav-link--logout {
+    border-color: #E1645F;
+    color: #E1645F;
+    font-weight: bold;
+}
+
+.navbar .nav-item a.nav-link--logout:hover {
+    border-color: #E1645F;
+    color: #FFFF;
+    background-color: #E1645F;
+    font-weight: bold;
+}
+
+.admin-content { 
+    background: linear-gradient(#e5ece3, #fff);
+}
+
+.card-walks { 
+    background-color: #E1645F;
+}
+
+.card-users { 
+    background-color: #678e62;
+}
+
+.card-tags { 
+    background-color: #eda80a;
 }
