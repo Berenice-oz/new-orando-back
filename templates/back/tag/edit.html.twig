@@ -1,34 +1,24 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Modifier un Tag{% endblock %}
-
+{% block title %}Modifier
+	{{ tag.name }}
+{% endblock %}
 {% block body %}
-
-<div class="container">
-
-<h3>Modifier un Tag</h3>
-
-
-{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
-
-    <div class="form_group">
-        <div>
-            {{ form_row(form.name) }}
-        </div>
-    </div>
-
-    <div class="form_group">
-        <div>
-            {{ form_row(form.color) }}
-        </div>
-    </div>
-
-    <button class="btn btn-lg btn-success" type="submit">
-        Enregistrer
-    </button>
-    
-   {{ form_end(form) }}
-
-</div>
-
+	<h1>Thème :
+		{{ tag.name }}</h1>
+	{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
+	<div class="form_group">
+		<div>
+			{{ form_row(form.name) }}
+		</div>
+	</div>
+	<div class="form_group">
+		<div>
+			{{ form_row(form.color) }}
+		</div>
+	</div>
+	<button class="btn btn-lg btn-success" type="submit">
+		Enregistrer
+	</button>
+	{{ form_end(form) }}
 {% endblock %}

@@ -1,34 +1,22 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Ajouter un Tag{% endblock %}
-
+{% block title %}Ajouter un thème
+{% endblock %}
 {% block body %}
-
-<div class="container">
-
-<h3>Ajouter un Tag</h3>
-
-
-{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
-
-    <div class="form_group">
-        <div>
-            {{ form_row(form.name) }}
-        </div>
-    </div>
-
-    <div class="form_group">
-        <div>
-            {{ form_row(form.color) }}
-        </div>
-    </div>
-
-    <button class="btn btn-lg btn-success" type="submit">
-        Enregistrer
-    </button>
-    
-   {{ form_end(form) }}
-
-</div>
-
+	<h3>Ajouter un thème</h3>
+	{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
+	<div class="form_group">
+		<div>
+			{{ form_row(form.name) }}
+		</div>
+	</div>
+	<div class="form_group">
+		<div>
+			{{ form_row(form.color) }}
+		</div>
+	</div>
+	<button class="btn btn-lg btn-success" type="submit">
+		Enregistrer
+	</button>
+	{{ form_end(form) }}
 {% endblock %}

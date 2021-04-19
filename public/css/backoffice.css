@@ -54,6 +54,16 @@ h3 {
 } */
 
 /***********************************************/
+html {
+    overflow-y: scroll;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+}
+
 
 .navbar-brand em {
     font-size: 0.8rem;
@@ -63,6 +73,7 @@ h3 {
     font-family: Stick, sans-serif;
     color: #EDA80A;
     font-weight: 700;
+    font-size: 1.6rem;
     padding: 1rem 0;
     text-shadow: 0.1em 0.1em 0.2em #000;
 }
@@ -88,14 +99,46 @@ h3 {
     background: linear-gradient(#e5ece3, #fff);
 }
 
-.card-walks { 
+/***HOME***/
+
+.card-walks,
+.walks-list-table thead { 
     background-color: #E1645F;
 }
 
-.card-users { 
+.card-users,
+.users-list-table thead  { 
     background-color: #678e62;
 }
 
-.card-tags { 
+.card-tags,
+.tags-list-table thead { 
     background-color: #eda80a;
+}
+
+.table thead th {
+    border-bottom: none;
+}
+
+/***LISTS****/
+.display-medium {
+    display: none;
+}
+
+.form-admin {
+    display: inline-block;
+}
+
+/****EDIT****/
+.form-edit {
+    max-width: 600px;
+    margin: auto;
+}
+
+@media(min-width: 768px) {
+    .display-medium {
+        display: inline-block;
+        margin-left: 0.5rem;
+    }
+    
 }

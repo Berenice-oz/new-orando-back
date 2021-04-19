@@ -13,8 +13,7 @@ class BackWalkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status', ChoiceType::class, [
-                        
+            ->add('status', ChoiceType::class, [        
                 'label' => 'Statut de la randonnée',
                 'choices' => [
                     'Annulée' => 0,
@@ -29,7 +28,7 @@ class BackWalkType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'attr' => ['class' => 'form-edit'],
         ]);
     }
 }

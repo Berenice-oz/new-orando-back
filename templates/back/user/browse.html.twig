@@ -1,45 +1,46 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Liste des Utilisateurs{% endblock %}
-
+{% block title %}Les utilisateurs
+{% endblock %}
 {% block body %}
-
-<h3>Liste des Utilisateurs</h3> 
-
-{{ include('back/_flash_message.html.twig') }}
-
-<table class="table">
-    
-            
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nom</th>
-      <th scope="col">Prénom</th>
-       <th scope="col">Email</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for user in usersList %}
-    <tr>
-      <th scope="row">{{ user.id }}</th>
-      <td>{{ user.lastname }}</td>
-      <td>{{ user.firstname }}</td>
-       <td>{{ user.email }}</td>
-         <td>
-        <form action="{{ path('user_delete', {id: user.id}) }}" method ="POST" onsubmit="return confirm('Supprimer  {{ user.email }} ?')">
-       {# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
-        <input type="hidden" name="_method" value="DELETE"/>
-         <input type="hidden" name="user" value="{{ csrf_token('delete_user') }}"/>
-        <button type="submit" class="btn btn-danger" >Supprimer</button>
-         
-      </form>
-      </td>
-    </tr>
- 
- </tbody>
-
-    {% endfor %}
-</table>
-
+	<h1>Les utilisateurs</h1>
+	{{ include('back/_flash_message.html.twig') }}
+	<table class="table table-hover mt-4 users-list-table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+        <th scope="col" class="d-none d-lg-block">Nom</th>
+				<th scope="col">Prénom</th>
+        <th scope="col" class="d-none d-lg-block">Pseudo</th>
+				<th scope="col">Email</th>
+        <th scope="col" class="d-none d-lg-block">Rôle</th>
+        <th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in usersList %}
+				<tr>
+					<th scope="row">{{ user.id }}</th>
+          <td class="d-none d-lg-block">{{ user.lastname }}</td>
+					<td>{{ user.firstname }}</td>
+          <td class="d-none d-lg-block">{{ user.nickname }}</td>
+					<td>{{ user.email }}</td>
+					<td class="d-none d-lg-block">
+          {% for role in user.roles %}
+          {{ role }}
+          {% endfor %}
+          </td>
+          <td>
+						<form
+							action="{{ path('user_delete', {id: user.id}) }}" method="POST" onsubmit="return confirm('Supprimer  {{ user.email }} ?')">
+							{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+							<input type="hidden" name="_method" value="DELETE"/>
+							<input type="hidden" name="user" value="{{ csrf_token('delete_user') }}"/>
+							<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i><span class="display-medium">Supprimer</span></button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		{% endfor %}
+	</table>
 {% endblock %}
