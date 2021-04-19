@@ -16,6 +16,7 @@ use App\DataFixtures\Provider\WalkDbProvider;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\DataFixtures\Data\TagData;
 use App\DataFixtures\Data\WalkData;
+
 /**
  * This class allow to make some Area objects et Walks objects in our database
  */
@@ -26,12 +27,12 @@ class AppFixtures extends Fixture
     const NB_WALKS = 50;
     const NB_USERS = 100;
     const NB_PARTICIPANTS = 50 * self::NB_USERS;
-    
+
     private $passwordEncoder;
     // Connection to MySQL
     private $connection;
 
-    
+
     public function __construct(Connection $connection, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->connection = $connection;
@@ -39,7 +40,7 @@ class AppFixtures extends Fixture
     }
     private function truncate()
     {
-        
+
         //Here , we "discuss" with MySql and ask to disabled foreign key
         $users = $this->connection->executeQuery('SET foreign_key_checks = 0');
         // each time we make bin/console doctrine:fixtures:load, thank to $this->connection->executeQuery
@@ -51,12 +52,12 @@ class AppFixtures extends Fixture
         $users = $this->connection->executeQuery('TRUNCATE TABLE participant');
         $users = $this->connection->executeQuery('TRUNCATE TABLE walk_tag');
     }
-    
+
     public function load(ObjectManager $manager)
     {
         // we truncate our table
         $this->truncate();
-        
+
         // use the factory to create a Faker\Generator instance in french
         $faker = Faker\Factory::create('fr_FR');
         $faker->seed('Orando');
@@ -70,45 +71,45 @@ class AppFixtures extends Fixture
         // we store the areas in an array
         $areasList = [];
         for ($i = 1; $i <= self::NB_AREAS; $i++) {
-             
+
             // An area
-           $area = new Area();
-           $area->setName($faker->unique()->areaName());
-           $area->setColor($faker->areaColor());
+            $area = new Area();
+            $area->setName($faker->unique()->areaName());
+            $area->setColor($faker->areaColor());
 
-           $areasList[] = $area;
-            
-           // Prepare the entity $area for the creation in the database
-           $manager->persist($area);
-       }
+            $areasList[] = $area;
 
-       //we store tags in an array
+            // Prepare the entity $area for the creation in the database
+            $manager->persist($area);
+        }
+
+        //we store tags in an array
 
         //we store tags in an array
         $tagsList = [];
 
-        
+
         foreach (TagData::$tagsData as $tag) {
-            
+
             // A Tag
             $myTag = new Tag();
             $myTag->setName($tag['name']);
             $myTag->setColor($tag['color']);
 
             $tagsList[] = $myTag;
-            
+
             // Prepare the entity $myTag for the creation in the database
             $manager->persist($myTag);
         }
 
         // // We store the walks in an array
         // $walksList = [];   
-        
+
         // for ($i = 1; $i <= self::NB_WALKS; $i++) {
-            
+
         //     // A walk
         //     $walk = new Walk();
-            
+
         //     // faker allow to generate fake data
         //     // unique / streetaddress/ randamDigitNotNull etc, you can find these
         //     // formatters available in his documentation
@@ -127,7 +128,7 @@ class AppFixtures extends Fixture
         //     $walk->setArea($randomArea);
 
         //     shuffle($tagsList);
-            
+
         //     for ($r = 0; $r <= mt_rand(1, 2); $r++) {
         //         $randomTag = $tagsList[$r];
         //         $walk->addTag($randomTag);
@@ -171,14 +172,14 @@ class AppFixtures extends Fixture
         //     }
 
         //     $usersList[] = $user;
-            
+
 
         //     // here, we prepare the entity user for the creation
         //     $manager->persist($user);
         // }
 
 
-        
+
         $admin = new User();
         $admin->setEmail('admin@admin.com');
         $admin->setLastname('admin');
@@ -191,25 +192,25 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
 
         // user => it's use during our test in dev environement
-        //$user = new User();
-        //$user->setEmail('user@user.com');
-        //$user->setLastname('user');
-        //$user->setFirstname('user');
-        //$userHashPassword = $this->passwordEncoder->encodePassword($user, 'user');
-        //$user->setPassword($userHashPassword);
-        //$user->setRoles(['ROLE_USER']);
-        //$user->setStatus(1);
-        //$user->setNickname('user');
+        $user = new User();
+        $user->setEmail('user@user.com');
+        $user->setLastname('user');
+        $user->setFirstname('user');
+        $userHashPassword = $this->passwordEncoder->encodePassword($user, 'user');
+        $user->setPassword($userHashPassword);
+        $user->setRoles(['ROLE_USER']);
+        $user->setStatus(1);
+        $user->setNickname('user');
         // shuffle($walksList);
         // for ($s = 0; $s < 5; $s++) {
         //     $randomWalk = $walksList[$s];
         //     $user->addParticipant($randomWalk);
         // }
-        //$manager->persist($user);
+        $manager->persist($user);
 
         // //walk's data creation store in an multidimensional array
         // $userWalks = [
-            
+
         //     //first walk
         //     [
         //         'title' => 'Circuit découverte de la Presqu\'île de Crozon',
@@ -273,12 +274,12 @@ class AppFixtures extends Fixture
         //     $walk->setElevation($userWalk['elevation']);
         //     $walk->setMaxNbPersons($userWalk['maxNbPersons']);
         //     $walk->setDescription($userWalk['description']);
-            
+
         //     // array_rand allow to have areas randomly
         //     $randomArea = $areasList[array_rand($areasList)];
         //     $walk->setArea($randomArea);
         //     $userWalksList[] = $walk;
-            
+
         //     //prepare each entity walk for the creation in database
         //     $manager->persist($walk);
         // }

@@ -1,64 +1,70 @@
-.navbar{
-    background-color: #BAA084;
+.navbar {
+    background-color: #678e62;
 }
 
-
-
-.image_mountain{
-    
+.image_mountain {
     background-size: cover center;
-    width:100vw;
-
+    width: 100vw;
 }
 
-h3{
-    text-align:center;
+h3 {
+    text-align: center;
     padding: 20px;
 }
 
-.btn-success{
+.btn-success {
     margin-bottom: 10px;
     margin-left: 15px;
-    background-color:#BD7A4A;
-    border-color:#BD7A4A;
-
+    background-color: #BD7A4A;
+    border-color: #BD7A4A;
 }
 
-.btn-success:hover{
-    background-color:#743001;
-    border-color:#743001;
+.btn-success:hover {
+    background-color: #743001;
+    border-color: #743001;
 }
 
-.table{
-    margin-left:15px;
-  
+.table {
+    margin-left: 15px;
 }
 
-.btn-warning{
+.btn-warning {
     background-color: #F2E175;
-    border-color:#F2E175;
+    border-color: #F2E175;
 }
 
-.btn-warning:hover{
+.btn-warning:hover {
     background-color: #F0DE91;
-    border-color:#F0DE91;
+    border-color: #F0DE91;
 }
 
-.btn-danger{
-    background-color:#B61F23;
-    border-color:#B61F23;
-   
-
+.btn-danger {
+    background-color: #B61F23;
+    border-color: #B61F23;
 }
 
-.btn-danger{
-    background-color:#E24452;
-    border-color:#E24452;
-
+.btn-danger {
+    background-color: #E24452;
+    border-color: #E24452;
 }
 
-.btn-primary{
+.btn-primary {
     margin-top: 15px;
-    margin-left:10px;
+    margin-left: 10px;
 }
 
+.navbar-brand em {
+    font-size: 0.8rem;
+}
+
+.navbar-brand-title {
+    font-family: Stick, sans-serif;
+    color: #EDA80A;
+    font-weight: 700;
+    padding: 1rem 0;
+    text-shadow: 0.1em 0.1em 0.2em #000;
+}
+
+.navbar .nav-item a.nav-link--custom:hover{
+    color: #EDA80A;
+}
