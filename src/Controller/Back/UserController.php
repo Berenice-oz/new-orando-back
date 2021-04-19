@@ -62,7 +62,7 @@ class UserController extends AbstractController
       
        }
 
-       $submittedToken = $request->request->get('user');
+       $submittedToken = $request->request->get('token');
 
        if(!$this->isCsrfTokenValid('delete_user', $submittedToken)){
            

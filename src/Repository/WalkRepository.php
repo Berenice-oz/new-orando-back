@@ -25,7 +25,7 @@ class WalkRepository extends ServiceEntityRepository
     public function findLast()
     {
         return $this->createQueryBuilder('w')
-            ->orderBy('w.createdAt', 'ASC')
+            ->orderBy('w.createdAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult()

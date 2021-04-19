@@ -42,7 +42,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findLast()
     {
         return $this->createQueryBuilder('u')
-            ->orderBy('u.createdAt', 'ASC')
+            ->orderBy('u.createdAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult()

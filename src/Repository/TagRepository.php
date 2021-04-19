@@ -25,7 +25,7 @@ class TagRepository extends ServiceEntityRepository
     public function findLast()
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.id', 'ASC')
+            ->orderBy('t.id', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult()
