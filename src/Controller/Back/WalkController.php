@@ -60,7 +60,7 @@ class WalkController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', 'Modification éffectuée avec succès.');
+            $this->addFlash('success', $walk->getTitle().' a bien été modifié.');
 
             return $this->redirectToRoute('walk_browse');
         }

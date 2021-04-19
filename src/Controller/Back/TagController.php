@@ -69,7 +69,7 @@ class TagController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', 'Ajout éffectué avec succès.');
+            $this->addFlash('success', 'Le thème '.$tag->getName().' a bien été crée.');
 
             return $this->redirectToRoute('tag_browse');
 
@@ -118,7 +118,7 @@ class TagController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', 'Modification éffectuée avec succès.');
+            $this->addFlash('success', 'Le thème '.$tag->getName().' a bien été modifié.');
 
             return $this->redirectToRoute('tag_browse');
 
@@ -167,7 +167,7 @@ class TagController extends AbstractController
         $em->remove($tag);
         $em->flush();
 
-        $this->addFlash('success', 'Suppression du tag effectuée.');
+        $this->addFlash('success', 'Le thème '.$tag->getName().' a bien été supprimé.');
 
         return $this->redirectToRoute('tag_browse');
     }

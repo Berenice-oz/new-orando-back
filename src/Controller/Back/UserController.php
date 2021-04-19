@@ -73,7 +73,7 @@ class UserController extends AbstractController
        $em->remove($user);
        $em->flush();
 
-       $this->addFlash('success', 'Supression effectuée avec succès.');
+       $this->addFlash('success', 'Le profil de  '.$user->getNickname().' a bien été supprimé.');
 
        return $this->redirectToRoute('user_browse');
     }

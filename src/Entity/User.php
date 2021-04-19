@@ -190,10 +190,10 @@ class User implements UserInterface
     /**
      * @ORM\PrePersist
      */
-    //public function setRolesValue()
-    //{
-       // $this->roles = ['ROLE_USER'];
-    //}
+    public function setRolesValue()
+    {
+       $this->roles = ['ROLE_USER'];
+    }
 
     /**
      * @see UserInterface

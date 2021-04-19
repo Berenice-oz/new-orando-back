@@ -15,7 +15,6 @@
 									<tr>
 										<th scope="col">#</th>
 										<th scope="col">Titre</th>
-										<th scope="col">Date du départ</th>
 										<th scope="col"></th>
 									</tr>
 								</thead>
@@ -24,7 +23,6 @@
 										<tr>
 											<th scope="row">{{ walk.id }}</th>
 											<td>{{ walk.title }}</td>
-											<td>{{ walk.date|date("d/m/Y") }}</td>
 											<td class="text-right">
 												<a href="{{ path('back_walk_edit', {id:walk.id}) }}" class="btn btn-sm btn-warning">
 													<i class="fas fa-edit"></i>
@@ -85,7 +83,7 @@
 													<div class="dropdown-menu">
 														<a class="dropdown-item" href="{{ path('user_delete', {id: user.id}) }}">
 															<form
-																action="{{ path('user_delete', {id: user.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer l'utilisateur {{ user.nickname }} ?')">
+																action="{{ path('user_delete', {id: user.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer {{ user.nickname }} ?')">
 																{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
 																<input type="hidden" name="_method" value="DELETE"/>
 																<input type="hidden" name="token" value="{{ csrf_token('delete_user') }}"/>
