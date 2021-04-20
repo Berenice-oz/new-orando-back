@@ -281,6 +281,14 @@ class Walk
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -292,6 +300,14 @@ class Walk
 
         return $this;
     }
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->setUpdatedAt(new \DateTime());
+
+    }   
 
     public function getArea(): ?Area
     {
@@ -337,6 +353,16 @@ class Walk
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setParticipant()
+    {
+        $participant = new Participant();
+        $participant->setUser($this->creator);
+        $participant->setWalk($this);
+        $this->addParticipant($participant);
+    }
 
     public function removeParticipant(Participant $participant): self
     {
