@@ -45,18 +45,22 @@ class AreaRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Find all Areas order by name ASC
+     * and retrieve only associate incomingWalks 
+     */
     public function findAllWithWalk()
     {
         return $this->createQueryBuilder('a')
             ->leftjoin('a.walks', 'w')
             ->addSelect('w')
-            ->andWhere('w.status = :status')
-            ->orderBy('w.date' ,'ASC')
-            ->setParameter('status' ,1)
+            ->andWhere('w.status = :status OR w.status IS NULL')
+            ->setParameter('status', 1)
+            ->addOrderBy('a.name' ,'ASC')
+            ->addOrderBy('w.date' ,'ASC')
             ->getQuery()
             ->getResult();
     }
-
 
     /*public function findAllByAsc($area)
     {
