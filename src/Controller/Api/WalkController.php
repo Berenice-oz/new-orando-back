@@ -151,17 +151,20 @@ class WalkController extends AbstractController
 
         if(count($errors)>0){
 
-            return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+            $errorsList = [];
+            foreach ($errors as $error) {
+                $label = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $errorsList[$label] =  $message;
+            }
+
+            return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $em->persist($walk);
         $em->flush();
 
-        return $this->redirectToRoute(
-            'api_walks_read_item',
-            ['id' => $walk->getId()],
-            Response::HTTP_CREATED
-        );
+        return $this->json(['message' => 'La randonnée à bien été crée.', Response::HTTP_CREATED]);
 
 
 
@@ -185,9 +188,9 @@ class WalkController extends AbstractController
      * 
      * Saving in database the modifications on the walk if there are not some errors
      *
-     * @Route("/api/walks/{id<\d+>}", name="api_walks_patch", methods={"PATCH"})
+     * @Route("/api/walks/{id<\d+>}", name="api_walks_update", methods={"PATCH"})
      */
-    public function patch(Request $request, Walk $walk = null, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
+    public function update(Request $request, Walk $walk = null, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
     {
         if($walk === null){
             

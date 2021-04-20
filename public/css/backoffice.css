@@ -1,3 +1,9 @@
+.navbar{
+    background-color: #BAA084;
+}
+
+
+
 .image_mountain{
     
     background-size: cover center;
@@ -7,15 +13,52 @@
 
 h3{
     text-align:center;
-    margin: 10px 0 10px 0;
+    padding: 20px;
 }
 
 .btn-success{
     margin-bottom: 10px;
     margin-left: 15px;
+    background-color:#BD7A4A;
+    border-color:#BD7A4A;
+
+}
+
+.btn-success:hover{
+    background-color:#743001;
+    border-color:#743001;
 }
 
 .table{
-    margin-left:10px;
+    margin-left:15px;
   
 }
+
+.btn-warning{
+    background-color: #F2E175;
+    border-color:#F2E175;
+}
+
+.btn-warning:hover{
+    background-color: #F0DE91;
+    border-color:#F0DE91;
+}
+
+.btn-danger{
+    background-color:#B61F23;
+    border-color:#B61F23;
+   
+
+}
+
+.btn-danger{
+    background-color:#E24452;
+    border-color:#E24452;
+
+}
+
+.btn-primary{
+    margin-top: 15px;
+    margin-left:10px;
+}
+

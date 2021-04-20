@@ -68,7 +68,7 @@ class WalkController extends AbstractController
 
         return $this->render('walk/create.html.twig', [
             'walk' => $walk,
-            //we send to a template form thank to createView()
+            //we send a template form thank to createView()
             'form' => $form->createView(),
         ]);
     }

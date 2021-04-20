@@ -17,8 +17,12 @@ class TagController extends AbstractController
      * 
      * @param TagRepository $tagRepository
      * @return Response
+     * 
+     * Tag's list thank to TagRepository
+     * 
+     * Pass to the template tagsList object
      *
-     * @Route("/back/tag/browse", name="tag_browse", methods={"GET"})
+     * @Route("/back/tags", name="tag_browse", methods={"GET"})
      */
     public function browse(TagRepository $tagRepository)
     {
@@ -36,6 +40,18 @@ class TagController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response|RedirectResponse
+     * @link https://symfony.com/doc/current/forms.html
+     * 
+     * Display the form and treat it
+     * 
+     * Create a new Tag
+     * 
+     * Then creation's form while giving the entity
+     * 
+     * Asking to the form to examine the request object
+     * 
+     * Saving the tag to the database thank to the EntityManagerInterface
+     * 
      *
      * @Route("/back/tag/add", name="tag_add", methods={"GET", "POST"})
      */
@@ -67,12 +83,22 @@ class TagController extends AbstractController
     }
 
     /**
-     * BackOffice : Edit a walk
+     * BackOffice : Edit a Tag
      * 
      * @param mixed Tag $tag
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response|RedirectResponse
+     * 
+     * Display the form and treat it
+     * 
+     * Check if the tag exist
+     * 
+     * Then creation's form while giving the entity
+     * 
+     * Asking to the form to examine the request object
+     * 
+     * Saving the tag to the database thank to the EntityManagerInterface
      *
      * @Route("/back/tag/edit/{id<\d+>}", name="tag_edit", methods={"GET", "POST"})
      */
@@ -108,9 +134,21 @@ class TagController extends AbstractController
     }
 
     /**
-     * BackOffice : Delete a walk
+     * BackOffice : Delete a Tag
+     * 
+     * Check if the tag exist
+     * 
+     * Get back the token name which is in the form thank to Request object
+     * and correponded to the second request(POST)
+     * @link https://symfony.com/doc/current/security/csrf.html
+     * 
+     * Get the value of the CSRF token thank to 'delete_tag' which is generate on the display
+     * 
+     * Checking if the token store in delete_tag is Valid
+     * 
+     * Delete the tag
      *
-     * @Route("/back/walk/delete/{id<\d+>}", name="tag_delete", methods={"DELETE"})
+     * @Route("/back/tag/delete/{id<\d+>}", name="tag_delete", methods={"DELETE"})
      */
     public function delete(Tag $tag = null, Request $request, EntityManagerInterface $em)
     {

@@ -178,17 +178,17 @@ class AppFixtures extends Fixture
         // }
 
 
-        // admin => it's use during our test in dev environement
-        //$admin = new User();
-        //$admin->setEmail('admin@admin.com');
-        //$admin->setLastname('admin');
-        //$admin->setFirstname('admin');
-        //$adminHashPassword = $this->passwordEncoder->encodePassword($admin, 'admin');
-        //$admin->setPassword($adminHashPassword);
-        //$admin->setRoles(['ROLE_ADMIN']);
-        //$admin->setStatus(1);//
-        //$admin->setNickname('admin');
-        //$manager->persist($admin);
+        
+        $admin = new User();
+        $admin->setEmail('admin@admin.com');
+        $admin->setLastname('admin');
+        $admin->setFirstname('admin');
+        $adminHashPassword = $this->passwordEncoder->encodePassword($admin, 'admin');
+        $admin->setPassword($adminHashPassword);
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setStatus(1);
+        $admin->setNickname('admin');
+        $manager->persist($admin);
 
         // user => it's use during our test in dev environement
         //$user = new User();

@@ -1,6 +1,6 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Ajouter un Tag{% endblock %}
+{% block title %}Modifier une randonnée{% endblock %}
 
 {% block body %}
 
@@ -8,26 +8,24 @@
 
 <div class="container">
 
-<h3>Ajouter un Tag</h3>
+<h3>Modifier la randonnée: {{ walk.title }}</h3>
+  
 
 
 {{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
 
-    <div class="form_group">
-        <div>
-            {{ form_row(form.name) }}
-        </div>
-    </div>
 
+    
     <div class="form_group">
         <div>
-            {{ form_row(form.color) }}
+            {{ form_row(form.status) }}
         </div>
     </div>
 
     <button class="btn btn-lg btn-success" type="submit">
         Enregistrer
     </button>
+    
     
    {{ form_end(form) }}
 

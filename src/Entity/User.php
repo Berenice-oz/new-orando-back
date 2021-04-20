@@ -125,7 +125,7 @@ class User implements UserInterface
     private $area;
 
     /**
-     * @ORM\OneToMany(targetEntity=Walk::class, mappedBy="creator")
+     * @ORM\OneToMany(targetEntity=Walk::class, mappedBy="creator", cascade={"remove"})
      * @Groups ("api_users_read_item")
      */
     private $walks;
@@ -190,10 +190,10 @@ class User implements UserInterface
     /**
      * @ORM\PrePersist
      */
-    public function setRolesValue()
-    {
-        $this->roles = ['ROLE_USER'];
-    }
+    //public function setRolesValue()
+    //{
+       // $this->roles = ['ROLE_USER'];
+    //}
 
     /**
      * @see UserInterface
