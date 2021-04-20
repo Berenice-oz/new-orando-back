@@ -20,8 +20,9 @@ class AreaController extends AbstractController
     public function read(AreaRepository $areaRepository): Response
     {
         // We get back all areas
-        $areas = $areaRepository->findBy([], ['name' => 'ASC']);
-        // $areas = $areaRepository->findAllWithWalk();
+        //$areas = $areaRepository->findBy([], ['name' => 'ASC']);
+        $areas = $areaRepository->findAllWithWalk();
+        //dd($areas);
         
         // We give data in Json format : 
         // first argument : data , second argument : status , 
