@@ -58,6 +58,10 @@ html {
     overflow-y: scroll;
 }
 
+body {
+    font-family: Raleway;
+}
+
 h1 {
     text-align: center;
     padding-top: 1rem;
