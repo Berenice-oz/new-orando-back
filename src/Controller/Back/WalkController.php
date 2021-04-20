@@ -21,7 +21,7 @@ class WalkController extends AbstractController
      * @param WalkRepository $walkRepository
      * @return Response
      * 
-     * @Route("/back/walks", name="walk_browse", methods={"GET"})
+     * @Route("/back/walks", name="back_walk_browse", methods={"GET"})
      */
     public function browse(WalkRepository $walkRepository)
     {

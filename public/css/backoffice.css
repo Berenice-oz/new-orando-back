@@ -82,7 +82,8 @@ h1 {
     text-shadow: 0.1em 0.1em 0.2em #000;
 }
 
-.navbar .nav-item a.nav-link--custom:hover{
+.navbar .nav-item a.nav-link--custom:hover,
+.navbar .navbar-nav .nav-link.active{
     color: #EDA80A;
 }
 
