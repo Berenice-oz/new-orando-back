@@ -389,6 +389,14 @@ class Walk
     }
 
     /**
+     * @ORM\PrePersist
+     */
+    public function setStatusValue()
+    {
+        $this->setStatus(1);
+    }
+
+    /**
      * @return Collection|Tag[]
      */
     public function getTags(): Collection
