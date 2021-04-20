@@ -141,6 +141,12 @@ h1 {
     display: inline-block;
 }
 
+.add-btn { 
+    max-width: 300px;
+    margin: auto;
+    display: block;
+}
+
 /****EDIT****/
 .form-edit {
     max-width: 600px;
