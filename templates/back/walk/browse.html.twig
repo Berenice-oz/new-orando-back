@@ -4,33 +4,39 @@
 {% endblock %}
 {% block body %}
 	<h1>Les randonnées</h1>
-	{{ include('back/_flash_message.html.twig') }}
-	<table class="table table-hover mt-4 walks-list-table">
-		<thead>
-			<tr>
-				<th scope="col">#</th>
-        <th scope="col" class="d-none d-lg-block">Date et heure</th>
-				<th scope="col">Titre</th>
-				<th scope="col" class="d-none d-lg-block">Description</th>
-				<th scope="col">Statut</th>
-        <th scope="col"  class="d-none d-lg-block">Organisateur</th>
-        <th scope="col">Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for walk in walksList %}
-				<tr>
-					<th scope="row">{{ walk.id }}</th>
-          <td class="d-none d-lg-block">{{ walk.date|date('d/m/Y h:m') }}</td>
-					<td>{{ walk.title }}</td>
-					<td class="d-none d-lg-block">{{ walk.description }}</td>
-					<td>{{ walk.status == 1 ? 'A venir': 'Terminée' }}</td>
-          <td class="d-none d-lg-block">{{ walk.creator.nickname }}</td>
-					<td>
-						<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning"><i class="fas fa-toggle-on"></i> Modifier le statut</a>
-					</td>
-				</tr>
-			</tbody>
-		{% endfor %}
-	</table>
+	<div class="row pt-5">
+		<div class="col-12">
+			{{ include('back/_flash_message.html.twig') }}
+			<table class="table table-hover mt-4 walks-list-table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col" class="d-none d-lg-block">Date et heure</th>
+						<th scope="col">Titre</th>
+						<th scope="col" class="d-none d-lg-block">Description</th>
+						<th scope="col">Statut</th>
+						<th scope="col" class="d-none d-lg-block">Organisateur</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for walk in walksList %}
+						<tr>
+							<th scope="row">{{ walk.id }}</th>
+							<td class="d-none d-lg-block">{{ walk.date|date('d/m/Y h:m') }}</td>
+							<td>{{ walk.title }}</td>
+							<td class="d-none d-lg-block">{{ walk.description }}</td>
+							<td>{{ walk.status == 1 ? 'A venir': 'Terminée' }}</td>
+							<td class="d-none d-lg-block">{{ walk.creator.nickname }}</td>
+							<td>
+								<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
+									<i class="fas fa-toggle-on"></i>
+									Modifier le statut</a>
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
 {% endblock %}
