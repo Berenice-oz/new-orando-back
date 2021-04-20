@@ -1,38 +1,42 @@
-
-  <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="{{ path('home') }}">BackOffice</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('tag_browse') }}">Tags<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Randonnées</a>
-                </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Utilisateurs</a>
-                </li>
-                
-                {# is the user connected ? #}
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                
-                <li class="nav-item">
-                    <a href="{{ path('app_logout') }}" class="btn btn-outline-primary">Déconnexion</a>
-                </li>
-                
-                {% else %}
-
-                 <li class="nav-item">
-                    <a href="{{ path('app_login') }}" class="btn btn-outline-primary">Connexion</a>
-                </li>
-
-                {% endif %}
-                
-
-            </ul>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light">
+	<a class="navbar-brand " href="{{ path('home') }}">
+		<span class="navbar-brand-title">O'RANDO</span>
+		<em>Admin</em>
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto fw-bold">
+			<li class="nav-item">
+				<a class="nav-link nav-link--custom {{ (app.request.attributes.get('_route') starts with "back_walk") ? "active" : "" }}" href="{{ path('back_walk_browse') }}">Randonnées</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link nav-link--custom {{ (app.request.attributes.get('_route') starts with "user") ? "active" : "" }}" href="{{ path('user_browse') }}">Utilisateurs</a>
+			</li>
+			<li class="nav-item ">
+				<a class="nav-link nav-link--custom {{ (app.request.attributes.get('_route') starts with "tag") ? "active" : "" }}" href="{{ path('tag_browse') }}">Thèmes</a>
+			</li>
+			{# is the user connected ? #}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#">{{ app.user.email }}
+						(
+						{# Libellé du rôle #}
+						{% if is_granted('ROLE_ADMIN') %}
+							Administrateur
+						{% endif %}
+						)
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('app_logout') }}" class="btn btn-outline-light nav-link--logout">Déconnexion</a>
+				</li>
+			{% else %}
+				<li class="nav-item">
+					<a href="{{ path('app_login') }}" class="btn btn-outline-light">Connexion</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
 </nav>

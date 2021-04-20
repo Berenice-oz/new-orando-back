@@ -1,18 +1,14 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Ajouter un thème
+{% block title %}Modifier
+	{{ walk.title }}
 {% endblock %}
 {% block body %}
-	<h3>Ajouter un thème</h3>
+	<h1>{{ walk.title }}</h1>
 	{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
 	<div class="form_group">
 		<div>
-			{{ form_row(form.name) }}
-		</div>
-	</div>
-	<div class="form_group">
-		<div>
-			{{ form_row(form.color) }}
+			{{ form_row(form.status) }}
 		</div>
 	</div>
 	<button class="btn btn-lg btn-success" type="submit">

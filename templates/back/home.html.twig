@@ -1,11 +1,156 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
-
-{% block body %}
-
-{{ include('back/_nav_back.html.twig') }}
-
-<img class="image_mountain" src="{{ asset('images/mountain.jpg') }}" alt="montagnes lors d'un coucher de soleil">
-
+{% block title %}Accueil
 {% endblock %}
+{% block body %}
+	<h1>Administration O'Rando</h1>
+	<div class="row pt-5">
+		<div class="col-12 col-md-4">
+			<div class="card text-white mb-3">
+				<div class="card-header card-walks">
+					<h2>Les randonnées<h2></div>
+						<div class="card-body">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Titre</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for walk in walks %}
+										<tr>
+											<th scope="row">{{ walk.id }}</th>
+											<td>{{ walk.title }}</td>
+											<td class="text-right">
+												<a href="{{ path('back_walk_edit', {id:walk.id}) }}" class="btn btn-sm btn-warning">
+													<i class="fas fa-edit"></i>
+												</a>
+												<!-- Example single danger button -->
+												<div class="btn-group">
+													<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-trash-alt"></i>
+													</button>
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="">
+															{# <form
+																action="" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')"> #}
+																{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+																{# <input type="hidden" name="_method" value="DELETE"/>
+																<input type="hidden" name="token" value=""/> #}
+																<button class="delete-btn" type="submit">Oui, je veux supprimer</button>
+															{# </form> #}
+														</a>
+														<a class="dropdown-item" href="#" data-toggle="dropdown">Annuler</a>
+													</div>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+							<a href="{{ path('back_walk_browse') }}" class="btn btn-block btn-success">Voir plus</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="card text-white mb-3">
+						<div class="card-header card-users">
+							<h2>Les utilisateurs</h2>
+						</div>
+						<div class="card-body">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Pseudo</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for user in users %}
+										<tr>
+											<th scope="row">{{ user.id }}</th>
+											<td>{{ user.nickname }}</td>
+											<td
+												class="text-right">
+												<!-- Example single danger button -->
+												<div class="btn-group">
+													<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-trash-alt"></i>
+													</button>
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="{{ path('user_delete', {id: user.id}) }}">
+															<form
+																action="{{ path('user_delete', {id: user.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer {{ user.nickname }} ?')">
+																{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+																<input type="hidden" name="_method" value="DELETE"/>
+																<input type="hidden" name="token" value="{{ csrf_token('delete_user') }}"/>
+																<button class="delete-btn" type="submit">Oui, je veux supprimer</button>
+															</form>
+														</a>
+														<a class="dropdown-item" href="#" data-toggle="dropdown">Annuler</a>
+													</div>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+							<a href="{{ path('user_browse') }}" class="btn btn-block btn-success">Voir plus</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="card text-white mb-3">
+						<div class="card-header card-tags">
+							<h2>Les thèmes</h2>
+						</div>
+						<div class="card-body">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Nom</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for tag in tags %}
+										<tr>
+											<th scope="row">{{ tag.id }}</th>
+											<td>{{ tag.name }}</td>
+											<td class="text-right">
+												<a href="{{ path('tag_edit', {id:tag.id}) }}" class="btn btn-sm btn-warning">
+													<i class="fas fa-edit"></i>
+												</a>
+												<!-- Example single danger button -->
+												<div class="btn-group">
+													<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-trash-alt"></i>
+													</button>
+													<div class="dropdown-menu">
+														<a class="dropdown-item" href="{{ path('tag_delete', {id: tag.id}) }}">
+															<form
+																action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le thème {{ tag.name }} ?')">
+																{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+																<input type="hidden" name="_method" value="DELETE"/>
+																<input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>
+																<button class="delete-btn" type="submit">Oui, je veux supprimer</button>
+															</form>
+														</a>
+														<a class="dropdown-item" href="#" data-toggle="dropdown">Annuler</a>
+													</div>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+							<a href="{{ path('tag_browse') }}" class="btn btn-block btn-success">Voir plus</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endblock %}

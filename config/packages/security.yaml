@@ -44,7 +44,7 @@ security:
         api_walks:
             pattern: ^/api/walks
             stateless: true
-            methods: [DELETE]
+            methods: [DELETE, POST]
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
@@ -61,6 +61,7 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: redirectafterlogout
+                target: home
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -78,3 +79,8 @@ security:
         - { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
         - { path: "^/api/participant$", roles: ROLE_USER, methods: POST }
         - { path: "^/api/participant", roles: ROLE_USER, methods: PATCH }
+        #WEB/BACK
+        - { path: "^/back", roles: ROLE_ADMIN}
+    
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER

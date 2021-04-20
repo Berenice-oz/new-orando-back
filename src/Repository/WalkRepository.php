@@ -19,6 +19,17 @@ class WalkRepository extends ServiceEntityRepository
         parent::__construct($registry, Walk::class);
     }
 
-    
+    /**
+     * Find the last 5 walks
+     */
+    public function findLast()
+    {
+        return $this->createQueryBuilder('w')
+            ->orderBy('w.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
 }

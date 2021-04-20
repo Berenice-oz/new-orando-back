@@ -1,8 +1,11 @@
 {# read and display all flash messages #}
 {% for label, messages in app.flashes %}
-    {% for message in messages %}
-        <div class="alert alert-{{ label }}">
-            {{ message }}
-        </div>
-    {% endfor %}
+	{% for message in messages %}
+		<div class="alert alert-{{ label }}">
+			{{ message }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	{% endfor %}
 {% endfor %}

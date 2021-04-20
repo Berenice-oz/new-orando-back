@@ -38,6 +38,7 @@ class AreaRepository extends ServiceEntityRepository
             FROM App\Entity\Walk w
             INNER JOIN w.area a
             WHERE w.area = :area
+            AND w.status = 1
             ORDER BY w.date ASC'
         )->setParameter('area', $area);
 
