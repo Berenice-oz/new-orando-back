@@ -76,7 +76,7 @@ class Walk
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item"})
      * @Assert\Range(
-     *      min = 1,
+     *      min = 0,
      *      max = 2000,
      *      notInRangeMessage = "Vous devez choisir une valeur comprise entre {{ min }}m et {{ max }}m",
      * )
@@ -86,7 +86,7 @@ class Walk
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
-     * @Assert\Positive
+     * @Assert\PositiveOrZero
      */
     private $maxNbPersons;
 
@@ -100,7 +100,7 @@ class Walk
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
-     * @Assert\Positive
+     * @Assert\PositiveOrZero
      */
     private $kilometre;
 
