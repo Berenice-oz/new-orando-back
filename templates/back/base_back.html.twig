@@ -20,7 +20,8 @@
 	</head>
 	<body>
 		{{ include('back/_nav_back.html.twig') }}
-		<div class="container-fluid admin-content"> 
+		<div class="container-fluid admin-content">
+		{% set referer = app.request.headers.get('referer')|default('/') %}
 		{% block body %}{% endblock %}
 		</div>
 	</body>

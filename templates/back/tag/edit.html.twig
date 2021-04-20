@@ -6,19 +6,24 @@
 {% block body %}
 	<h1>Thème :
 		{{ tag.name }}</h1>
-	{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
-	<div class="form_group">
-		<div>
-			{{ form_row(form.name) }}
+	<div class="row pt-5">
+		<div class="col-12">
+		<a href="{{ referer }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Retour</a>
+			{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
+			<div class="form_group">
+				<div>
+					{{ form_row(form.name) }}
+				</div>
+			</div>
+			<div class="form_group">
+				<div>
+					{{ form_row(form.color) }}
+				</div>
+			</div>
+			<button class="btn btn-lg btn-success" type="submit">
+				Enregistrer
+			</button>
+			{{ form_end(form) }}
 		</div>
 	</div>
-	<div class="form_group">
-		<div>
-			{{ form_row(form.color) }}
-		</div>
-	</div>
-	<button class="btn btn-lg btn-success" type="submit">
-		Enregistrer
-	</button>
-	{{ form_end(form) }}
 {% endblock %}

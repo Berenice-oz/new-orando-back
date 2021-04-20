@@ -4,44 +4,47 @@
 {% endblock %}
 {% block body %}
 	<h1>Les thèmes</h1>
-	<a href="{{ path('tag_add') }}" type="button" class="btn btn-success mt-2 mb-4 add-btn">
-		<i class="far fa-plus-square"></i>
-		Ajouter un thème</a>
-	{{ include('back/_flash_message.html.twig') }}
-	<table class="table table-hover mt-4 tags-list-table thead">
-		<thead>
-			<tr>
-				<th scope="col">#</th>
-				<th scope="col">Nom</th>
-				<th scope="col" class="d-none d-sm-block">Couleur</th>
-				<th scope="col">Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for tag in tagsList %}
-				<tr>
-					<th scope="row">{{ tag.id }}</th>
-					<td>{{ tag.name }}</td>
-					<td class="d-none d-sm-block">{{ tag.color }}</td>
-					<td>
-						<a href="{{ path('tag_edit', {id:tag.id}) }}" type="button" class="btn btn-warning">
-							<i class="fas fa-edit"></i>
-							<span class="display-medium">Modifier</span>
-						</a>
-						<form
-							action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le tag {{ tag.name }} ?')">
-							{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
-							<input type="hidden" name="_method" value="DELETE"/>
-							<input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>
-							<button type="submit" class="btn btn-danger">
-								<i class="fas fa-trash-alt"></i>
-								<span class="display-medium">Supprimer</span>
-							</button>
-						</form>
-					</td>
-				</tr>
-			</tbody>
-		{% endfor %}
-	</table>
-
+	<div class="row pt-5">
+		<div class="col-12">
+			<a href="{{ path('tag_add') }}" type="button" class="btn btn-success mt-2 mb-4 add-btn">
+				<i class="far fa-plus-square"></i>
+				Ajouter un thème</a>
+			{{ include('back/_flash_message.html.twig') }}
+			<table class="table table-hover mt-4 tags-list-table thead">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nom</th>
+						<th scope="col" class="d-none d-sm-block">Couleur</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for tag in tagsList %}
+						<tr>
+							<th scope="row">{{ tag.id }}</th>
+							<td>{{ tag.name }}</td>
+							<td class="d-none d-sm-block">{{ tag.color }}</td>
+							<td>
+								<a href="{{ path('tag_edit', {id:tag.id}) }}" type="button" class="btn btn-warning">
+									<i class="fas fa-edit"></i>
+									<span class="display-medium">Modifier</span>
+								</a>
+								<form
+									action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le tag {{ tag.name }} ?')">
+									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+									<input type="hidden" name="_method" value="DELETE"/>
+									<input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>
+									<button type="submit" class="btn btn-danger">
+										<i class="fas fa-trash-alt"></i>
+										<span class="display-medium">Supprimer</span>
+									</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
 {% endblock %}

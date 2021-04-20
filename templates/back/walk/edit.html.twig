@@ -5,14 +5,31 @@
 {% endblock %}
 {% block body %}
 	<h1>{{ walk.title }}</h1>
-	{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
-	<div class="form_group">
-		<div>
-			{{ form_row(form.status) }}
+	<div class="row pt-5">
+		<div class="col-12">
+		<a href="{{ referer }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Retour</a>
+			<div class="card walk-datas mt-2 mb-3">
+				<div class="card-body">
+					<h5 class="card-title walk-datas-label">Description</h5>
+					<p class="card-text">{{ walk.description }}</p>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><span class="walk-datas-label">Créé le : </span><em>{{ walk.createdAt|date("Y-m-d H:m") }}</em></li>
+					<li class="list-group-item"><span class="walk-datas-label">Modifié le: </span><em>{{ walk.updatedAt|date("Y-m-d H:m") }}</em></li>
+					<li class="list-group-item"><span class="walk-datas-label">Organisé par: </span><em>{{ walk.creator.nickname }}</em></li>
+					<li class="list-group-item"><span class="walk-datas-label">Date et heure de départ: </span><em>{{ walk.date|date("Y-m-d H:m") }}</em></li>
+				</ul>
+			</div>
+			{{ form_start(form, {attr: {novalidate: 'novalidate'}})}}
+			<div class="form_group">
+				<div>
+					{{ form_row(form.status) }}
+				</div>
+			</div>
+			<button class="btn btn-lg btn-success" type="submit">
+				Enregistrer
+			</button>
+			{{ form_end(form) }}
 		</div>
 	</div>
-	<button class="btn btn-lg btn-success" type="submit">
-		Enregistrer
-	</button>
-	{{ form_end(form) }}
 {% endblock %}
