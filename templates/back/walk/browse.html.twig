@@ -24,7 +24,7 @@
           <td class="d-none d-lg-block">{{ walk.date|date('d/m/Y h:m') }}</td>
 					<td>{{ walk.title }}</td>
 					<td class="d-none d-lg-block">{{ walk.description }}</td>
-					<td>{{ walk.status }}</td>
+					<td>{{ walk.status == 1 ? 'A venir': 'Terminée' }}</td>
           <td class="d-none d-lg-block">{{ walk.creator.nickname }}</td>
 					<td>
 						<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning"><i class="fas fa-toggle-on"></i> Modifier le statut</a>
