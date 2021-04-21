@@ -31,5 +31,18 @@ class WalkRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Find expired and status "incoming" walk's
+     */
+    public function findForCronJob()
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.status = :status AND w.date < :date')
+            ->setParameters(array('date' => new \DateTime, 'status' => 1))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
 }
