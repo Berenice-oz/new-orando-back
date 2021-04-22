@@ -133,7 +133,7 @@ h3 {
 }
 
 .walks-list-table .date-col {
-    width: 13%;
+    width: 10%;
 }
 
 .walks-list-table .title-col {
@@ -141,7 +141,7 @@ h3 {
 }
 
 .walks-list-table .desc-col {
-    width: 20%;
+    width: 25%;
 }
 
 .walks-list-table .status-col {
@@ -149,7 +149,7 @@ h3 {
 }
 
 .walks-list-table .creator-col {
-    width: 10%;
+    width: 12%;
 }
 
 .walks-list-table .actions-col {
@@ -165,20 +165,24 @@ h3 {
     vertical-align: top;
 }
 
+.users-table .id-col {
+    width: 3%;
+}
+
 .users-table .lastname-col {
-    width: 20%;
+    width: 15%;
 }
 
 .users-table .firstname-col {
-    width: 20%;
+    width: 22%;
 }
 
 .users-table .nickname-col {
-    width: 20%;
+    width: 15%;
 }
 
 .users-table .email-col {
-    width: 30%;
+    width: 25%;
 }
 
 .users-table .role-col {
@@ -203,11 +207,11 @@ h3 {
 }
 
 .tags-table .name-col {
-    width: 30%;
+    width: 35%;
 }
 
 .tags-table .color-col {
-    width: 30%;
+    width: 35%;
 }
 
 .tags-table .actions-col {
