@@ -59,11 +59,7 @@ class WalkController extends AbstractController
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
         
-        //$date = $walk->getDate();
-        //dd($date);
-        
-        //if ($date > new DateTime()) {
-            // we send walk item data json format
+     
             return $this->json(
                 $walk,
                 Response::HTTP_OK,
@@ -76,20 +72,7 @@ class WalkController extends AbstractController
             
                 ]
                 );
-        //} else {
-            // we send walk item data json format
-            //return $this->json(
-               // $walk,
-               // Response::HTTP_OK,
-                //[],
-               // ['groups' => 'api_walks_read_item_else',
-            
-               // ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-              //  return $object->getId();
-                //}
-            
-                //]
-                //);
+       
     }
     
             
