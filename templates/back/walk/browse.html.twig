@@ -38,7 +38,10 @@
 							<td>{{ walk.date|date('d/m/Y h:m') }}</td>
 							<td>{{ walk.title }}</td>
 							<td>{{ walk.description }}</td>
-							<td>{{ walk.status == 1 ? 'A venir': 'Terminée' }}</td>
+							<td>{% if walk.status == 1 %}A venir
+								{% elseif walk.status == 2 %}Terminée
+								{% else %}Annulée
+								{% endif %}</td>
 							<td>{{ walk.creator.nickname }}</td>
 							<td>
 								<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
