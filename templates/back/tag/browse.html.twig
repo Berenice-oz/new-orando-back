@@ -31,7 +31,7 @@
 									<span class="display-medium">Modifier</span>
 								</a>
 								<form
-									action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le tag {{ tag.name }} ?')">
+									action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le thème {{ tag.name }} ?')">
 									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
 									<input type="hidden" name="_method" value="DELETE"/>
 									<input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>

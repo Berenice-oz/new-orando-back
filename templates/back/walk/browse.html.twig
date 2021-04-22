@@ -31,7 +31,17 @@
 							<td>
 								<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
 									<i class="fas fa-toggle-on"></i>
-									Modifier le statut</a>
+									<span class="display-medium">Modifier le statut</span></a>
+								<form
+									action="{{ path('walk_delete', {id: walk.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')">
+									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+									<input type="hidden" name="_method" value="DELETE"/>
+									<input type="hidden" name="token" value="{{ csrf_token('delete_walk') }}"/>
+									<button type="submit" class="btn btn-danger">
+										<i class="fas fa-trash-alt"></i>
+										<span class="display-medium">Supprimer</span>
+									</button>
+								</form>
 							</td>
 						</tr>
 					{% endfor %}

@@ -33,14 +33,14 @@
 														<i class="fas fa-trash-alt"></i>
 													</button>
 													<div class="dropdown-menu">
-														<a class="dropdown-item" href="">
-															{# <form
-																action="" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')"> #}
+														<a class="dropdown-item" href="{{ path('walk_delete', {id: walk.id}) }}">
+															<form
+																action="{{ path('walk_delete', {id: walk.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')">
 																{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
-																{# <input type="hidden" name="_method" value="DELETE"/>
-																<input type="hidden" name="token" value=""/> #}
+																<input type="hidden" name="_method" value="DELETE"/>
+																<input type="hidden" name="token" value="{{ csrf_token('delete_walk') }}"/>
 																<button class="delete-btn" type="submit">Oui, je veux supprimer</button>
-															{# </form> #}
+															</form>
 														</a>
 														<a class="dropdown-item" href="#" data-toggle="dropdown">Annuler</a>
 													</div>
@@ -130,7 +130,7 @@
 													<button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														<i class="fas fa-trash-alt"></i>
 													</button>
-													<div class="dropdown-menu">
+													<div class="dropdown-menu dropdown-menu-right">
 														<a class="dropdown-item" href="{{ path('tag_delete', {id: tag.id}) }}">
 															<form
 																action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le thème {{ tag.name }} ?')">
