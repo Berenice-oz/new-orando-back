@@ -10,13 +10,19 @@
 				<i class="far fa-plus-square"></i>
 				Ajouter un thème</a>
 			{{ include('back/_flash_message.html.twig') }}
-			<table class="table table-hover mt-4 tags-list-table thead">
+			<div class="count">
+				{{ tagsList.getTotalItemCount }} élément(s)
+			</div>
+			<div class="navigation">
+				{{ knp_pagination_render(tagsList) }}
+			</div>
+			<table class="table table-hover mt-4 tags-list-table tags-table">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Nom</th>
-						<th scope="col" class="d-none d-sm-block">Couleur</th>
-						<th scope="col">Actions</th>
+						<th scope="col" class="id-col">#</th>
+						<th scope="col" class="name-col">Nom</th>
+						<th scope="col" class="d-none d-sm-block color-col">Couleur</th>
+						<th scope="col" class="actions-col">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,7 +37,7 @@
 									<span class="display-medium">Modifier</span>
 								</a>
 								<form
-									action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le tag {{ tag.name }} ?')">
+									action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le thème {{ tag.name }} ?')">
 									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
 									<input type="hidden" name="_method" value="DELETE"/>
 									<input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>
@@ -45,6 +51,9 @@
 					</tbody>
 				{% endfor %}
 			</table>
+			<div class="navigation">
+				{{ knp_pagination_render(tagsList) }}
+			</div>
 		</div>
 	</div>
 {% endblock %}

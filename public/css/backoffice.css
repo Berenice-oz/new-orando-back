@@ -35,7 +35,7 @@ h3 {
 }
 
 .navbar .nav-item a.nav-link--custom:hover,
-.navbar .navbar-nav .nav-link.active{
+.navbar .navbar-nav .nav-link.active {
     color: #EDA80A;
 }
 
@@ -52,24 +52,24 @@ h3 {
     font-weight: bold;
 }
 
-.admin-content { 
+.admin-content {
     background: linear-gradient(#e5ece3, #fff);
 }
 
-/***HOME***/
+/*===============================HOME=======================================*/
 
 .card-walks,
-.walks-list-table thead { 
+.walks-list-table thead {
     background-color: #E1645F;
 }
 
 .card-users,
-.users-list-table thead  { 
+.users-list-table thead {
     background-color: #678e62;
 }
 
 .card-tags,
-.tags-list-table thead { 
+.tags-list-table thead {
     background-color: #eda80a;
 }
 
@@ -81,10 +81,30 @@ h3 {
     padding: 0;
     margin: 0;
     border: none;
-    background-color: #FFFF;
+    background-color: transparent;
 }
 
-/***LISTS****/
+.home-list {
+    width: 100%;
+}
+
+.home-list-id-col {
+    width: 10%;
+}
+
+.home-list-title-col {
+    width: 40%;
+}
+
+.home-list-actions-col {
+    width: 50%;
+}
+
+/*===============================LISTS=======================================*/
+.table th { 
+    border: none;
+}
+
 .display-medium {
     display: none;
 }
@@ -93,13 +113,108 @@ h3 {
     display: inline-block;
 }
 
-.add-btn { 
+.add-btn {
     max-width: 300px;
     margin: auto;
     display: block;
 }
 
-/****EDIT****/
+/***********WALKS**********/
+.walks-list-table {
+    width: 100%;
+}
+
+.walks-list-table thead th {
+    vertical-align: top;
+}
+
+.walks-list-table .id-col {
+    width: 2%;
+}
+
+.walks-list-table .date-col {
+    width: 13%;
+}
+
+.walks-list-table .title-col {
+    width: 20%;
+}
+
+.walks-list-table .desc-col {
+    width: 20%;
+}
+
+.walks-list-table .status-col {
+    width: 5%;
+}
+
+.walks-list-table .creator-col {
+    width: 10%;
+}
+
+.walks-list-table .actions-col {
+    width: 25%;
+}
+
+/***********USERS**********/
+.users-table {
+    width: 100%;
+}
+
+.users-table thead th {
+    vertical-align: top;
+}
+
+.users-table .lastname-col {
+    width: 20%;
+}
+
+.users-table .firstname-col {
+    width: 20%;
+}
+
+.users-table .nickname-col {
+    width: 20%;
+}
+
+.users-table .email-col {
+    width: 30%;
+}
+
+.users-table .role-col {
+    width: 10%;
+}
+
+.users-table .actions-col {
+    width: 10%;
+}
+
+/***********TAGS**********/
+.tags-table {
+    width: 100%;
+}
+
+.tags-table thead th {
+    vertical-align: top;
+}
+
+.tags-table .id-col {
+    width: 5%;
+}
+
+.tags-table .name-col {
+    width: 30%;
+}
+
+.tags-table .color-col {
+    width: 30%;
+}
+
+.tags-table .actions-col {
+    width: 25%;
+}
+
+/*===============================EDIT=======================================*/
 .form-edit {
     max-width: 600px;
     margin: auto;
@@ -110,12 +225,12 @@ h3 {
     font-weight: bold;
 }
 
-.walk-datas { 
+.walk-datas {
     max-width: 1200px;
     margin: auto;
 }
 
-.walk-datas-label { 
+.walk-datas-label {
     color: #678e62;
     font-weight: bold;
 }
@@ -125,5 +240,5 @@ h3 {
         display: inline-block;
         margin-left: 0.5rem;
     }
-    
+
 }

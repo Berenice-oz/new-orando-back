@@ -7,19 +7,25 @@
 	<div class="row pt-5">
 		<div class="col-12">
 			{{ include('back/_flash_message.html.twig') }}
+			<div class="count">
+				{{ walksList.getTotalItemCount }} élément(s)
+			</div>
+			<div class="navigation">
+				{{ knp_pagination_render(walksList) }}
+			</div>
 			<table class="table table-hover mt-4 walks-list-table">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col" class="d-none d-lg-block">Date et heure</th>
-						<th scope="col">Titre</th>
-						<th scope="col" class="d-none d-lg-block">Description</th>
-						<th scope="col">Statut</th>
-						<th scope="col" class="d-none d-lg-block">Organisateur</th>
-						<th scope="col">Actions</th>
+						<th scope="col" class="id-col">#</th>
+						<th scope="col" class="d-none d-lg-block date-col">Date et heure</th>
+						<th scope="col" class="title-col">Titre</th>
+						<th scope="col" class="d-none d-lg-block desc-col">Description</th>
+						<th scope="col" class="status-col">Statut</th>
+						<th scope="col" class="d-none d-lg-block creator-col">Organisateur</th>
+						<th scope="col" class="actions-col">Actions</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody width="100%">
 					{% for walk in walksList %}
 						<tr>
 							<th scope="row">{{ walk.id }}</th>
@@ -31,12 +37,26 @@
 							<td>
 								<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
 									<i class="fas fa-toggle-on"></i>
-									Modifier le statut</a>
+									<span class="display-medium">Modifier le statut</span>
+								</a>
+								<form
+									action="{{ path('walk_delete', {id: walk.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')">
+									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+									<input type="hidden" name="_method" value="DELETE"/>
+									<input type="hidden" name="token" value="{{ csrf_token('delete_walk') }}"/>
+									<button type="submit" class="btn btn-danger">
+										<i class="fas fa-trash-alt"></i>
+										<span class="display-medium">Supprimer</span>
+									</button>
+								</form>
 							</td>
 						</tr>
-					</tbody>
-				{% endfor %}
+					{% endfor %}
+				</tbody>
 			</table>
+			<div class="navigation">
+				{{ knp_pagination_render(walksList) }}
+			</div>
 		</div>
 	</div>
 {% endblock %}

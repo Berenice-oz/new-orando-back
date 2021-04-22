@@ -33,6 +33,17 @@ class WalkRepository extends ServiceEntityRepository
     }
 
     /**
+     * Find All Query
+     */
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('w')
+            ->orderBy('w.createdAt', 'DESC')
+            ->getQuery()
+        ;
+    }
+
+    /**
      * Find expired and status "incoming" walk's
      */
     public function findForCronJob()

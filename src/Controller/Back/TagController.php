@@ -6,6 +6,7 @@ use App\Entity\Tag;
 use App\Form\TagType;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,9 +25,20 @@ class TagController extends AbstractController
      *
      * @Route("/back/tags", name="tag_browse", methods={"GET"})
      */
-    public function browse(TagRepository $tagRepository)
+    public function browse(TagRepository $tagRepository, PaginatorInterface $paginator, Request $request)
     {
-        $tagsList = $tagRepository->findAll();
+        $tagListQuery = $tagRepository->findAllQuery();
+
+        $tagsList = $paginator->paginate(
+            $tagListQuery,
+            $request->query->getInt('page', 1),
+            10 /*limit per page*/
+        );
+
+        $tagsList->setCustomParameters([
+            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
+            'size' => 'small', # small|large (for template: twitter_bootstrap_v4_pagination)
+        ]);
 
         return $this->render('back/tag/browse.html.twig', [
             'tagsList' => $tagsList,
