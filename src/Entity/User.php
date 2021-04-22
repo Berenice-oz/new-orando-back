@@ -369,7 +369,8 @@ class User implements UserInterface
     public function getWalks(): Collection
     {
         $criteria = Criteria::create()
-            ->orderBy(array("date" => Criteria::ASC));
+            ->orderBy(array("date" => Criteria::ASC))
+            ->andWhere(Criteria::expr()->eq('status', 1));
         return $this->walks->matching($criteria);
     }
 
