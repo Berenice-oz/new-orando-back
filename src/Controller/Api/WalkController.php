@@ -197,6 +197,8 @@ class WalkController extends AbstractController
             return $this->json(['error' => 'Randonnée non trouvée'], Response::HTTP_NOT_FOUND);
         }
         
+        $this->denyAccessUnlessGranted('update', $walk);
+        
         $jsonContent = $request->getContent();
 
         
