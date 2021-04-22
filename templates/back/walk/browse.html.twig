@@ -13,15 +13,21 @@
 			<div class="navigation">
 				{{ knp_pagination_render(walksList) }}
 			</div>
+			<div class="table-responsive">
 			<table class="table table-hover mt-4 walks-list-table">
 				<thead>
 					<tr>
 						<th scope="col" class="id-col">#</th>
-						<th scope="col" class="d-none d-lg-block date-col">Date et heure</th>
-						<th scope="col" class="title-col">Titre</th>
-						<th scope="col" class="d-none d-lg-block desc-col">Description</th>
-						<th scope="col" class="status-col">Statut</th>
-						<th scope="col" class="d-none d-lg-block creator-col">Organisateur</th>
+						<th scope="col" class="date-col {% if walksList.isSorted('w.date') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Date et heure', 'w.date') }}</th>
+						<th scope="col" class="title-col {% if walksList.isSorted('w.title') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Titre', 'w.title') }}</th>
+						<th scope="col" class="desc-col {% if walksList.isSorted('w.description') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Description', 'w.description') }}</th>
+						<th scope="col" class="status-col {% if walksList.isSorted('w.status') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Statut', 'w.status') }}</th>
+						<th scope="col" class="creator-col {% if walksList.isSorted('w.creator') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Organisateur', 'w.creator') }}</th>
 						<th scope="col" class="actions-col">Actions</th>
 					</tr>
 				</thead>
@@ -29,11 +35,14 @@
 					{% for walk in walksList %}
 						<tr>
 							<th scope="row">{{ walk.id }}</th>
-							<td class="d-none d-lg-block">{{ walk.date|date('d/m/Y h:m') }}</td>
+							<td>{{ walk.date|date('d/m/Y h:m') }}</td>
 							<td>{{ walk.title }}</td>
-							<td class="d-none d-lg-block">{{ walk.description }}</td>
-							<td>{{ walk.status == 1 ? 'A venir': 'Terminée' }}</td>
-							<td class="d-none d-lg-block">{{ walk.creator.nickname }}</td>
+							<td>{{ walk.description }}</td>
+							<td>{% if walk.status == 1 %}A venir
+								{% elseif walk.status == 2 %}Terminée
+								{% else %}Annulée
+								{% endif %}</td>
+							<td>{{ walk.creator.nickname }}</td>
 							<td>
 								<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
 									<i class="fas fa-toggle-on"></i>
@@ -54,6 +63,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			</div>
 			<div class="navigation">
 				{{ knp_pagination_render(walksList) }}
 			</div>

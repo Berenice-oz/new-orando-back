@@ -13,25 +13,32 @@
 			<div class="navigation">
 				{{ knp_pagination_render(usersList) }}
 			</div>
+			<div class="table-responsive">
 			<table class="table table-hover mt-4 users-list-table users-table">
 				<thead>
 					<tr>
-						<th scope="col" class="d-none d-lg-block lastname-col" >Nom</th>
-						<th scope="col" class="firstname-col">Prénom</th>
-						<th scope="col" class="d-none d-lg-block nickname-col">Pseudo</th>
-						<th scope="col" class="email-col">Email</th>
-						<th scope="col" class="d-none d-lg-block role-col">Rôle</th>
+						<th scope="col" class="id-col">#</th>
+						<th scope="col" class="lastname-col {% if usersList.isSorted('u.lastname') %}sorted{% endif %}">
+            {{ knp_pagination_sortable(usersList, 'Nom', 'u.lastname') }}</th>
+						<th scope="col" class="firstname-col {% if usersList.isSorted('u.firstname') %}sorted{% endif %}">
+            {{ knp_pagination_sortable(usersList, 'Prénom', 'u.firstname') }}</th>
+						<th scope="col" class="email-col {% if usersList.isSorted('u.email') %}sorted{% endif %}">
+            {{ knp_pagination_sortable(usersList, 'Email', 'u.email') }}</th>
+						<th scope="col" class="nickname-col {% if usersList.isSorted('u.nickname') %}sorted{% endif %}">
+            {{ knp_pagination_sortable(usersList, 'Pseudo', 'u.nickname') }}</th>
+						<th scope="col" class="role-col">Rôle</th>
 						<th scope="col" class="actions-col">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for user in usersList %}
 						<tr>
-							<td class="d-none d-lg-block">{{ user.lastname }}</td>
+							<th scope="row">{{ user.id }}</th>
+							<td>{{ user.lastname }}</td>
 							<td>{{ user.firstname }}</td>
-							<td class="d-none d-lg-block">{{ user.nickname }}</td>
 							<td>{{ user.email }}</td>
-							<td class="d-none d-lg-block">
+							<td>{{ user.nickname }}</td>
+							<td>
 								{% for role in user.roles %}
 									{{ role }}
 								{% endfor %}
@@ -52,6 +59,7 @@
 					</tbody>
 				{% endfor %}
 			</table>
+			</div>
 			<div class="navigation">
 				{{ knp_pagination_render(usersList) }}
 			</div>

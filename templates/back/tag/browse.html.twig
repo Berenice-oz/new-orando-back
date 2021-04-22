@@ -11,46 +11,51 @@
 				Ajouter un thème</a>
 			{{ include('back/_flash_message.html.twig') }}
 			<div class="count">
-				{{ tagsList.getTotalItemCount }} élément(s)
+				{{ tagsList.getTotalItemCount }}
+				élément(s)
 			</div>
 			<div class="navigation">
 				{{ knp_pagination_render(tagsList) }}
 			</div>
-			<table class="table table-hover mt-4 tags-list-table tags-table">
-				<thead>
-					<tr>
-						<th scope="col" class="id-col">#</th>
-						<th scope="col" class="name-col">Nom</th>
-						<th scope="col" class="d-none d-sm-block color-col">Couleur</th>
-						<th scope="col" class="actions-col">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for tag in tagsList %}
+			<div class="table-responsive">
+				<table class="table table-hover mt-4 tags-list-table tags-table">
+					<thead>
 						<tr>
-							<th scope="row">{{ tag.id }}</th>
-							<td>{{ tag.name }}</td>
-							<td class="d-none d-sm-block">{{ tag.color }}</td>
-							<td>
-								<a href="{{ path('tag_edit', {id:tag.id}) }}" type="button" class="btn btn-warning">
-									<i class="fas fa-edit"></i>
-									<span class="display-medium">Modifier</span>
-								</a>
-								<form
-									action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le thème {{ tag.name }} ?')">
-									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
-									<input type="hidden" name="_method" value="DELETE"/>
-									<input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>
-									<button type="submit" class="btn btn-danger">
-										<i class="fas fa-trash-alt"></i>
-										<span class="display-medium">Supprimer</span>
-									</button>
-								</form>
-							</td>
+							<th scope="col" class="id-col">#</th>
+							<th scope="col" class="name-col {% if tagsList.isSorted('t.name') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(tagsList, 'Nom', 't.name') }}</th>
+							<th scope="col" class="color-col {% if tagsList.isSorted('t.color') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(tagsList, 'Couleur', 't.color') }}</th>
+							<th scope="col" class="actions-col">Actions</th>
 						</tr>
-					</tbody>
-				{% endfor %}
-			</table>
+					</thead>
+					<tbody>
+						{% for tag in tagsList %}
+							<tr>
+								<th scope="row">{{ tag.id }}</th>
+								<td>{{ tag.name }}</td>
+								<td>{{ tag.color }}</td>
+								<td>
+									<a href="{{ path('tag_edit', {id:tag.id}) }}" type="button" class="btn btn-warning">
+										<i class="fas fa-edit"></i>
+										<span class="display-medium">Modifier</span>
+									</a>
+									<form
+										action="{{ path('tag_delete', {id: tag.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer le thème {{ tag.name }} ?')">
+										{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+										<input type="hidden" name="_method" value="DELETE"/>
+										<input type="hidden" name="token" value="{{ csrf_token('delete_tag') }}"/>
+										<button type="submit" class="btn btn-danger">
+											<i class="fas fa-trash-alt"></i>
+											<span class="display-medium">Supprimer</span>
+										</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					{% endfor %}
+				</table>
+			</div>
 			<div class="navigation">
 				{{ knp_pagination_render(tagsList) }}
 			</div>
