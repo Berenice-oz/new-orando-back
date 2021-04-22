@@ -10,16 +10,16 @@
 			<table class="table table-hover mt-4 walks-list-table">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col" class="d-none d-lg-block">Date et heure</th>
-						<th scope="col">Titre</th>
-						<th scope="col" class="d-none d-lg-block">Description</th>
-						<th scope="col">Statut</th>
-						<th scope="col" class="d-none d-lg-block">Organisateur</th>
-						<th scope="col">Actions</th>
+						<th scope="col" class="id-col">#</th>
+						<th scope="col" class="d-none d-lg-block date-col">Date et heure</th>
+						<th scope="col" class="title-col">Titre</th>
+						<th scope="col" class="d-none d-lg-block desc-col">Description</th>
+						<th scope="col" class="status-col">Statut</th>
+						<th scope="col" class="d-none d-lg-block creator-col">Organisateur</th>
+						<th scope="col" class="actions-col">Actions</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody width="100%">
 					{% for walk in walksList %}
 						<tr>
 							<th scope="row">{{ walk.id }}</th>
@@ -34,8 +34,8 @@
 									Modifier le statut</a>
 							</td>
 						</tr>
-					</tbody>
-				{% endfor %}
+					{% endfor %}
+				</tbody>
 			</table>
 		</div>
 	</div>

@@ -7,15 +7,15 @@
 	<div class="row pt-5">
 		<div class="col-12">
 			{{ include('back/_flash_message.html.twig') }}
-			<table class="table table-hover mt-4 users-list-table">
+			<table class="table table-hover mt-4 users-list-table users-table">
 				<thead>
 					<tr>
-						<th scope="col" class="d-none d-lg-block">Nom</th>
-						<th scope="col">Prénom</th>
-						<th scope="col" class="d-none d-lg-block">Pseudo</th>
-						<th scope="col">Email</th>
-						<th scope="col" class="d-none d-lg-block">Rôle</th>
-						<th scope="col">Actions</th>
+						<th scope="col" class="d-none d-lg-block lastname-col" >Nom</th>
+						<th scope="col" class="firstname-col">Prénom</th>
+						<th scope="col" class="d-none d-lg-block nickname-col">Pseudo</th>
+						<th scope="col" class="email-col">Email</th>
+						<th scope="col" class="d-none d-lg-block role-col">Rôle</th>
+						<th scope="col" class="actions-col">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
