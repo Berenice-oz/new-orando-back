@@ -6,6 +6,7 @@ use App\Entity\Walk;
 use App\Form\BackWalkType;
 use App\Repository\WalkRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -23,9 +24,19 @@ class WalkController extends AbstractController
      * 
      * @Route("/back/walks", name="back_walk_browse", methods={"GET"})
      */
-    public function browse(WalkRepository $walkRepository)
+    public function browse(WalkRepository $walkRepository, PaginatorInterface $paginator, Request $request)
     {
-        $walksList = $walkRepository->findAll();
+        $walksListQuery = $walkRepository->findAllQuery();
+        $walksList = $paginator->paginate(
+            $walksListQuery,
+            $request->query->getInt('page', 1),
+            10 /*limit per page*/
+        );
+
+        $walksList->setCustomParameters([
+            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
+            'size' => 'small', # small|large (for template: twitter_bootstrap_v4_pagination)
+        ]);
 
         return $this->render('back/walk/browse.html.twig', [
 

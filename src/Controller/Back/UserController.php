@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,9 +22,20 @@ class UserController extends AbstractController
      * 
      * @Route("/back/users", name="user_browse", methods={"GET"})
      */
-    public function browse(UserRepository $userRepository)
+    public function browse(UserRepository $userRepository, PaginatorInterface $paginator, Request $request)
     {
-        $usersList = $userRepository->findAll();
+        $usersListQuery = $userRepository->findAllQuery();
+
+        $usersList = $paginator->paginate(
+            $usersListQuery,
+            $request->query->getInt('page', 1),
+            10 /*limit per page*/
+        );
+
+        $usersList->setCustomParameters([
+            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
+            'size' => 'small', # small|large (for template: twitter_bootstrap_v4_pagination)
+        ]);
 
         return $this->render('back/user/browse.html.twig',[
             

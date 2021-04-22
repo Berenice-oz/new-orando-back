@@ -32,6 +32,17 @@ class TagRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Find All Query
+     */
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+        ;
+    }
+
     // /**
     //  * @return Tag[] Returns an array of Tag objects
     //  */

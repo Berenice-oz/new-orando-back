@@ -7,6 +7,12 @@
 	<div class="row pt-5">
 		<div class="col-12">
 			{{ include('back/_flash_message.html.twig') }}
+			<div class="count">
+				{{ walksList.getTotalItemCount }} élément(s)
+			</div>
+			<div class="navigation">
+				{{ knp_pagination_render(walksList) }}
+			</div>
 			<table class="table table-hover mt-4 walks-list-table">
 				<thead>
 					<tr>
@@ -31,7 +37,8 @@
 							<td>
 								<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
 									<i class="fas fa-toggle-on"></i>
-									<span class="display-medium">Modifier le statut</span></a>
+									<span class="display-medium">Modifier le statut</span>
+								</a>
 								<form
 									action="{{ path('walk_delete', {id: walk.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')">
 									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
@@ -47,6 +54,9 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			<div class="navigation">
+				{{ knp_pagination_render(walksList) }}
+			</div>
 		</div>
 	</div>
 {% endblock %}

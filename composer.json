@@ -15,6 +15,7 @@
         "doctrine/orm": "^2.8",
         "fakerphp/faker": "^1.13",
         "fresh/doctrine-enum-bundle": "~7.1",
+        "knplabs/knp-paginator-bundle": "^5.4",
         "lexik/jwt-authentication-bundle": "^2.11",
         "nelmio/cors-bundle": "^2.1",
         "phpdocumentor/reflection-docblock": "^5.2",

@@ -10,6 +10,12 @@
 				<i class="far fa-plus-square"></i>
 				Ajouter un thème</a>
 			{{ include('back/_flash_message.html.twig') }}
+			<div class="count">
+				{{ tagsList.getTotalItemCount }} élément(s)
+			</div>
+			<div class="navigation">
+				{{ knp_pagination_render(tagsList) }}
+			</div>
 			<table class="table table-hover mt-4 tags-list-table tags-table">
 				<thead>
 					<tr>
@@ -45,6 +51,9 @@
 					</tbody>
 				{% endfor %}
 			</table>
+			<div class="navigation">
+				{{ knp_pagination_render(tagsList) }}
+			</div>
 		</div>
 	</div>
 {% endblock %}

@@ -7,6 +7,12 @@
 	<div class="row pt-5">
 		<div class="col-12">
 			{{ include('back/_flash_message.html.twig') }}
+			<div class="count">
+				{{ usersList.getTotalItemCount }} élément(s)
+			</div>
+			<div class="navigation">
+				{{ knp_pagination_render(usersList) }}
+			</div>
 			<table class="table table-hover mt-4 users-list-table users-table">
 				<thead>
 					<tr>
@@ -46,6 +52,9 @@
 					</tbody>
 				{% endfor %}
 			</table>
+			<div class="navigation">
+				{{ knp_pagination_render(usersList) }}
+			</div>
 		</div>
 	</div>
 {% endblock %}
