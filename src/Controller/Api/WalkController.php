@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Walk;
 use App\Repository\WalkRepository;
@@ -57,20 +58,45 @@ class WalkController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-
-        // we send walk item data json format
-        return $this->json(
-            $walk,
-            Response::HTTP_OK,
-            [],
-            ['groups' => 'api_walks_read_item', 
+        
+        //$date = $walk->getDate();
+        //dd($date);
+        
+        //if ($date > new DateTime()) {
+            // we send walk item data json format
+            return $this->json(
+                $walk,
+                Response::HTTP_OK,
+                [],
+                ['groups' => 'api_walks_read_item',
             
-            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                 return $object->getId();
-            }
+                }
             
-            ]);
+                ]
+                );
+        //} else {
+            // we send walk item data json format
+            //return $this->json(
+               // $walk,
+               // Response::HTTP_OK,
+                //[],
+               // ['groups' => 'api_walks_read_item_else',
+            
+               // ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+              //  return $object->getId();
+                //}
+            
+                //]
+                //);
     }
+    
+            
+
+
+     
+    
 
     /**
      * @param mixed $walk
