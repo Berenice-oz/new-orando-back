@@ -25,34 +25,34 @@ class Walk
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item", "api_participant_check", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item", "api_participant_check"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
     private $startingPoint;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      * 
      */
     private $endPoint;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
     private $date;
@@ -60,7 +60,7 @@ class Walk
     /**
      * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $duration;
 
@@ -68,13 +68,13 @@ class Walk
      * @ORM\Column(name="difficulty", type="WalkDifficultyType")
      * @DoctrineAssert\Enum(entity="App\DBAL\Types\WalkDifficultyType")  
      * @Assert\NotBlank
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $difficulty;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item"})
      * @Assert\Range(
      *      min = 0,
      *      max = 2000,
@@ -85,21 +85,21 @@ class Walk
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      * @Assert\PositiveOrZero
      */
     private $maxNbPersons;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      * @Assert\NotBlank
      */
     private $description;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item")
      * @Assert\PositiveOrZero
      */
     private $kilometre;
@@ -117,7 +117,7 @@ class Walk
 
     /**
      * @ORM\ManyToOne(targetEntity=Area::class, inversedBy="walks")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item"})
      * @Assert\NotBlank
      */
     private $area;
@@ -125,13 +125,13 @@ class Walk
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
      * @Assert\NotBlank
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
      */
     private $creator;
 
     /**
      * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="walk", cascade={"remove","persist"})
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $participants;
 
@@ -143,7 +143,7 @@ class Walk
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="walks")
      * @ORM\JoinTable(name="walk_tag")
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_walks_read_item_else"})
+     * @Groups({"api_walks_read", "api_walks_read_item"})
      */
     private $tags;
 
