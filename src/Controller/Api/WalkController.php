@@ -112,10 +112,11 @@ class WalkController extends AbstractController
         //$this->denyAccessUnlessGranted('delete', $walk);
 
         $jsonContent = $request->toArray();
+        dd($jsonContent);
         
         $data = [
             $userId = $jsonContent['user'][0]['id'],
-            $walkItem = $jsonContent['walk'][0]
+            $walkItem = $jsonContent['walk'][0]['id']
         ];
 
         //dd($data);
@@ -133,8 +134,7 @@ class WalkController extends AbstractController
         
         
         $userItem = $serializer->denormalize($userId, User::class, 'json');
-
-        //dd($user);
+        //dd($userItem);
 
         if($userItem === $walk->getCreator()){
 
