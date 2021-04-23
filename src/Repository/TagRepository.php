@@ -43,6 +43,22 @@ class TagRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Find all tags by search
+     */
+    public function findAllTagsBySearchQuery($search = null)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('(t.name LIKE :name) OR
+                (t.color LIKE :color)')
+            ->setParameters(array(
+                'name' => '%' . $search . '%',
+                'color' => '%' . $search . '%',
+                ))
+            ->orderBy('t.id', 'DESC')
+            ->getQuery();
+    }
+
     // /**
     //  * @return Tag[] Returns an array of Tag objects
     //  */

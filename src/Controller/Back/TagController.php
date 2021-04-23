@@ -27,10 +27,16 @@ class TagController extends AbstractController
      */
     public function browse(TagRepository $tagRepository, PaginatorInterface $paginator, Request $request)
     {
-        $tagListQuery = $tagRepository->findAllQuery();
+        $search = trim($request->query->get("search"));
+        
+        if ((strlen($search) < 2 && $search != null )|| !($search)) {
+            $tagsListQuery = $tagRepository->findAllQuery();
+        }else {
+            $tagsListQuery = $tagRepository->findAllTagsBySearchQuery($search);
+        }
 
         $tagsList = $paginator->paginate(
-            $tagListQuery,
+            $tagsListQuery,
             $request->query->getInt('page', 1),
             10 /*limit per page*/
         );
