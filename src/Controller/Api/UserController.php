@@ -98,7 +98,7 @@ class UserController extends AbstractController
     public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
     {
         $data = $request->request->all();
-        $data = $serializer->serialize($data, 'json');
+        $user = $serializer->serialize($data, 'json');
         $user = $serializer->deserialize($data, User::class, 'json');
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
@@ -141,9 +141,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/api/users/{id<\d+>}", name="api_users_update", methods={"PATCH"})
+     * @Route("/api/users/{id<\d+>}", name="api_users_update", methods={"POST"})
      */
-    public function update(Request $request, SerializerInterface $serializer, User $user = null, EntityManagerInterface $entityManager, ValidatorInterface $validator)
+    public function update(Request $request, SerializerInterface $serializer, User $user = null, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
     {
         if ($user === null) {
             $message = [
@@ -153,8 +153,19 @@ class UserController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-        $jsonContent = $request->getContent();
-        $serializer->deserialize($jsonContent, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+        $userPassword = $user->getPassword();
+        $userPicture = $user->getPicture();
+        $data = $request->request->all();
+        $password = $data['password'];
+        $pictureFile = $request->files->get('picture');
+        $data = $serializer->serialize($data, 'json');
+        $serializer->deserialize($data, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+        if ($password === '') {
+            $user->setPassword($userPassword);
+        }
+        if (!$pictureFile) {
+            $user->setPicture($userPicture);
+        }
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
             $errorsList = [];
@@ -166,7 +177,29 @@ class UserController extends AbstractController
 
             return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        //todo encoder le mdp si il est renseigné et non null
+        if ($password !== '') {
+            $user->setPassword($encoder->encodePassword($user, $password));
+        }
+        
+        if ($pictureFile) {
+            $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+            try {
+                $pictureFile->move(
+                    $this->getParameter('profil_picture_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                $message = [
+                    'error' => 'Un problème est survenu lors de l\'enregistrement de l\'image',
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                ];
+
+                return $this->json($message, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+            $user->setPicture($newFilename);
+        }
         $entityManager->flush();
         return $this->json(
             ['message' => 'Les informations de l\'utilisateur ' . $user->getNickname() . ' ont bien été modifiées.'],
