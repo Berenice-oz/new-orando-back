@@ -44,7 +44,14 @@ class ParticipantController extends AbstractController
         $errors = $validator->validate($participation);
         if (count($errors) > 0) {
 
-            return $this->json(['message' => 'La modification n\'a pas été prise en compte.'], 418);
+            $errorsList = [];
+            foreach ($errors as $error) {
+                $label = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $errorsList[$label] =  $message;
+            }
+
+            return $this->json(['errors' => $errorsList], Response::HTTP_I_AM_A_TEAPOT);
         }
         $entityManager->persist($participation);
         $entityManager->flush();
