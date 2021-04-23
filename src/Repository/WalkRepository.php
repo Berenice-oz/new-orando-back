@@ -55,5 +55,25 @@ class WalkRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Find all walks by search
+     */
+    public function findAllWalksBySearchQuery($search = null)
+    {
+        return $this->createQueryBuilder('w')
+            ->innerjoin('w.creator', 'c')
+            ->addSelect('c')
+            ->where('(w.title LIKE :title) OR
+                (w.description LIKE :desc) OR
+                (c.nickname LIKE :nickname)')
+            ->setParameters(array(
+                'title' => '%' . $search . '%',
+                'desc' => '%' . $search . '%',
+                'nickname' => '%' . $search . '%',
+                ))
+            ->orderBy('w.createdAt', 'DESC')
+            ->getQuery();
+    }
     
 }

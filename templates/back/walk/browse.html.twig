@@ -7,62 +7,79 @@
 	<div class="row pt-5">
 		<div class="col-12">
 			{{ include('back/_flash_message.html.twig') }}
+			<form class="form-inline my-2 my-lg-0" action="{{ path("back_walk_browse") }}" method="GET">
+				<input class="form-control mr-sm-2" type="search" id="search" name="search" value={{ app.request.query.get("search") }}>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+					<i class="fas fa-search"></i>
+					Chercher</button>
+				<a href="{{ path('back_walk_browse') }}" class="btn btn-outline-danger ml-2 my-2 my-sm-0">
+					<i class="fas fa-undo"></i>
+				</a>
+			</form>
+			{% if search %}
+				<div class="resume-search">Résultat pour la recherche
+					<em>"{{ search }}"</em>
+				</div>
+			{% endif %}
 			<div class="count">
-				{{ walksList.getTotalItemCount }} élément(s)
+				{{ walksList.getTotalItemCount }}
+				élément(s)
 			</div>
 			<div class="navigation">
 				{{ knp_pagination_render(walksList) }}
 			</div>
 			<div class="table-responsive">
-			<table class="table table-hover mt-4 walks-list-table">
-				<thead>
-					<tr>
-						<th scope="col" class="id-col">#</th>
-						<th scope="col" class="date-col {% if walksList.isSorted('w.date') %}sorted{% endif %}">
-								{{ knp_pagination_sortable(walksList, 'Date et heure', 'w.date') }}</th>
-						<th scope="col" class="title-col {% if walksList.isSorted('w.title') %}sorted{% endif %}">
-								{{ knp_pagination_sortable(walksList, 'Titre', 'w.title') }}</th>
-						<th scope="col" class="desc-col {% if walksList.isSorted('w.description') %}sorted{% endif %}">
-								{{ knp_pagination_sortable(walksList, 'Description', 'w.description') }}</th>
-						<th scope="col" class="status-col {% if walksList.isSorted('w.status') %}sorted{% endif %}">
-								{{ knp_pagination_sortable(walksList, 'Statut', 'w.status') }}</th>
-						<th scope="col" class="creator-col {% if walksList.isSorted('w.creator') %}sorted{% endif %}">
-								{{ knp_pagination_sortable(walksList, 'Organisateur', 'w.creator') }}</th>
-						<th scope="col" class="actions-col">Actions</th>
-					</tr>
-				</thead>
-				<tbody width="100%">
-					{% for walk in walksList %}
+				<table class="table table-hover mt-4 walks-list-table">
+					<thead>
 						<tr>
-							<th scope="row">{{ walk.id }}</th>
-							<td>{{ walk.date|date('d/m/Y h:m') }}</td>
-							<td>{{ walk.title }}</td>
-							<td>{{ walk.description }}</td>
-							<td>{% if walk.status == 1 %}A venir
-								{% elseif walk.status == 2 %}Terminée
-								{% else %}Annulée
-								{% endif %}</td>
-							<td>{{ walk.creator.nickname }}</td>
-							<td>
-								<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
-									<i class="fas fa-toggle-on"></i>
-									<span class="display-medium">Modifier le statut</span>
-								</a>
-								<form
-									action="{{ path('walk_delete', {id: walk.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')">
-									{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
-									<input type="hidden" name="_method" value="DELETE"/>
-									<input type="hidden" name="token" value="{{ csrf_token('delete_walk') }}"/>
-									<button type="submit" class="btn btn-danger">
-										<i class="fas fa-trash-alt"></i>
-										<span class="display-medium">Supprimer</span>
-									</button>
-								</form>
-							</td>
+							<th scope="col" class="id-col">#</th>
+							<th scope="col" class="date-col {% if walksList.isSorted('w.date') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Date et heure', 'w.date') }}</th>
+							<th scope="col" class="title-col {% if walksList.isSorted('w.title') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Titre', 'w.title') }}</th>
+							<th scope="col" class="desc-col {% if walksList.isSorted('w.description') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Description', 'w.description') }}</th>
+							<th scope="col" class="status-col {% if walksList.isSorted('w.status') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Statut', 'w.status') }}</th>
+							<th scope="col" class="creator-col {% if walksList.isSorted('w.creator') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Organisateur', 'w.creator') }}</th>
+							<th scope="col" class="actions-col">Actions</th>
 						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{% for walk in walksList %}
+							<tr>
+								<th scope="row">{{ walk.id }}</th>
+								<td>{{ walk.date|date('d/m/Y h:m') }}</td>
+								<td>{{ walk.title }}</td>
+								<td>{{ walk.description }}</td>
+								<td>
+									{% if walk.status == 1 %}A venir
+										{% elseif walk.status == 2 %}Terminée
+										{% else %}Annulée
+									{% endif %}
+								</td>
+								<td>{{ walk.creator.nickname }}</td>
+								<td>
+									<a href="{{ path('back_walk_edit', {id:walk.id}) }}" type="button" class="btn btn-warning">
+										<i class="fas fa-toggle-on"></i>
+										<span class="display-medium">Modifier le statut</span>
+									</a>
+									<form
+										action="{{ path('walk_delete', {id: walk.id}) }}" method="POST" class="form-admin" onsubmit="return confirm('Supprimer la randonnée {{ walk.title }} ?')">
+										{# Fake HTTP Method, see https://symfony.com/doc/current/routing.html#matching-http-methods #}
+										<input type="hidden" name="_method" value="DELETE"/>
+										<input type="hidden" name="token" value="{{ csrf_token('delete_walk') }}"/>
+										<button type="submit" class="btn btn-danger">
+											<i class="fas fa-trash-alt"></i>
+											<span class="display-medium">Supprimer</span>
+										</button>
+									</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 			</div>
 			<div class="navigation">
 				{{ knp_pagination_render(walksList) }}
