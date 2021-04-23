@@ -206,12 +206,9 @@ class WalkController extends AbstractController
             return $this->json(['error' => 'Randonnée non trouvée'], Response::HTTP_NOT_FOUND);
         }
         
-    
+
         
         $jsonContent = $request->getContent();
-        
-        
-
         
         $walk = $serializer->deserialize(
             $jsonContent,
