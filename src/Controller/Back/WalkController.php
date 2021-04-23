@@ -26,11 +26,17 @@ class WalkController extends AbstractController
      */
     public function browse(WalkRepository $walkRepository, PaginatorInterface $paginator, Request $request)
     {
-        $walksListQuery = $walkRepository->findAllQuery();
+        $search = trim($request->query->get("search"));
+        
+        if ((strlen($search) < 2 && $search != null )|| !($search)) {
+            $walksListQuery = $walkRepository->findAllQuery();
+        }else {
+            $walksListQuery = $walkRepository->findAllWalksBySearchQuery($search);
+        }
         $walksList = $paginator->paginate(
             $walksListQuery,
             $request->query->getInt('page', 1),
-            10 /*limit per page*/
+            10, /*limit per page*/
         );
 
         $walksList->setCustomParameters([
@@ -39,9 +45,8 @@ class WalkController extends AbstractController
         ]);
 
         return $this->render('back/walk/browse.html.twig', [
-
             'walksList' => $walksList,
-
+            'search' => $search,
         ]);
     }
 
