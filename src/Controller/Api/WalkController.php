@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use DateTime;
 use App\Entity\User;
 use App\Entity\Walk;
+use App\Repository\UserRepository;
 use App\Repository\WalkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class WalkController extends AbstractController
 {
@@ -84,12 +86,13 @@ class WalkController extends AbstractController
     /**
      * @param mixed $walk
      * @param EntityManagerInterface $em
+     * @param User $user
      * @return JSON
      * 
      * Delete a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_delete", methods={"DELETE"})
      */
-    public function delete(Walk $walk = null, EntityManagerInterface $em)
+    public function delete(Walk $walk = null, EntityManagerInterface $em, Request $request, SerializerInterface $serializer, UserRepository $userRepository)
     {
         // managing error
         if ($walk === null) {
@@ -106,22 +109,56 @@ class WalkController extends AbstractController
         }
 
         // only the user who create a walk could be delete it (@see folder => Voter => WalkVoter.php)
-        $this->denyAccessUnlessGranted('delete', $walk);
-    
-        // Delete a walk 
-        $walkId = $walk->getId();
-        $em->remove($walk);
-        $em->flush();
+        //$this->denyAccessUnlessGranted('delete', $walk);
 
-        $message = [
-            'id' => $walkId,
-            'message' => 'La randonnée a bien été supprimé.'
-        ];
+        $jsonContent = $request->toArray();
         
-        return $this->json(
-        $message,
-        Response::HTTP_OK
-        );
+        $data = [
+            $userId = $jsonContent['user'][0]['id'],
+            $walkItem = $jsonContent['walk'][0]
+        ];
+
+        //dd($data);
+
+        $walk = $serializer->denormalize(
+            $walkItem,
+            Walk::class,
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $walk,
+            'groups' => 'api_walks_read_item',
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
+                return $object;
+            }  
+            ]);
+        
+        
+        $userItem = $serializer->denormalize($userId, User::class, 'json');
+
+        //dd($user);
+
+        if($userItem === $walk->getCreator()){
+
+            $em->remove($walk);
+            $em->flush();
+
+
+            $message = [
+                'id' => $walk->getId(),
+                'message' => 'La randonnée a bien été supprimé.'
+            ];
+            
+            return $this->json(
+            $message,
+            Response::HTTP_OK
+            );
+
+        } else{
+
+            return $this->json(['message' => 'Action non autorisée', Response::HTTP_FORBIDDEN]);
+        }
+
+       
+
     }
 
     /**
@@ -199,7 +236,7 @@ class WalkController extends AbstractController
      *
      * @Route("/api/walks/{id<\d+>}", name="api_walks_update", methods={"PATCH"})
      */
-    public function update(Request $request, Walk $walk = null, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
+    public function update(Request $request, Walk $walk = null, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em, User $user)
     {
         if($walk === null){
             
@@ -208,10 +245,18 @@ class WalkController extends AbstractController
         
 
         
-        $jsonContent = $request->getContent();
+        $jsonContent = $request->toArray();
+        //dd($jsonContent);
+       
+        $data = [
+            $userId = $jsonContent['user'][0]['id'],
+            $walkItem = $jsonContent['walk'][0]
+        ];
+
+        //dd($data);
         
-        $walk = $serializer->deserialize(
-            $jsonContent,
+        $walk = $serializer->denormalize(
+            $walkItem,
             Walk::class,
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $walk,
@@ -221,6 +266,9 @@ class WalkController extends AbstractController
             }  
             ]);
         
+        $user = $serializer->denormalize($userId, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+        //dd($user);
+        
 
         $errors = $validator->validate($walk);
 
@@ -229,10 +277,19 @@ class WalkController extends AbstractController
             return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->denyAccessUnlessGranted('update', $walk);
+        if($user === $walk->getCreator()){
 
-        $em->flush($walk);
+            $em->persist($walk);
+            $em->flush();
 
-        return $this->json(['message' => 'Randonnée modifiée.'], Response::HTTP_OK);
+            return $this->json(['message' => 'Randonnée modifiée.'], Response::HTTP_OK);
+
+        } else {
+
+            return $this->json(['message' => 'Action non autorisée.'], Response::HTTP_FORBIDDEN);
+
+        }
+
+       
     }
 }

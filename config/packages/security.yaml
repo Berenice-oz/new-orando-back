@@ -77,7 +77,7 @@ security:
         # #WEB/API
         - { path: "^/api/users", roles: ROLE_USER, methods: GET }
 
-        - { path: "^/api/walks", roles: ROLE_USER, methods: [DELETE, PATCH, POST] }
+        #- { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
         - { path: "^/api/participant", roles: ROLE_USER, methods: POST }
         - { path: "^/api/participant", roles: ROLE_USER, methods: PATCH }
         #WEB/BACK
