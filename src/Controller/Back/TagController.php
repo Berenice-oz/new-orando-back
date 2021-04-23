@@ -28,7 +28,6 @@ class TagController extends AbstractController
     public function browse(TagRepository $tagRepository, PaginatorInterface $paginator, Request $request)
     {
         $search = trim($request->query->get("search"));
-        
         if ((strlen($search) < 2 && $search != null )|| !($search)) {
             $tagsListQuery = $tagRepository->findAllQuery();
         }else {
@@ -48,6 +47,7 @@ class TagController extends AbstractController
 
         return $this->render('back/tag/browse.html.twig', [
             'tagsList' => $tagsList,
+            'search' => $search,
         ]);
     }
 

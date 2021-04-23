@@ -24,7 +24,12 @@ class UserController extends AbstractController
      */
     public function browse(UserRepository $userRepository, PaginatorInterface $paginator, Request $request)
     {
-        $usersListQuery = $userRepository->findAllQuery();
+        $search = trim($request->query->get("search"));
+        if ((strlen($search) < 2 && $search != null )|| !($search)) {
+            $usersListQuery = $userRepository->findAllQuery();
+        }else {
+            $usersListQuery = $userRepository->findAllUsersBySearchQuery($search);
+        }
 
         $usersList = $paginator->paginate(
             $usersListQuery,
@@ -38,8 +43,8 @@ class UserController extends AbstractController
         ]);
 
         return $this->render('back/user/browse.html.twig',[
-            
             'usersList' => $usersList,
+            'search' => $search,
         ]);
     }
 

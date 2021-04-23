@@ -27,7 +27,6 @@ class WalkController extends AbstractController
     public function browse(WalkRepository $walkRepository, PaginatorInterface $paginator, Request $request)
     {
         $search = trim($request->query->get("search"));
-        
         if ((strlen($search) < 2 && $search != null )|| !($search)) {
             $walksListQuery = $walkRepository->findAllQuery();
         }else {
