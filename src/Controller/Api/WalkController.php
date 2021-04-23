@@ -206,9 +206,11 @@ class WalkController extends AbstractController
             return $this->json(['error' => 'Randonnée non trouvée'], Response::HTTP_NOT_FOUND);
         }
         
-        $this->denyAccessUnlessGranted('update', $walk);
+    
         
         $jsonContent = $request->getContent();
+        
+        
 
         
         $walk = $serializer->deserialize(
@@ -229,6 +231,8 @@ class WalkController extends AbstractController
 
             return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        $this->denyAccessUnlessGranted('update', $walk);
 
         $em->flush($walk);
 

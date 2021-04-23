@@ -99,10 +99,12 @@ class Walk
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_users_read_item", "api_area_read_item"})
      * @Assert\PositiveOrZero
      */
     private $kilometre;
+
+   
 
     /**
      * @ORM\Column(type="datetime")
@@ -135,8 +137,9 @@ class Walk
      */
     private $participants;
 
-    /**
+     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups("api_walks_read_item")
      */
     private $status;
 
