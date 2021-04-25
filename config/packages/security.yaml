@@ -50,6 +50,7 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+            access_denied_handler: App\Security\AccessDeniedHandler
         
         #Main authentication
         main:
@@ -77,10 +78,9 @@ security:
         - { path: "^/profile", roles: ROLE_USER }
         - { path: "^/walk", roles: ROLE_USER }
         #WEB/API
-        - { path: "^/api/users", roles: ROLE_USER, methods: GET }
-
-        #- { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
-        - { path: "^/api/participant$", roles: ROLE_USER, methods: [POST,PATCH] }
+        - { path: "^/api/users", roles: ROLE_USER, methods: [GET, POST] }
+        - { path: "^/api/walks", roles: ROLE_USER, methods: [DELETE, PATCH, POST] }
+        - { path: "^/api/participant$", roles: ROLE_USER, methods: [ POST, PATCH] }
         #WEB/BACK
         - { path: "^/back", roles: ROLE_ADMIN}
     

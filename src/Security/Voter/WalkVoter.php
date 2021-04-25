@@ -9,15 +9,15 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class WalkVoter extends Voter
 {
-    CONST UPDATE = "update";
-    CONST DELETE = "delete";
-    
-   
+    const UPDATE = "update";
+    const DELETE = "delete";
+    const CREATE = "create";
+
     protected function supports($attribute, $subject)
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::UPDATE, self::DELETE])
+        return in_array($attribute, [self::UPDATE, self::DELETE, self::CREATE])
             && $subject instanceof \App\Entity\Walk;
     }
 
@@ -39,6 +39,9 @@ class WalkVoter extends Voter
                 return $user === $walk->getCreator();
                 break;
             case self::DELETE:
+                return $user === $walk->getCreator();
+                break;
+            case self::CREATE:
                 return $user === $walk->getCreator();
                 break;
         }

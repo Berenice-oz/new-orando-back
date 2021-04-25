@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-
-use DateTime;
 use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\WalkRepository;
@@ -104,11 +102,8 @@ class Walk
      */
     private $kilometre;
 
-   
-
     /**
      * @ORM\Column(type="datetime")
-     *  
      */
     private $createdAt;
 
@@ -127,7 +122,7 @@ class Walk
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="walks", cascade={"persist"})
      * @Assert\NotBlank
-     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_area_read_item", "api_users_read_item"})
      */
     private $creator;
 
@@ -152,8 +147,6 @@ class Walk
 
     public function __construct()
     {
-        //$this->createdAt= new DateTime();
-        //$this->status = 1;
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
@@ -234,7 +227,6 @@ class Walk
 
         return $this;
     }
-
 
     public function getElevation(): ?int
     {
