@@ -13,7 +13,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
         $message = [
-            'error' => 'Access Denied',
+            'error' => 'Action non autorisée',
             'status' => Response::HTTP_FORBIDDEN,
         ];
         return new JsonResponse($message, Response::HTTP_FORBIDDEN);

@@ -44,7 +44,7 @@ class UserController extends AbstractController
     {
         if ($user === null) {
             $message = [
-                'error' => 'User not found.',
+                'error' => 'Utilisateur non trouvé',
                 'status' => Response::HTTP_NOT_FOUND,
             ];
 
@@ -147,7 +147,7 @@ class UserController extends AbstractController
     {
         if ($user === null) {
             $message = [
-                'error' => 'User not found.',
+                'error' => 'Utilisateur non trouvé',
                 'status' => Response::HTTP_NOT_FOUND,
             ];
 
@@ -232,7 +232,7 @@ class UserController extends AbstractController
     {
         if ($user === null) {
             $message = [
-                'error' => 'User not found.',
+                'error' => 'Utilisateur non trouvé',
                 'status' => Response::HTTP_NOT_FOUND,
             ];
 
