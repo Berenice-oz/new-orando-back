@@ -161,7 +161,7 @@ class UserController extends AbstractController
         $pictureFile = $request->files->get('picture');
         $data = $serializer->serialize($data, 'json');
         $serializer->deserialize($data, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
-        if ($password === '') {
+        if ($password === '' || !$password) {
             $user->setPassword($userPassword);
         }
         if (!$pictureFile) {
@@ -240,17 +240,26 @@ class UserController extends AbstractController
         }
         $jsonContent = $request->toArray();
         $userMessage = $jsonContent['message'];
+        $expeditor = $userRepository->find($jsonContent['user']);
+        $errorsList = [];
         if (!$userMessage || $userMessage = "") {
-            $message = [
-                'error' => 'Le message ne doit pas être vide.',
-                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            $errorsList[] = [
+                'message' => 'Le message ne doit pas être vide.',
             ];
-
-            return $this->json($message, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+        if (!$expeditor || $expeditor === null) {
+            $errorsList[] = [
+                'expeditor' => 'l\'expéditeur est introuvable.',
+            ];
+        }
+        $this->denyAccessUnlessGranted('contact', $expeditor);
+        if (count($errorsList) > 0){
+            return $this->json($errorsList, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        
         $userMessage = $jsonContent['message'];
         $recipientUserEmail =  $user->getEmail();
-        $expeditor = $userRepository->find($jsonContent['user']);
+        
         $email = (new TemplatedEmail());
         $email->getHeaders()->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
         $email->from(new Address('contact@orando.me'))
