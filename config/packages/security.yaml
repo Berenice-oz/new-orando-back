@@ -29,13 +29,14 @@ security:
         api_users:
             pattern: ^/api/users
             stateless: true
-            methods: [GET]
+            methods: [GET, POST]
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+            access_denied_handler: App\Security\AccessDeniedHandler
         
         api_participants:
-            pattern: ^/api/participant
+            pattern: ^/api/participant$
             stateless: true
             guard:
                 authenticators:
@@ -78,7 +79,7 @@ security:
         - { path: "^/api/users", roles: ROLE_USER, methods: GET }
 
         #- { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
-        - { path: "^/api/participant", roles: ROLE_USER, methods: POST }
+        - { path: "^/api/participant$", roles: ROLE_USER, methods: POST }
         - { path: "^/api/participant", roles: ROLE_USER, methods: PATCH }
         #WEB/BACK
         - { path: "^/back", roles: ROLE_ADMIN}

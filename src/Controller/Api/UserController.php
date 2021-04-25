@@ -50,6 +50,7 @@ class UserController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
+        $this->denyAccessUnlessGranted('update', $user);
         $incomingWalks = $participantRepository->findIncomingWalksByUser($user);
         $archivedWalks = $participantRepository->findArchivedWalksByUser($user);
         $datas = [
@@ -93,12 +94,12 @@ class UserController extends AbstractController
      *
      * Then persist and save the user
      * 
-     * @Route("/api/users", name="api_users_create", methods={"POST"})
+     * @Route("/api/register", name="api_register", methods={"POST"})
      */
     public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
     {
         $data = $request->request->all();
-        $user = $serializer->serialize($data, 'json');
+        $data = $serializer->serialize($data, 'json');
         $user = $serializer->deserialize($data, User::class, 'json');
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
@@ -153,6 +154,7 @@ class UserController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
+        $this->denyAccessUnlessGranted('update', $user);
         $userPassword = $user->getPassword();
         $userPicture = $user->getPicture();
         $data = $request->request->all();
