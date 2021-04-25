@@ -2,9 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\User;
 use App\Entity\Walk;
-use App\Repository\UserRepository;
 use App\Repository\WalkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,18 +17,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class WalkController extends AbstractController
 {
     /**
+     * API endpoint for listing walks
+     * 
      * @param WalkRepository $walkRepository
      * @return JSON
      * 
-     * Walk's list
+     * Get all walks with WalkRepository
+     * 
+     * Return them in a JSON response
+     * 
      * @Route("/api/walks", name="api_walks", methods={"GET"})
      */
     public function read(WalkRepository $walkRepository): Response
     {
-        // we get back all walks with findAll method 
         $walks = $walkRepository->findAll();
-
-        // We send with json format walks datas 
         return $this->json(
             $walks,
             Response::HTTP_OK,
@@ -40,11 +40,16 @@ class WalkController extends AbstractController
     }
 
     /**
+     * API endpoint for reading a single walk's datas
+     * 
      * @param mixed $walk
      * @param WalkRepository $walkRepository
      * @return JSON
      * 
-     * Data of a walk
+     * Get the walk from params
+     * 
+     * If it exist, return walk's datas in a JSON Response
+     * 
      * @Route("/api/walks/{id<\d+>}", name="api_walks_read_item", methods={"GET"})
      */
     public function readItem(Walk $walk = null): Response
@@ -65,27 +70,31 @@ class WalkController extends AbstractController
             [
                 'groups' => 'api_walks_read_item',
                 ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+
                     return $object->getId();
                 }
-
             ]
         );
     }
 
     /**
+     * API endpoint for deleting a walk
+     * 
      * @param mixed $walk
      * @param EntityManagerInterface $em
-     * @param User $user
      * @return JSON
      * 
-     * Delete a walk
+     * Get the walk from params
+     * 
+     * If it exist, delete the walk with EntityManager
+     * 
+     * Return a JSON response
+     * 
      * @Route("/api/walks/{id<\d+>}", name="api_walks_delete", methods={"DELETE"})
      */
-    public function delete(Walk $walk = null, EntityManagerInterface $em, Request $request, SerializerInterface $serializer, UserRepository $userRepository)
+    public function delete(Walk $walk = null, EntityManagerInterface $em)
     {
-        // managing error
         if ($walk === null) {
-            // optional: we define a custom message to transmit to the frontend
             $message = [
                 'status' => Response::HTTP_NOT_FOUND,
                 'error' => 'Randonnée non trouvée.',
@@ -94,7 +103,6 @@ class WalkController extends AbstractController
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
         $this->denyAccessUnlessGranted('delete', $walk);
-        // Delete a walk 
         $walkId = $walk->getId();
         $em->remove($walk);
         $em->flush();
@@ -109,7 +117,7 @@ class WalkController extends AbstractController
     }
 
     /**
-     * Api endpoint to create a walk
+     * Api endpoint for creating a walk
      * 
      * @param Request $request
      * @param SerializerInterface $serializer
@@ -157,7 +165,7 @@ class WalkController extends AbstractController
     }
 
     /**
-     * Api endpoint to edit a walk
+     * Api endpoint for editing a walk
      * 
      * @param Request $request
      * @param mixed Walk $walk

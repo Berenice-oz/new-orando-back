@@ -11,24 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AreaController extends AbstractController
 {
     /**
-     * API endpoint who list Areas
+     * API endpoint for listing areas and theirs walks
+     * 
      * @param AreaRepository $areaRepository
      * @return JSON
+     * 
+     * Get all areas with their walks with AreaRepository
+     * 
+     * Return them in a JSON response
      * 
      * @Route("/api/areas", name="api_areas", methods={"GET"})
      */
     public function read(AreaRepository $areaRepository): Response
     {
-        // We get back all areas
-        //$areas = $areaRepository->findBy([], ['name' => 'ASC']);
         $areas = $areaRepository->findAllWithWalk();
-        //dd($areas);
-        
-        // We give data in Json format : 
-        // first argument : data , second argument : status , 
-        // third argument : an empty array, because we have NelmioCorsBundle
-        // fourth argument : we have selected data we want to send thank to Symfony\Component\Serializer\Normalizer\AbstractNormalizer
-        // which enable to write annotation (@Group) on properties in the Entity (Area)
         return $this->json(
             $areas,
             Response::HTTP_OK,
@@ -41,10 +37,17 @@ class AreaController extends AbstractController
     } 
 
     /**
-     * API endpoint who list walks by area
+     * API endpoint for reading a single area's datas
+     * 
      * @param AreaRepository $areaRepository
      * @param Area $area
      * @return JSON
+     * 
+     * Get the area from params
+     * 
+     * If it exist, find area datas and related walks with AreaRepository.
+     * 
+     * Return these datas in a JSON Response
      * 
      * @Route("/api/areas/{id<\d+>}", name="api_areas_read_item", methods="GET")
      */
@@ -58,11 +61,7 @@ class AreaController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-
-        // To get back walks'list by area ,I coded a custom method in the AreaRepository
         $walksByArea = $areaRepository->findAllWalkJoinedToArea($area);
-
-        // we give data in Json format
         return $this->json(
             $walksByArea,
             Response::HTTP_OK,
