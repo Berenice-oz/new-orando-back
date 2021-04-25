@@ -17,41 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
-    /**
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
-     * @return Response|RedirectResponse
-     * 
-     * @Route("/register", name="user_register", methods={"GET","POST"})
-     */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder): Response
-    {
-        $user = new User();
-
-        $form = $this->createForm(RegisterType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-            //$user->setStatus(1);
-            //$user->setRoles(['ROLE_USER']);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // add a flash message to inform the user if his action is alright
-            $this->addFlash('success', 'Votre compte a bien été crée, vous pouvez vous connecter.');
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        return $this->render('user/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-
-    /**
+   /**
      * @param Request $request
      * @param MailerInterface $mailer
      * @param User $user
