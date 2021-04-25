@@ -101,7 +101,7 @@ h3 {
 }
 
 /*===============================LISTS=======================================*/
-.table th { 
+.table th {
     border: none;
 }
 
@@ -245,4 +245,22 @@ h3 {
         margin-left: 0.5rem;
     }
 
+}
+
+/*===============================ERROR PAGES=======================================*/
+
+.image_error {
+    text-align: center;
+    margin: auto;
+    display: flex;
+    width: 80%;
+}
+
+.title_error {
+    text-align: center;
+}
+
+.text_error {
+    margin-top: 10px;
+    text-align: center;
 }
