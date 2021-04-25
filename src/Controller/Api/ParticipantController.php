@@ -3,8 +3,6 @@
 namespace App\Controller\Api;
 
 use App\Entity\Participant;
-use App\Entity\User;
-use App\Entity\Walk;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ParticipantRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +12,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-
 
 class ParticipantController extends AbstractController
 {
@@ -41,6 +37,7 @@ class ParticipantController extends AbstractController
     {
         $jsonContent = $request->getContent();
         $participation = $serializer->deserialize($jsonContent, Participant::class, 'json');
+        $this->denyAccessUnlessGranted('create', $participation);
         $errors = $validator->validate($participation);
         if (count($errors) > 0) {
 
@@ -80,30 +77,12 @@ class ParticipantController extends AbstractController
      * 
      * @Route("/api/participant", name="api_participant_update", methods={"PATCH"})
      */
-    public function update(Request $request, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    public function update(Request $request, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager): Response
     {
         $jsonContent = $request->toArray();
-        //dd($jsonContent);
-        $data = [
-            $userItem = $jsonContent['user'][0]['id'],
-            $walkItem = $jsonContent['walk'][0]['id']
-
-        ];
-        //dd($data);
-
-        $walk = $serializer->denormalize($walkItem, Walk::class, 'json', [
-            'groups' => 'api_walks_read_item',
-            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
-                return $object;
-            }
-        ]);
-        //dd($walk);
-        
-        $user = $serializer->denormalize($userItem, User::class, 'json');
-        //dd($user);
-        
+        $user = $jsonContent['user'];
+        $walk = $jsonContent['walk'];
         $participant = $participantRepository->findOneBy(['user' => $user, 'walk' => $walk]);
-        
         if ($participant === null) {
             $message = [
                 'error' => 'Participation non trouvée.',
@@ -112,27 +91,14 @@ class ParticipantController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-        //$this->denyAccessUnlessGranted('update', $participant);
+        $this->denyAccessUnlessGranted('update', $participant);
         $requestStatus = $jsonContent['requestStatus'];
         $participant->setRequestStatus($requestStatus);
-
-        if($user === $participant->getUser()){
-            
-            $entityManager->persist($participant);
-            $entityManager->flush();
-            return $this->json(
-                ['message' => 'Le statut de votre participation a bien été modifié.'],
-                Response::HTTP_OK
-            );
-
-        } else{
-            return $this->json(
-                ['message' => 'Modification non autorisée'],
-                Response::HTTP_FORBIDDEN
-            );
-
-        }
-       
+        $entityManager->flush($participant);
+        return $this->json(
+            ['message' => 'Le statut de votre participation a bien été modifié.'],
+            Response::HTTP_OK
+        );
     }
 
     /**

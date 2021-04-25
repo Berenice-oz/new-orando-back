@@ -50,7 +50,6 @@ class UserController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-        $this->denyAccessUnlessGranted('update', $user);
         $incomingWalks = $participantRepository->findIncomingWalksByUser($user);
         $archivedWalks = $participantRepository->findArchivedWalksByUser($user);
         $datas = [
