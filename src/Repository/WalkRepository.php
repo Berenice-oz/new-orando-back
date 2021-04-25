@@ -28,8 +28,7 @@ class WalkRepository extends ServiceEntityRepository
             ->orderBy('w.createdAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     /**
@@ -38,9 +37,10 @@ class WalkRepository extends ServiceEntityRepository
     public function findAllQuery()
     {
         return $this->createQueryBuilder('w')
+            ->innerjoin('w.creator', 'u')
+            ->addSelect('u')
             ->orderBy('w.createdAt', 'DESC')
-            ->getQuery()
-        ;
+            ->getQuery();
     }
 
     /**
@@ -52,8 +52,7 @@ class WalkRepository extends ServiceEntityRepository
             ->andWhere('w.status = :status AND w.date < :date')
             ->setParameters(array('date' => new \DateTime, 'status' => 1))
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     /**
@@ -62,18 +61,17 @@ class WalkRepository extends ServiceEntityRepository
     public function findAllWalksBySearchQuery($search = null)
     {
         return $this->createQueryBuilder('w')
-            ->innerjoin('w.creator', 'c')
-            ->addSelect('c')
+            ->innerjoin('w.creator', 'u')
+            ->addSelect('u')
             ->where('(w.title LIKE :title) OR
                 (w.description LIKE :desc) OR
-                (c.nickname LIKE :nickname)')
+                (u.nickname LIKE :nickname)')
             ->setParameters(array(
                 'title' => '%' . $search . '%',
                 'desc' => '%' . $search . '%',
                 'nickname' => '%' . $search . '%',
-                ))
+            ))
             ->orderBy('w.createdAt', 'DESC')
             ->getQuery();
     }
-    
 }
