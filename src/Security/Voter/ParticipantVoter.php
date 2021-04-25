@@ -9,13 +9,14 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class ParticipantVoter extends Voter
 {
-    CONST UPDATE = "update";
-    
+    const UPDATE = "update";
+    const CREATE = "create";
+
     protected function supports($attribute, $subject)
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::UPDATE])
+        return in_array($attribute, [self::UPDATE, self::CREATE])
             && $subject instanceof \App\Entity\Participant;
     }
 
@@ -33,6 +34,9 @@ class ParticipantVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::UPDATE:
+                return $user === $participant->getUser();
+                break;
+            case self::CREATE:
                 return $user === $participant->getUser();
                 break;
         }

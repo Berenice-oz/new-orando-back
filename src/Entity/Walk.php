@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-
-use DateTime;
 use App\Entity\Participant;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\WalkRepository;
@@ -106,7 +104,6 @@ class Walk
 
     /**
      * @ORM\Column(type="datetime")
-     *  
      */
     private $createdAt;
 
@@ -135,8 +132,9 @@ class Walk
      */
     private $participants;
 
-    /**
+     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups("api_walks_read_item")
      */
     private $status;
 
@@ -149,8 +147,6 @@ class Walk
 
     public function __construct()
     {
-        //$this->createdAt= new DateTime();
-        //$this->status = 1;
         $this->participants = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
@@ -231,7 +227,6 @@ class Walk
 
         return $this;
     }
-
 
     public function getElevation(): ?int
     {

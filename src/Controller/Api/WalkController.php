@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use App\Entity\Walk;
+use App\Repository\UserRepository;
 use App\Repository\WalkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,10 +26,10 @@ class WalkController extends AbstractController
      * @Route("/api/walks", name="api_walks", methods={"GET"})
      */
     public function read(WalkRepository $walkRepository): Response
-    {   
+    {
         // we get back all walks with findAll method 
         $walks = $walkRepository->findAll();
-        
+
         // We send with json format walks datas 
         return $this->json(
             $walks,
@@ -46,7 +47,7 @@ class WalkController extends AbstractController
      * Data of a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_read_item", methods={"GET"})
      */
-    public function readItem(Walk $walk = null, WalkRepository $walkRepository):Response
+    public function readItem(Walk $walk = null): Response
     {
         // managing error
         if ($walk === null) {
@@ -57,61 +58,53 @@ class WalkController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-
-        // we send walk item data json format
         return $this->json(
             $walk,
             Response::HTTP_OK,
             [],
-            ['groups' => 'api_walks_read_item', 
-            
-            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
-                return $object->getId();
-            }
-            
-            ]);
+            [
+                'groups' => 'api_walks_read_item',
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    return $object->getId();
+                }
+
+            ]
+        );
     }
 
     /**
      * @param mixed $walk
      * @param EntityManagerInterface $em
+     * @param User $user
      * @return JSON
      * 
      * Delete a walk
      * @Route("/api/walks/{id<\d+>}", name="api_walks_delete", methods={"DELETE"})
      */
-    public function delete(Walk $walk = null, EntityManagerInterface $em)
+    public function delete(Walk $walk = null, EntityManagerInterface $em, Request $request, SerializerInterface $serializer, UserRepository $userRepository)
     {
         // managing error
         if ($walk === null) {
-
             // optional: we define a custom message to transmit to the frontend
             $message = [
                 'status' => Response::HTTP_NOT_FOUND,
                 'error' => 'Randonnée non trouvée.',
             ];
 
-    
-           
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-
-        // only the user who create a walk could be delete it (@see folder => Voter => WalkVoter.php)
         $this->denyAccessUnlessGranted('delete', $walk);
-    
         // Delete a walk 
         $walkId = $walk->getId();
         $em->remove($walk);
         $em->flush();
-
         $message = [
             'id' => $walkId,
             'message' => 'La randonnée a bien été supprimé.'
         ];
-        
         return $this->json(
-        $message,
-        Response::HTTP_OK
+            $message,
+            Response::HTTP_OK
         );
     }
 
@@ -134,23 +127,21 @@ class WalkController extends AbstractController
      */
     public function create(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
     {
-        
         $jsonContent = $request->getContent();
-
         $walk = $serializer->deserialize(
-            $jsonContent, 
-            Walk::class, 
-            'json', 
-            ['groups' => 'api_walks_read_item',
-            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
-                return $object;
-            }  
-        ]);
-
+            $jsonContent,
+            Walk::class,
+            'json',
+            [
+                'groups' => 'api_walks_read_item',
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    return $object;
+                }
+            ]
+        );
+        $this->denyAccessUnlessGranted('create', $walk);
         $errors = $validator->validate($walk);
-
-        if(count($errors)>0){
-
+        if (count($errors) > 0) {
             $errorsList = [];
             foreach ($errors as $error) {
                 $label = $error->getPropertyPath();
@@ -160,14 +151,9 @@ class WalkController extends AbstractController
 
             return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
         $em->persist($walk);
         $em->flush();
-
-        return $this->json(['message' => 'La randonnée à bien été crée.', Response::HTTP_CREATED]);
-
-
-
+        return $this->json(['message' => 'La randonnée à bien été crée.'], Response::HTTP_CREATED);
     }
 
     /**
@@ -192,35 +178,36 @@ class WalkController extends AbstractController
      */
     public function update(Request $request, Walk $walk = null, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em)
     {
-        if($walk === null){
-            
+        if ($walk === null) {
+
             return $this->json(['error' => 'Randonnée non trouvée'], Response::HTTP_NOT_FOUND);
         }
-        
         $jsonContent = $request->getContent();
-
-        
         $walk = $serializer->deserialize(
             $jsonContent,
             Walk::class,
             'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $walk,
-            'groups' => 'api_walks_read_item',
-            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object){
-                return $object;
-            }  
-            ]);
-        
-
+            [
+                AbstractNormalizer::OBJECT_TO_POPULATE => $walk,
+                'groups' => 'api_walks_read_item',
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    return $object;
+                }
+            ]
+        );
+        $this->denyAccessUnlessGranted('update', $walk);
         $errors = $validator->validate($walk);
+        if (count($errors) > 0) {
+            $errorsList = [];
+            foreach ($errors as $error) {
+                $label = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $errorsList[$label] =  $message;
+            }
 
-        if(count($errors) > 0){
-
-            return $this->json($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
         $em->flush($walk);
-
         return $this->json(['message' => 'Randonnée modifiée.'], Response::HTTP_OK);
     }
 }

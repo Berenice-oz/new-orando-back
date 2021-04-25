@@ -44,7 +44,7 @@ class UserController extends AbstractController
     {
         if ($user === null) {
             $message = [
-                'error' => 'User not found.',
+                'error' => 'Utilisateur non trouvé',
                 'status' => Response::HTTP_NOT_FOUND,
             ];
 
@@ -93,7 +93,7 @@ class UserController extends AbstractController
      *
      * Then persist and save the user
      * 
-     * @Route("/api/users", name="api_users_create", methods={"POST"})
+     * @Route("/api/register", name="api_register", methods={"POST"})
      */
     public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
     {
@@ -141,20 +141,32 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/api/users/{id<\d+>}", name="api_users_update", methods={"PATCH"})
+     * @Route("/api/users/{id<\d+>}", name="api_users_update", methods={"POST"})
      */
-    public function update(Request $request, SerializerInterface $serializer, User $user = null, EntityManagerInterface $entityManager, ValidatorInterface $validator)
+    public function update(Request $request, SerializerInterface $serializer, User $user = null, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
     {
         if ($user === null) {
             $message = [
-                'error' => 'User not found.',
+                'error' => 'Utilisateur non trouvé',
                 'status' => Response::HTTP_NOT_FOUND,
             ];
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-        $jsonContent = $request->getContent();
-        $serializer->deserialize($jsonContent, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+        $this->denyAccessUnlessGranted('update', $user);
+        $userPassword = $user->getPassword();
+        $userPicture = $user->getPicture();
+        $data = $request->request->all();
+        $password = $data['password'];
+        $pictureFile = $request->files->get('picture');
+        $data = $serializer->serialize($data, 'json');
+        $serializer->deserialize($data, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+        if ($password === '' || !$password) {
+            $user->setPassword($userPassword);
+        }
+        if (!$pictureFile) {
+            $user->setPicture($userPicture);
+        }
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
             $errorsList = [];
@@ -166,7 +178,29 @@ class UserController extends AbstractController
 
             return $this->json(['errors' => $errorsList], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        //todo encoder le mdp si il est renseigné et non null
+        if ($password !== '') {
+            $user->setPassword($encoder->encodePassword($user, $password));
+        }
+        
+        if ($pictureFile) {
+            $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+            try {
+                $pictureFile->move(
+                    $this->getParameter('profil_picture_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                $message = [
+                    'error' => 'Un problème est survenu lors de l\'enregistrement de l\'image',
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                ];
+
+                return $this->json($message, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+            $user->setPicture($newFilename);
+        }
         $entityManager->flush();
         return $this->json(
             ['message' => 'Les informations de l\'utilisateur ' . $user->getNickname() . ' ont bien été modifiées.'],
@@ -198,7 +232,7 @@ class UserController extends AbstractController
     {
         if ($user === null) {
             $message = [
-                'error' => 'User not found.',
+                'error' => 'Utilisateur non trouvé',
                 'status' => Response::HTTP_NOT_FOUND,
             ];
 
@@ -206,17 +240,26 @@ class UserController extends AbstractController
         }
         $jsonContent = $request->toArray();
         $userMessage = $jsonContent['message'];
+        $expeditor = $userRepository->find($jsonContent['user']);
+        $errorsList = [];
         if (!$userMessage || $userMessage = "") {
-            $message = [
-                'error' => 'Le message ne doit pas être vide.',
-                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            $errorsList[] = [
+                'message' => 'Le message ne doit pas être vide.',
             ];
-
-            return $this->json($message, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+        if (!$expeditor || $expeditor === null) {
+            $errorsList[] = [
+                'expeditor' => 'l\'expéditeur est introuvable.',
+            ];
+        }
+        $this->denyAccessUnlessGranted('contact', $expeditor);
+        if (count($errorsList) > 0){
+            return $this->json($errorsList, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        
         $userMessage = $jsonContent['message'];
         $recipientUserEmail =  $user->getEmail();
-        $expeditor = $userRepository->find($jsonContent['user']);
+        
         $email = (new TemplatedEmail());
         $email->getHeaders()->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
         $email->from(new Address('contact@orando.me'))

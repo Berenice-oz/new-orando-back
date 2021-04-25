@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 class ParticipantController extends AbstractController
 {
     /**
@@ -38,10 +37,18 @@ class ParticipantController extends AbstractController
     {
         $jsonContent = $request->getContent();
         $participation = $serializer->deserialize($jsonContent, Participant::class, 'json');
+        $this->denyAccessUnlessGranted('create', $participation);
         $errors = $validator->validate($participation);
         if (count($errors) > 0) {
 
-            return $this->json(['message' => 'La modification n\'a pas été prise en compte.'], 418);
+            $errorsList = [];
+            foreach ($errors as $error) {
+                $label = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $errorsList[$label] =  $message;
+            }
+
+            return $this->json(['errors' => $errorsList], Response::HTTP_I_AM_A_TEAPOT);
         }
         $entityManager->persist($participation);
         $entityManager->flush();

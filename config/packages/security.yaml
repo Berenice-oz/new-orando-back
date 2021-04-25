@@ -25,14 +25,15 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        # JWT Authentification for API routes
+        # JWT Authentication for API routes
         api_users:
-            pattern: ^/api/users
+            pattern: ^/api/(users|contact-)
             stateless: true
-            methods: [GET]
+            methods: [GET, POST]
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+            access_denied_handler: App\Security\AccessDeniedHandler
         
         api_participants:
             pattern: ^/api/participant$
@@ -40,16 +41,18 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+            access_denied_handler: App\Security\AccessDeniedHandler
         
         api_walks:
             pattern: ^/api/walks
             stateless: true
-            methods: [DELETE, POST]
+            methods: [DELETE, PATCH, POST]
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+            access_denied_handler: App\Security\AccessDeniedHandler
         
-        #Main authentification
+        #Main authentication
         main:
             anonymous: true
             lazy: true
@@ -74,11 +77,10 @@ security:
         #WEB/HTML
         - { path: "^/profile", roles: ROLE_USER }
         - { path: "^/walk", roles: ROLE_USER }
-        # #WEB/API
-        - { path: "^/api/users", roles: ROLE_USER, methods: GET }
-        - { path: "^/api/walks", roles: ROLE_USER, methods: DELETE }
-        - { path: "^/api/participant$", roles: ROLE_USER, methods: POST }
-        - { path: "^/api/participant", roles: ROLE_USER, methods: PATCH }
+        #WEB/API
+        - { path: "^/api/(users|contact-)", roles: ROLE_USER, methods: [GET, POST] }
+        - { path: "^/api/walks", roles: ROLE_USER, methods: [DELETE, PATCH, POST] }
+        - { path: "^/api/participant$", roles: ROLE_USER, methods: [ POST, PATCH] }
         #WEB/BACK
         - { path: "^/back", roles: ROLE_ADMIN}
     

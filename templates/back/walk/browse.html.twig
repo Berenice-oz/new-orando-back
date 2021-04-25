@@ -41,8 +41,8 @@
 								{{ knp_pagination_sortable(walksList, 'Description', 'w.description') }}</th>
 							<th scope="col" class="status-col {% if walksList.isSorted('w.status') %}sorted{% endif %}">
 								{{ knp_pagination_sortable(walksList, 'Statut', 'w.status') }}</th>
-							<th scope="col" class="creator-col {% if walksList.isSorted('w.creator') %}sorted{% endif %}">
-								{{ knp_pagination_sortable(walksList, 'Organisateur', 'w.creator') }}</th>
+							<th scope="col" class="creator-col {% if walksList.isSorted('u.nickname') %}sorted{% endif %}">
+								{{ knp_pagination_sortable(walksList, 'Organisateur', 'u.nickname') }}</th>
 							<th scope="col" class="actions-col">Actions</th>
 						</tr>
 					</thead>
