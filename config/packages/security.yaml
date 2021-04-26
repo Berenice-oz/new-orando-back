@@ -76,7 +76,6 @@ security:
     access_control:
         #WEB/HTML
         - { path: "^/profile", roles: ROLE_USER }
-        - { path: "^/walk", roles: ROLE_USER }
         #WEB/API
         - { path: "^/api/(users|contact-)", roles: ROLE_USER, methods: [GET, POST] }
         - { path: "^/api/walks", roles: ROLE_USER, methods: [DELETE, PATCH, POST] }

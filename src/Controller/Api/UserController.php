@@ -34,9 +34,9 @@ class UserController extends AbstractController
      * 
      * Get the user from params.
      * 
-     * If it exist, find incoming and archived walks with participant repository.
+     * If it exist, find incoming and archived walks with ParticipantRepository.
      * 
-     * Send user's and user's walk datas in JSON Response by using the normalizer who read the content of the class by calling the “getters” 
+     * Return user's and user's walk datas in JSON Response by using the normalizer who turn arrays into objects 
      * 
      * @Route("/api/users/{id<\d+>}", name="api_users_read_item", methods={"GET"})
      */

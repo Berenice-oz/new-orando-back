@@ -12,39 +12,41 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TagController extends AbstractController
-{   
+{
     /**
-     * Back-office endpoint which is a list of tags 
+     * Back-office : Tag's list
      * 
      * @param TagRepository $tagRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
+     * @link https://github.com/KnpLabs/KnpPaginatorBundle
      * 
-     * Tag's list thank to TagRepository
+     * Get all tags or all tags by search with TagRepository (QUERY not Result ==> @see TagRepository)
      * 
-     * Pass to the template tagsList object
+     * Paginate these datas into a Pagination object with KnpPaginatorBundle
+     * 
+     * Passing these paginates datas and render the template into the Response
      *
      * @Route("/back/tags", name="tag_browse", methods={"GET"})
      */
     public function browse(TagRepository $tagRepository, PaginatorInterface $paginator, Request $request)
     {
         $search = trim($request->query->get("search"));
-        if ((strlen($search) < 2 && $search != null )|| !($search)) {
+        if ((strlen($search) < 2 && $search != null) || !($search)) {
             $tagsListQuery = $tagRepository->findAllQuery();
-        }else {
+        } else {
             $tagsListQuery = $tagRepository->findAllTagsBySearchQuery($search);
         }
-
         $tagsList = $paginator->paginate(
             $tagsListQuery,
             $request->query->getInt('page', 1),
-            10 /*limit per page*/
+            10
         );
-
         $tagsList->setCustomParameters([
-            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
-            'size' => 'small', # small|large (for template: twitter_bootstrap_v4_pagination)
+            'align' => 'center',
+            'size' => 'small',
         ]);
-
         return $this->render('back/tag/browse.html.twig', [
             'tagsList' => $tagsList,
             'search' => $search,
@@ -70,38 +72,27 @@ class TagController extends AbstractController
      * 
      * Saving the tag to the database thank to the EntityManagerInterface
      * 
-     *
      * @Route("/back/tag/add", name="tag_add", methods={"GET", "POST"})
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
         $tag = new Tag();
-
         $form = $this->createForm(TagType::class, $tag);
-
         $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($tag);
-
             $em->flush();
-
-            $this->addFlash('success', 'Le thème '.$tag->getName().' a bien été crée.');
+            $this->addFlash('success', 'Le thème ' . $tag->getName() . ' a bien été crée.');
 
             return $this->redirectToRoute('tag_browse');
-
-
         }
-
-        return $this->render('back/tag/add.html.twig',[
-            
+        return $this->render('back/tag/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
     /**
-     * BackOffice : Edit a Tag
+     * BackOffice : Edit a tag
      * 
      * @param mixed Tag $tag
      * @param Request $request
@@ -120,45 +111,39 @@ class TagController extends AbstractController
      *
      * @Route("/back/tag/edit/{id<\d+>}", name="tag_edit", methods={"GET", "POST"})
      */
-    public function edit(Tag $tag = null , Request $request, EntityManagerInterface $em)
+    public function edit(Tag $tag = null, Request $request, EntityManagerInterface $em)
     {
-        
-        if($tag === null){
+        if ($tag === null) {
 
             throw $this->createNotFoundException('Tag non trouvé.');
         }
-        
         $form = $this->createForm(TagType::class, $tag);
-
         $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-
-            $this->addFlash('success', 'Le thème '.$tag->getName().' a bien été modifié.');
+            $this->addFlash('success', 'Le thème ' . $tag->getName() . ' a bien été modifié.');
 
             return $this->redirectToRoute('tag_browse');
-
-
         }
-
-        return $this->render('back/tag/edit.html.twig',[
+        return $this->render('back/tag/edit.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
         ]);
-
-
     }
 
     /**
-     * BackOffice : Delete a Tag
+     * BackOffice : Delete a tag
+     * 
+     * @param mixed Tag $tag
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response|RedirectResponse
+     * @link https://symfony.com/doc/current/security/csrf.html
      * 
      * Check if the tag exist
      * 
      * Get back the token name which is in the form thank to Request object
      * and correponded to the second request(POST)
-     * @link https://symfony.com/doc/current/security/csrf.html
      * 
      * Get the value of the CSRF token thank to 'delete_tag' which is generate on the display
      * 
@@ -170,25 +155,18 @@ class TagController extends AbstractController
      */
     public function delete(Tag $tag = null, Request $request, EntityManagerInterface $em)
     {
-        if($tag === null){
+        if ($tag === null) {
 
             throw $this->createNotFoundException('Tag non trouvé.');
         }
-
         $submittedToken = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('delete_tag', $submittedToken)) {
 
-        if(!$this->isCsrfTokenValid('delete_tag', $submittedToken)){
-            
             throw $this->createAccessDeniedException('Action non autorisée.');
         }
-
         $em->remove($tag);
         $em->flush();
-
-        $this->addFlash('success', 'Le thème '.$tag->getName().' a bien été supprimé.');
-
+        $this->addFlash('success', 'Le thème ' . $tag->getName() . ' a bien été supprimé.');
         return $this->redirectToRoute('tag_browse');
     }
-    
 }
-

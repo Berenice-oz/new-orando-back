@@ -40,7 +40,6 @@ class ParticipantController extends AbstractController
         $this->denyAccessUnlessGranted('create', $participation);
         $errors = $validator->validate($participation);
         if (count($errors) > 0) {
-
             $errorsList = [];
             foreach ($errors as $error) {
                 $label = $error->getPropertyPath();
@@ -131,7 +130,6 @@ class ParticipantController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-
         return $this->json(
             $participant,
             Response::HTTP_OK,

@@ -240,8 +240,7 @@
 
 
 /*************************************RESPONSIVE*********************************************/
-
-@media(min-width: 768px) {
+ @media(min-width: 768px) {
   .title_margin {
     margin: 2rem auto;
     min-width: 80%;
@@ -318,4 +317,4 @@
     padding:10px;
   }
 
-}
+} 

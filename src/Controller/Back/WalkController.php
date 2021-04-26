@@ -14,32 +14,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class WalkController extends AbstractController
 {
     /**
-     * Walks'list thank to the WalkRepository
-     * 
-     * Pass the object walksList to the template
+     * Back-office : Walk's list
      *
      * @param WalkRepository $walkRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
+     * @link https://github.com/KnpLabs/KnpPaginatorBundle
+     * 
+     * Get all walks or all walks by search with WalkRepository (QUERY not Result ==> @see WalkRepository)
+     * 
+     * Paginate these datas into a Pagination object with KnpPaginatorBundle
+     * 
+     * Passing these paginates datas and render the template into the Response
      * 
      * @Route("/back/walks", name="back_walk_browse", methods={"GET"})
      */
     public function browse(WalkRepository $walkRepository, PaginatorInterface $paginator, Request $request)
     {
         $search = trim($request->query->get("search"));
-        if ((strlen($search) < 2 && $search != null )|| !($search)) {
+        if ((strlen($search) < 2 && $search != null) || !($search)) {
             $walksListQuery = $walkRepository->findAllQuery();
-        }else {
+        } else {
             $walksListQuery = $walkRepository->findAllWalksBySearchQuery($search);
         }
         $walksList = $paginator->paginate(
             $walksListQuery,
             $request->query->getInt('page', 1),
-            10, /*limit per page*/
+            10,
         );
-
         $walksList->setCustomParameters([
-            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
-            'size' => 'small', # small|large (for template: twitter_bootstrap_v4_pagination)
+            'align' => 'center',
+            'size' => 'small',
         ]);
 
         return $this->render('back/walk/browse.html.twig', [
@@ -49,36 +55,39 @@ class WalkController extends AbstractController
     }
 
     /**
-     * Update the status of a walk
+     * BackOffice : Edit a walk (status) 
      *
-     * @param Request $request
      * @param mixed Walk $walk
+     * @param Request $request
      * @param EntityManagerInterface $em
      * @return RedirectResponse
      * 
+     * Display the form and treat it
+     * 
+     * Check if the tag exist
+     * 
+     * Then creation's form while giving the entity
+     * 
+     * Asking to the form to examine the request object
+     * 
+     * Saving the tag to the database thank to the EntityManagerInterface
+     * 
      * @Route("/back/walk/edit/{id<\d+>}", name="back_walk_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Walk $walk = null, EntityManagerInterface $em)
+    public function edit(Walk $walk = null, Request $request, EntityManagerInterface $em)
     {
         if ($walk === null) {
 
             throw $this->createNotFoundException('Randonnée non trouvée');
         }
-
         $form = $this->createForm(BackWalkType::class, $walk);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em->flush();
-
             $this->addFlash('success', $walk->getTitle() . ' a bien été modifié.');
 
             return $this->redirectToRoute('back_walk_browse');
         }
-
-
         return $this->render('back/walk/edit.html.twig', [
             'walk' => $walk,
             'form' => $form->createView(),
@@ -88,16 +97,16 @@ class WalkController extends AbstractController
     /**
      * Delete a walk
      * 
-     * @param Request $request
      * @param mixed Walk $walk
+     * @param Request $request
      * @param EntityManagerInterface $em
      * @return RedirectResponse
+     * @link https://symfony.com/doc/current/security/csrf.html
      * 
      * Check if the walk exist
      * 
      * Get back the token name which is in the form thank to Request object
      * and correponded to the second request(POST)
-     * @link https://symfony.com/doc/current/security/csrf.html
      * 
      * Get the value of the CSRF token thank to 'delete_walk' which is generate on the display
      * 
@@ -107,9 +116,10 @@ class WalkController extends AbstractController
      *
      * @Route("/back/walk/{id<\d+>}", name="walk_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Walk $walk = null, EntityManagerInterface $em)
+    public function delete(Walk $walk = null, Request $request, EntityManagerInterface $em)
     {
         if ($walk === null) {
+
             throw $this->createNotFoundException('Randonnée non trouvée.');
         }
         $submittedToken = $request->request->get('token');
@@ -119,9 +129,7 @@ class WalkController extends AbstractController
         }
         $em->remove($walk);
         $em->flush();
-
         $this->addFlash('success', 'La randonnée  ' . $walk->getTitle() . ' a bien été supprimée.');
-
         return $this->redirectToRoute('back_walk_browse');
     }
 }

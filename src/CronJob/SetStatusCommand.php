@@ -29,15 +29,12 @@ class SetStatusCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Récupérer la date du jour
-        // Chercher les rando quiont une date strictement inférieur à la date du jour et que le statut de la rando est a venir
-        // Pour chaque rando on update le statut de la rando a terminé
         $walks = $this->walkRepository->findForCronJob();
-        $nbWalks = count($walks);
         foreach($walks as $walk){
             $walk->setStatus(2);
             $this->em->flush($walk);
         }
+        $nbWalks = count($walks);
         $output->writeln([
             'Update to archived walks',
             '===========================',

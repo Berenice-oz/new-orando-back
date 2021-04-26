@@ -10,13 +10,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TagType extends AbstractType
 {   
-    /**
-     * BackOffice : add a new tag and change its
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     * @return void
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

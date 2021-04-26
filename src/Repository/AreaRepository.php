@@ -20,34 +20,27 @@ class AreaRepository extends ServiceEntityRepository
     }
 
     /**
-     * We get back walk's list of an area
-     *
-     * Here : SQL request associate
-     * 
-     * SELECT * FROM walk
-     * INNER JOIN area
-     * ON `walk`.`area_id`= `area`.`id`
-     * WHERE `area`.`id`= 1
+     * Find by area and retrieve only associate incoming walks
+     * @param Area $area
+     * @return Area|null
      */
-    public function findAllWalkJoinedToArea(Area $area)
+    public function findByAreaWithWalks(Area $area)
     {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT w, a
-            FROM App\Entity\Walk w
-            INNER JOIN w.area a
-            WHERE w.area = :area
-            AND w.status = 1
-            ORDER BY w.date ASC'
-        )->setParameter('area', $area);
-
-        return $query->getResult();
+        return $this->createQueryBuilder('a')
+            ->innerjoin('a.walks', 'w')
+            ->addSelect('w')
+            ->andWhere('w.status = :status OR w.status IS NULL')
+            ->andWhere('w.area = :area')
+            ->setParameters(array('status' => 1, 'area' => $area))
+            ->addOrderBy('w.date' ,'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
      * Find all Areas order by name ASC
-     * and retrieve only associate incomingWalks 
+     * and retrieve only associate incoming walks
+     * @return Area[] Returns an array of Area objects 
      */
     public function findAllWithWalk()
     {
@@ -62,13 +55,4 @@ class AreaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /*public function findAllByAsc($area)
-    {
-        return $this->createQueryBuilder('a')
-            ->('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

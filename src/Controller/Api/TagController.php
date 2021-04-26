@@ -10,10 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class TagController extends AbstractController
 {   
     /**
-     * Api endpoint to read all tags
+     * Api endpoint for listing all tags
      *
      * @param TagRepository $tagRepository
      * @return JSON
+     * 
+     * Get all tags with TagRepository
+     * 
+     * Return them in a JSON response
      * 
      * @Route("/api/tags", name="api_tags", methods={"GET"})
      */

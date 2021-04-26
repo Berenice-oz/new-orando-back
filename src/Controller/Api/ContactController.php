@@ -6,7 +6,6 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,53 +27,43 @@ class ContactController extends AbstractController
      */
     public function contact(Request $request, MailerInterface $mailer)
     {
-       $jsonContent = $request->toArray();
-       $subject = $jsonContent['subject'];
-       $mail = $jsonContent['mail'];
-       $message = $jsonContent['message'];
+        $jsonContent = $request->toArray();
+        $subject = $jsonContent['subject'];
+        $mail = $jsonContent['mail'];
+        $message = $jsonContent['message'];
 
-       if(empty($mail) && empty($message)){
-            
+        if (empty($mail) && empty($message)) {
             $message = [
                 'error' => "Oups, vous avez oublié d'écrire un email et un message."
             ];
 
             return $this->json($message, Response::HTTP_BAD_REQUEST);
-       
-        }
-        else if(empty($mail)){
-
+        
+        } else if (empty($mail)) {
             $message = [
                 'error' => "Oups, vous avez oublié d'écrire un email."
             ];
 
             return $this->json($message, Response::HTTP_BAD_REQUEST);
-
-       }
-       else if(empty($message)){
-
+        
+        } else if (empty($message)) {
             $message = [
                 'error' => "Oups, vous avez oublié d'écrire votre message."
             ];
 
             return $this->json($message, Response::HTTP_BAD_REQUEST);
-
-       }else{
-
-            //Send mail
+        
+        } else {
             $email = (new Email())
-            ->from('contact@orando.me')
-            ->to('contact@orando.me')
-            ->replyTo($mail)
-            ->subject('Contact Orando.me -' . $subject)
-            ->text('Message de '.$mail .':
-            '. $message);
+                ->from('contact@orando.me')
+                ->to('contact@orando.me')
+                ->replyTo($mail)
+                ->subject('Contact Orando.me -' . $subject)
+                ->text('Message de ' . $mail . ':
+            ' . $message);
             $mailer->send($email);
 
             return $this->json(['message' => 'Votre message a bien été envoyé.'], Response::HTTP_OK);
-
-       }
-
-        
+        }
     }
 }
