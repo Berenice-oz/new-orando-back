@@ -61,7 +61,7 @@ class AreaController extends AbstractController
 
             return $this->json($message, Response::HTTP_NOT_FOUND);
         }
-        $walksByArea = $areaRepository->findAllWalkJoinedToArea($area);
+        $walksByArea = $areaRepository->findByAreaWithWalks($area);
         return $this->json(
             $walksByArea,
             Response::HTTP_OK,

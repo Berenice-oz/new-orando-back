@@ -19,68 +19,43 @@ class ParticipantRepository extends ServiceEntityRepository
         parent::__construct($registry, Participant::class);
     }
 
-    // /**
-    //  * @return Participant[] Returns an array of Participant objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Participant
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
- /**
-     * Return All Incoming Walk for a User
-    */
+    /**
+     * Find incoming walks participation by User
+     * 
+     * @param mixed $user
+     * @return Participant[] Returns an array of Participant objects
+     */
     public function findIncomingWalksByUser($user)
     {
         return $this->createQueryBuilder('p')
-        ->andWhere('p.user = :user')
-        ->innerjoin('p.walk', 'w')
-        ->addSelect('w')
-        ->andWhere('w.status = :status')
-        ->andWhere('p.requestStatus = :requestStatus')
-        ->setParameters(array('user' => $user, 'status' => 1, 'requestStatus' => 1))
-        ->orderBy("w.date", "ASC")
-        ->getQuery()
-        ->getResult()
-    ; 
+            ->andWhere('p.user = :user')
+            ->innerjoin('p.walk', 'w')
+            ->addSelect('w')
+            ->andWhere('w.status = :status')
+            ->andWhere('p.requestStatus = :requestStatus')
+            ->setParameters(array('user' => $user, 'status' => 1, 'requestStatus' => 1))
+            ->orderBy("w.date", "ASC")
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * Return All Archived Walk for a User
-    */
+     * Find archived walks participation by User
+     * 
+     * @param mixed $user
+     * @return Participant[] Returns an array of Participant objects
+     */
     public function findArchivedWalksByUser($user)
     {
         return $this->createQueryBuilder('p')
-        ->andWhere('p.user = :user')
-        ->innerjoin('p.walk', 'w')
-        ->addSelect('w')
-        ->andWhere('w.status = :status')
-        ->andWhere('p.requestStatus = :requestStatus')
-        ->setParameters(array('user' => $user, 'status' => 2, 'requestStatus' => 1))
-        ->orderBy("w.date", "ASC")
-        ->getQuery()
-        ->getResult()
-    ; 
+            ->andWhere('p.user = :user')
+            ->innerjoin('p.walk', 'w')
+            ->addSelect('w')
+            ->andWhere('w.status = :status')
+            ->andWhere('p.requestStatus = :requestStatus')
+            ->setParameters(array('user' => $user, 'status' => 2, 'requestStatus' => 1))
+            ->orderBy("w.date", "ASC")
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -21,6 +21,8 @@ class WalkRepository extends ServiceEntityRepository
 
     /**
      * Find the last 5 walks
+     * 
+     * @return Walk[] Returns an array of Walk objects
      */
     public function findLast()
     {
@@ -32,7 +34,9 @@ class WalkRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find All Query
+     * Query: Find All walks
+     * 
+     * @return \Doctrine\ORM\Query
      */
     public function findAllQuery()
     {
@@ -45,6 +49,8 @@ class WalkRepository extends ServiceEntityRepository
 
     /**
      * Find expired and status "incoming" walk's
+     * 
+     * @return Walk[] Returns an array of Walk objects
      */
     public function findForCronJob()
     {
@@ -56,7 +62,10 @@ class WalkRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find all walks by search
+     * Query: Find all walks by search
+     * 
+     * @param mixed|null $search
+     * @return \Doctrine\ORM\Query
      */
     public function findAllWalksBySearchQuery($search = null)
     {

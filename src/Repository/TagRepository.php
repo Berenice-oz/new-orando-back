@@ -21,6 +21,8 @@ class TagRepository extends ServiceEntityRepository
 
     /**
      * Find the last 5 tags
+     * 
+     * @return Tag[] Returns an array of Tag objects
      */
     public function findLast()
     {
@@ -33,7 +35,9 @@ class TagRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find All Query
+     * Query: Find All tags
+     * 
+     * @return \Doctrine\ORM\Query
      */
     public function findAllQuery()
     {
@@ -44,7 +48,10 @@ class TagRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find all tags by search
+     * Query: Find all tags by search
+     * 
+     * @param mixed|null $search
+     * @return \Doctrine\ORM\Query
      */
     public function findAllTagsBySearchQuery($search = null)
     {
@@ -58,33 +65,4 @@ class TagRepository extends ServiceEntityRepository
             ->orderBy('t.id', 'DESC')
             ->getQuery();
     }
-
-    // /**
-    //  * @return Tag[] Returns an array of Tag objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Tag
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
