@@ -75,7 +75,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups ("api_users_read_item")
-     * @Assert\Date
+     * 
      */
     private $dateOfBirth;
     
@@ -130,6 +130,7 @@ class User implements UserInterface
         $this->walks = new ArrayCollection();
         $this->participants = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
