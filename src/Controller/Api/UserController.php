@@ -158,9 +158,12 @@ class UserController extends AbstractController
         $userPicture = $user->getPicture();
         $data = $request->request->all();
         $password = $data['password'];
+        //$dateOfBirth = $data['dateOfBirth'];
         $pictureFile = $request->files->get('picture');
         $data = $serializer->serialize($data, 'json');
         $serializer->deserialize($data, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+
+        //$user->setDateOfBirth(new \DateTime($dateOfBirth));
         if ($password === '' || !$password) {
             $user->setPassword($userPassword);
         }

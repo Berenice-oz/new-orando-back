@@ -8,6 +8,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 class AddUserDataInApiAuth
 {
     /**
+    * @link https://github.com/lexik/LexikJWTAuthenticationBundle/blob/master/Resources/doc/2-data-customization.md#eventsauthentication_success---adding-public-data-to-the-jwt-response
     * @param AuthenticationSuccessEvent $event
     */
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)

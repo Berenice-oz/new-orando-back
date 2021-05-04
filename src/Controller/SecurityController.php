@@ -15,8 +15,6 @@ use App\Entity\User;
 
 class SecurityController extends AbstractController
 {
-   
-    
     /**
      * @param AutenticationUtils $authenticationUtils
      * @return Response
@@ -44,15 +42,6 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-    /** 
-     * @Route("/redirectafterlogout", name="redirectafterlogout")
-     */
-    //public function redirectafterlogout()
-    //{
-        //return $this->redirect('http://localhost:8080/');
-    //}
-    
 
 
     /**

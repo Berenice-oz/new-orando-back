@@ -19,23 +19,7 @@ class AreaRepository extends ServiceEntityRepository
         parent::__construct($registry, Area::class);
     }
 
-    /**
-     * Find by area and retrieve only associate incoming walks
-     * @param Area $area
-     * @return Area|null
-     */
-    public function findByAreaWithWalks(Area $area)
-    {
-        return $this->createQueryBuilder('a')
-            ->innerjoin('a.walks', 'w')
-            ->addSelect('w')
-            ->andWhere('w.status = :status OR w.status IS NULL')
-            ->andWhere('w.area = :area')
-            ->setParameters(array('status' => 1, 'area' => $area))
-            ->addOrderBy('w.date' ,'ASC')
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+   
 
     /**
      * Find all Areas order by name ASC
