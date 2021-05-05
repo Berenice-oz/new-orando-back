@@ -158,12 +158,9 @@ class UserController extends AbstractController
         $userPicture = $user->getPicture();
         $data = $request->request->all();
         $password = $data['password'];
-        //$dateOfBirth = $data['dateOfBirth'];
         $pictureFile = $request->files->get('picture');
         $data = $serializer->serialize($data, 'json');
         $serializer->deserialize($data, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
-
-        //$user->setDateOfBirth(new \DateTime($dateOfBirth));
         if ($password === '' || !$password) {
             $user->setPassword($userPassword);
         }
@@ -265,7 +262,7 @@ class UserController extends AbstractController
         
         $email = (new TemplatedEmail());
         $email->getHeaders()->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
-        $email->from(new Address('orando.promo.oz@gmail.com'))
+        $email->from(new Address('contact@orando.me'))
             ->to($recipientUserEmail)
             ->subject('O\'Rando - Vous avez reçu un nouveau message de ' . $expeditor->getNickname() . '!')
             ->htmlTemplate('email/email-contact_user.html.twig')
