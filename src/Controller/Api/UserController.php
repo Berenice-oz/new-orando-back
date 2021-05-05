@@ -265,7 +265,7 @@ class UserController extends AbstractController
         
         $email = (new TemplatedEmail());
         $email->getHeaders()->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
-        $email->from(new Address('contact@orando.me'))
+        $email->from(new Address('orando.promo.oz@gmail.com'))
             ->to($recipientUserEmail)
             ->subject('O\'Rando - Vous avez reçu un nouveau message de ' . $expeditor->getNickname() . '!')
             ->htmlTemplate('email/email-contact_user.html.twig')
