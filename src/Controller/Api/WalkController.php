@@ -16,6 +16,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WalkController extends AbstractController
 {
+     
+    /**
+     * API endpoint for listing walks
+     * 
+     * @param WalkRepository $walkRepository
+     * @return JSON
+     * 
+     * Get all walks with WalkRepository
+     * 
+     * Return them in a JSON response
+     * 
+     * @Route("/api/walks", name="api_walks", methods={"GET"})
+     */
+    public function read(WalkRepository $walkRepository): Response
+    {
+        $walks = $walkRepository->findAll();
+        return $this->json(
+            $walks,
+            Response::HTTP_OK,
+            [],
+            ['groups' => 'api_walks_read'],
+        );
+    }
    
     /**
      * API endpoint for reading a single walk's datas
