@@ -17,7 +17,7 @@ class Tag
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("api_tags_read")
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_tags_read"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Tag
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
-     * @Groups({"api_walks_read", "api_walks_read_item"})
+     * @Groups({"api_walks_read", "api_walks_read_item", "api_tags_read"})
      */
     private $color;
 
