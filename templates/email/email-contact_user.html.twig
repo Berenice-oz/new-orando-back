@@ -1,4 +1,5 @@
 {% apply inline_css(source('@styles/email.css')) %}
+{% set expEmail = "<a href='mailto:" ~ expeditor.email ~ "'>" ~ expeditor.email ~ "</a>" %}
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Stick&display=swap');
 </style>
@@ -10,8 +11,7 @@
    Vous avez reçu un nouveau message de {{ expeditor.nickname }} sur Orando.me:
 </p>
 <p><em>{{ message }}</em></p>
-<p>
-    <a href="https://orando.me/{{ path('contact_user', {id:expeditor.id}) }}">Cliquez ici pour lui répondre sur Orando.me!</a>
+<p> Vous pouvez lui répondre sur son adresse e-mail : {{ expEmail|raw }}
 </p>
 </section>
 {% endapply %}
