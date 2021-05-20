@@ -1,5 +1,5 @@
 {% apply inline_css(source('@styles/email.css')) %}
-{# {% set expEmail = "<a href='mailto:" ~ expeditor.email ~ "'>" ~ expeditor.email ~ "</a>" %} #}
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Stick&display=swap');
 </style>
@@ -12,7 +12,7 @@
 </p>
 <p><em>{{ message }}</em></p>
 <p> Vous pouvez lui répondre sur son adresse e-mail : 
-{# {{ expEmail|raw }} #}
+{{ expeditor.email }}
 </p>
 </section>
 {% endapply %}
